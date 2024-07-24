@@ -1,11 +1,12 @@
-NAME = minishell
-NAME_BONUS = minishell_b
+NAME = 
+NAME_BONUS = 
 
 CC = cc
 FLAGS = -Wextra -Wall -g -fPIE -I$(HEADER_FOLDER)
 # FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
-all: $(NAME)
+all:
+	@$(call random_shmol_cat, "nnnnnngnh .. ? . !", , $(CLS), );
 
 # ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 # │─██████████████─██████████████─██████████████─██████████████─██████████─██████──────────██████─██████████████─│
@@ -22,35 +23,18 @@ all: $(NAME)
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 
-NAMEE = minishell
-NAMEE_BONUS = minishell_b
-
-
-a: $(NAMEE)
-	@rm -rf out && mkdir out
-	@$(call random_shmol_cat, teshting ... $@: $(ARG), 'hav fun ね? ($(word 1, $^))', $(CLS), );
-	./$(word 1, $^)
+NAMEE = 
+NAMEE_BONUS = 
 
 ARG_SET_1 = echo hello > txt | cat
-ARG_SET_2 = grep "error" < log.txt | sort | uniq > errors.txt 2> errors.log
-ARG_SET_3 = cmd1 < infile | cmd2 > outfile | cmd3 >> appendfile
-ARG_SET_3 = cmd1 < $FILE | cmd2 "> outfile" | cmd3 && cmd3 >> appendfile
-ARG_SET_4 = export a="hello world!" && echo "abc"'--$5--'"==$ $$==$?==$a    "PWD is $PWD
-ARG_SET_4 = echo '"a"'"a"'
 
-ARG_SET_4 = echo asdlkjfss  > adsdnfbsadjff >> aaaaaaaaaaaa << END | echo a || echo b
-ARG_SET_5 = echo a | wc -c | <<END cat > out/out3 && cat out/out3 && echo all done
+a:
+	@make -C cpp0/ex00 ex00;
 
-b: $(NAMEE)
+
+b:
 	@$(call random_shmol_cat, teshting ... $@: $(ARG), 'hav fun ね? ($(word 1, $^))', $(CLS), );
 	./$(word 1, $^)
-
-
-v: $(NAMEE)
-	@$(call random_shmol_cat, "vlgrininnng ... $(word 1, $^)!", "$(ARG2)", $(CLS), );
-	-$(VALGRIND) ./$(word 1, $^)
-
-
 
 # MAKE M: Run life threatening arguments (no valgrind, make things fucked up)
 #
@@ -256,8 +240,7 @@ clean:
 	@$(call print_cat, $(CLEAR), $(COLOR_2R_2G_5B), $(COLOR_3R_2G_0B), $(COLOR_4R_5G_0B), $(call pad_word, 10, "Objects"), $(call pad_word, 12, "Exterminated"));
 
 fclean: clean
-	@rm -rf $(NAME) $(NAME_BONUS)
-	@make -sC lib clean_silent;
+	@rm -rf $(NAME)
 	@$(call print_cat, $(CLEAR), $(COLOR_1R_2G_0B), $(COLOR_3R_0G_0B), $(COLOR_2R_1G_0B), $(call pad_word, 10, "All⠀clean"), $(call pad_word, 12, "Miaster"));
 
 re: fclean all bonus

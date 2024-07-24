@@ -1,8 +1,7 @@
-NAME = minishell
-NAME_BONUS = minishell_b
+NAME = megaphone
 
-CC = cc
-FLAGS = -Wextra -Wall -g -fPIE -I$(HEADER_FOLDER)
+CC = g++
+FLAGS = -Wextra -Wall -g -fPIE
 # FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
 all: $(NAME)
@@ -22,57 +21,22 @@ all: $(NAME)
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 
-NAMEE = minishell
-NAMEE_BONUS = minishell_b
+NAMEE = megaphone
 
 
-a: $(NAMEE)
-	@rm -rf out && mkdir out
-	@$(call random_shmol_cat, teshting ... $@: $(ARG), 'hav fun ね? ($(word 1, $^))', $(CLS), );
+ARG1 = "some string in lowercase"
+ARG2 = Damnit "some more text"
+
+ex00: $(NAMEE)
+	@$(call random_shmol_cat, teshting ... $@: cpp0/ex00, 'hav fun ね? ($(word 1, $^))', $(CLS), );
 	./$(word 1, $^)
-
-ARG_SET_1 = echo hello > txt | cat
-ARG_SET_2 = grep "error" < log.txt | sort | uniq > errors.txt 2> errors.log
-ARG_SET_3 = cmd1 < infile | cmd2 > outfile | cmd3 >> appendfile
-ARG_SET_3 = cmd1 < $FILE | cmd2 "> outfile" | cmd3 && cmd3 >> appendfile
-ARG_SET_4 = export a="hello world!" && echo "abc"'--$5--'"==$ $$==$?==$a    "PWD is $PWD
-ARG_SET_4 = echo '"a"'"a"'
-
-ARG_SET_4 = echo asdlkjfss  > adsdnfbsadjff >> aaaaaaaaaaaa << END | echo a || echo b
-ARG_SET_5 = echo a | wc -c | <<END cat > out/out3 && cat out/out3 && echo all done
-
-b: $(NAMEE)
-	@$(call random_shmol_cat, teshting ... $@: $(ARG), 'hav fun ね? ($(word 1, $^))', $(CLS), );
-	./$(word 1, $^)
+	./$(word 1, $^) $(ARG1)
+	./$(word 1, $^) $(ARG2)
 
 
 v: $(NAMEE)
 	@$(call random_shmol_cat, "vlgrininnng ... $(word 1, $^)!", "$(ARG2)", $(CLS), );
 	-$(VALGRIND) ./$(word 1, $^)
-
-
-
-# MAKE M: Run life threatening arguments (no valgrind, make things fucked up)
-#
-m: $(NAMEE)
-	-@$(call helper_tester, $(ARG_SET_1), "\'teshting the limits of the food chain:", shouldnt work, $(HELLGRIND))
-	@$(call random_shmol_cat, \033[5m(DISCLAIMER)\033[25m, No philosophers was harmed in the making of this test, $(CLS), )
-
-
-# MAKE N: Run a dozen bad arguments, with valgrind
-#
-n: $(NAMEE)
-	@for arg in $(BAD_ARGS); do \
-	$(call random_shmol_cat, teshting lots of bad args:, $$arg, $(CLS), ); \
-	$(HELLGRIND) ./$(word 1, $^) $$arg; \
-	echo "\t\033[5m~ Press Enter to continue...\033[0m"; read -p "" key; \
-	done
-	@$(call random_shmol_cat, this one is for valgriind output only:, valgrind doesnt like philosophers、some will die, $(CLS), )
-	$(VALGRIIND) ./$(word 1, $^) 3 500 100 200 2
-
-BAD_ARGS = "3 5 1 1 2a" \
-			"3 5 1 wtf"
-
 
 ULIMIT = 3000
 m2: $(NAME)
@@ -104,47 +68,30 @@ endef
 # │─██████████████─██████████████─██████████████─██████──██████████─██████████████─██████████████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-SRC = $(wildcard src/*.c)
-OBJ = $(patsubst src/%.c, src/obj/%.o, $(SRC))
+SRC = $(wildcard *.cpp)
+OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
 
-SRC_FOLDER = src
-OBJ_FOLDER = src/obj
-HEADER_FOLDER = inc
+OBJ_FOLDER = obj
+HEADER = header.h
 
-ADD_FLAGS = -lm -lreadline -lncurses
-
-# ╭──────────────────────────────────────────────────────────────────────╮
-# │                  	 	        Libft                      	         │
-# ╰──────────────────────────────────────────────────────────────────────╯
-
-libft:
-	@make -sC lib all;
-
-libclean:
-	@make -sC lib clean
-
-relib:
-	@make -sC lib re
-
-libtest:
-	@make -sC lib test_color
+ADD_FLAGS = -std=c++98
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): libft $(OBJ) main.c
+$(NAME): $(OBJ) $(HEADER)
 	@clear
-	@if ! $(CC) $(FLAGS) $(OBJ) main.c lib/libft.a $(ADD_FLAGS) -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) $(OBJ) $(ADD_FLAGS) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
 	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
 
-abc: fclean libft $(OBJ) main.c
-	$(CC) $(FLAGS) $(OBJ) main.c lib/libft.a $(ADD_FLAGS) -o $(NAME)
+abc: fclean $(OBJ)
+	$(CC) $(FLAGS) $(OBJ) $(ADD_FLAGS) -o $(NAME)
 
-src/obj/%.o: src/%.c inc/$(NAME).h
+obj/%.o: %.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi
@@ -152,37 +99,6 @@ src/obj/%.o: src/%.c inc/$(NAME).h
 		$(call shmol_cat_error, $(RED), $(RED_L)); \
 		exit 1; \
 	fi
-
-# ╭──────────────────────────────────────────────────────────────────────╮
-# │                  	 	       BONUS	                   	         │
-# ╰──────────────────────────────────────────────────────────────────────╯
-
-FLAGS_MLX = -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lz
-SRC_B = $(wildcard srcb/*.c)
-OBJ_B = $(patsubst srcb/%.c, srcb/obj/%.o, $(SRC_B))
-
-OBJ_FOLDER_B = srcb/obj
-
-$(NAME_BONUS): bonus
-
-bonus: $(OBJ_B) main_bonus.c inc/$(NAME).h
-	@clear
-	@if ! $(CC) $(FLAGS) $(OBJ_B) main_bonus.c lib/libft.a $(ADD_FLAGS) -o $(NAME_BONUS); then \
-		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
-		exit 1; \
-	fi
-	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(COLOR_4R_1G_5B), $(call pad_word, 10, $(NAME_BONUS)), $(call pad_word, 12, "Compiled~"));
-
-srcb/obj/%.o: srcb/%.c inc/$(NAME).h
-	@clear
-	@if [ ! -e $(OBJ_FOLDER_B) ]; then\
-		mkdir -p $(OBJ_FOLDER_B);\
-	fi
-	@if ! $(CC) -c $(FLAGS) -c $< -o $@; then \
-		$(call shmol_cat_error, $(RED), $(RED_L)); \
-		exit 1; \
-	fi
-
 
 # ╭────────────────────────────────────────────────────────────────────────────╮
 # │─██████████████─██████████████─██████████████─██████─────────██████████████─│
@@ -213,50 +129,14 @@ git: fclean
 	git commit -m "$$current_date"; \
 	git push
 
-NORM_FILE = src/ main.c main_bonus.c inc/
-
-norm: fclean
-	@$(call random_shmol_cat_blink, 掃除してるかな..、いいね、いいねえー, giv file to norm, $(CLS), );
-	-@read -p 'file...:' path; \
-	if [ -z "$$path" ]; then \
-		watch -n 0.2 norminette $(NORM_FILE); \
-	else \
-		watch -n 0.2 norminette $$path; \
-	fi
-
-# --------------------------------------------------------------------------------- >
-# 																				TEST
-test:	libft
-	@rm -f ./lib/a.out
-	-@cc ./lib/test.c ./lib/libft.a -o ./lib/a.out $(ADD_FLAGS)
-	@if [ ! -e ./lib/a.out ]; then\
-		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "The⠀Cake"), $(call pad_word, 12, "Is⠀A⠀Lie..")); \
-		exit 3; \
-	fi
-	@$(call random_cat, $(call pad_word, 12, "Making"), $(call pad_word, 14, "Science"), $(CLS), $(RESET));
-	@lib/a.out
-
-FLAGS_TEST = -g -fPIE -I$(HEADER_FOLDER)
-
-test2:	libft $(OBJ) inc/$(NAME).h
-	@rm -f ./lib/a.out
-	@$(CC) $(FLAGS_TEST) $(OBJ) ./lib/test.c lib/libft.a $(ADD_FLAGS) -o ./lib/a.out
-	@$(call random_cat, $(call pad_word, 12, "TESTING"), $(call pad_word, 14, "SCIENCE"), $(CLS), $(RESET));
-	-@$(VALGRIND) lib/a.out
-
-vtest:	libft
-	@rm -f ./lib/a.out
-	@$(CC) $(FLAGS_TEST) $(OBJ) ./lib/test.c lib/libft.a $(ADD_FLAGS) -o ./lib/a.out
-	@$(call print_cat, "", $(RED), $(GOLD), $(BLUE1), $(call pad_word, 10, "TESTING"), $(call pad_word, 12, "SCIENCE.."));
-	-@$(VALGRIND) lib/a.out
 # --------------------------------------------------------------------------------- >
 # 																				CLEAN
 clean:
-	@rm -rf $(OBJ_FOLDER) ./out
+	@rm -rf $(OBJ_FOLDER)
 	@$(call print_cat, $(CLEAR), $(COLOR_2R_2G_5B), $(COLOR_3R_2G_0B), $(COLOR_4R_5G_0B), $(call pad_word, 10, "Objects"), $(call pad_word, 12, "Exterminated"));
 
 fclean: clean
-	@rm -rf $(NAME) $(NAME_BONUS)
+	@rm -rf $(NAME)
 	@make -sC lib clean_silent;
 	@$(call print_cat, $(CLEAR), $(COLOR_1R_2G_0B), $(COLOR_3R_0G_0B), $(COLOR_2R_1G_0B), $(call pad_word, 10, "All⠀clean"), $(call pad_word, 12, "Miaster"));
 
