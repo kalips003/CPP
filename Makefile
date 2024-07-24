@@ -1,8 +1,8 @@
 NAME = 
 NAME_BONUS = 
 
-CC = cc
-FLAGS = -Wextra -Wall -g -fPIE -I$(HEADER_FOLDER)
+CC = g++
+FLAGS = -Wextra -Wall -g -fPIE
 # FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
 all:
@@ -95,23 +95,7 @@ SRC_FOLDER = src
 OBJ_FOLDER = src/obj
 HEADER_FOLDER = inc
 
-ADD_FLAGS = -lm -lreadline -lncurses
-
-# ╭──────────────────────────────────────────────────────────────────────╮
-# │                  	 	        Libft                      	         │
-# ╰──────────────────────────────────────────────────────────────────────╯
-
-libft:
-	@make -sC lib all;
-
-libclean:
-	@make -sC lib clean
-
-relib:
-	@make -sC lib re
-
-libtest:
-	@make -sC lib test_color
+ADD_FLAGS = -std=c++98
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
@@ -136,37 +120,6 @@ src/obj/%.o: src/%.c inc/$(NAME).h
 		$(call shmol_cat_error, $(RED), $(RED_L)); \
 		exit 1; \
 	fi
-
-# ╭──────────────────────────────────────────────────────────────────────╮
-# │                  	 	       BONUS	                   	         │
-# ╰──────────────────────────────────────────────────────────────────────╯
-
-FLAGS_MLX = -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lz
-SRC_B = $(wildcard srcb/*.c)
-OBJ_B = $(patsubst srcb/%.c, srcb/obj/%.o, $(SRC_B))
-
-OBJ_FOLDER_B = srcb/obj
-
-$(NAME_BONUS): bonus
-
-bonus: $(OBJ_B) main_bonus.c inc/$(NAME).h
-	@clear
-	@if ! $(CC) $(FLAGS) $(OBJ_B) main_bonus.c lib/libft.a $(ADD_FLAGS) -o $(NAME_BONUS); then \
-		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
-		exit 1; \
-	fi
-	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(COLOR_4R_1G_5B), $(call pad_word, 10, $(NAME_BONUS)), $(call pad_word, 12, "Compiled~"));
-
-srcb/obj/%.o: srcb/%.c inc/$(NAME).h
-	@clear
-	@if [ ! -e $(OBJ_FOLDER_B) ]; then\
-		mkdir -p $(OBJ_FOLDER_B);\
-	fi
-	@if ! $(CC) -c $(FLAGS) -c $< -o $@; then \
-		$(call shmol_cat_error, $(RED), $(RED_L)); \
-		exit 1; \
-	fi
-
 
 # ╭────────────────────────────────────────────────────────────────────────────╮
 # │─██████████████─██████████████─██████████████─██████─────────██████████████─│
@@ -210,15 +163,15 @@ norm: fclean
 
 # --------------------------------------------------------------------------------- >
 # 																				TEST
-test:	libft
-	@rm -f ./lib/a.out
-	-@cc ./lib/test.c ./lib/libft.a -o ./lib/a.out $(ADD_FLAGS)
-	@if [ ! -e ./lib/a.out ]; then\
+test:
+	@rm -f ./a.out
+	-@$(CC) ./test.cpp -o ./a.out
+	@if [ ! -e ./a.out ]; then\
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "The⠀Cake"), $(call pad_word, 12, "Is⠀A⠀Lie..")); \
 		exit 3; \
 	fi
 	@$(call random_cat, $(call pad_word, 12, "Making"), $(call pad_word, 14, "Science"), $(CLS), $(RESET));
-	@lib/a.out
+	@./a.out
 
 FLAGS_TEST = -g -fPIE -I$(HEADER_FOLDER)
 
