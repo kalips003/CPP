@@ -1,4 +1,4 @@
-NAME = megaphone
+NAME = phonebook
 
 CC = g++
 FLAGS = -Wextra -Wall -g -fPIE
@@ -75,7 +75,7 @@ SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
 
 OBJ_FOLDER = obj
-HEADER = header.h
+HEADER = 
 
 ADD_FLAGS = -std=c++98
 

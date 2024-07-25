@@ -28,8 +28,12 @@ NAMEE_BONUS =
 
 ARG_SET_1 = echo hello > txt | cat
 
-a:
+00:
 	@make -C cpp0/ex00 ex00;
+01:
+	@make -C cpp0/ex01 ex01;
+02:
+	@make -C cpp0/ex02 ex02;
 
 
 b:
