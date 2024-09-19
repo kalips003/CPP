@@ -1,7 +1,7 @@
-NAME = megaphone
+NAME = phonebook
 
 CC = g++
-FLAGS = -Wextra -Wall -g -std=c++98
+FLAGS = -Wextra -Wall -g -fPIE
 # FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
 all: $(NAME)
@@ -27,7 +27,7 @@ NAMEE = megaphone
 ARG1 = "some string in lowercase"
 ARG2 = Damnit "some more text"
 
-a: $(NAMEE)
+ex01: $(NAMEE)
 	@$(call random_shmol_cat, teshting ... $@: cpp0/ex00, 'hav fun ね? ($(word 1, $^))', $(CLS), );
 	./$(word 1, $^)
 	@echo
@@ -75,7 +75,7 @@ SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
 
 OBJ_FOLDER = obj
-HEADER = header.h
+HEADER = 
 
 ADD_FLAGS = -std=c++98
 
@@ -254,7 +254,7 @@ endef
 define random_shmol_cat
 	COLOR=$$(printf "\033[38;5;%dm" $$(shuf -i 1-255 -n 1)); \
 	COLOR2=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
-	echo -e "$(3)$${COLOR2}\
+	echo "$(3)$${COLOR2}\
 	\tにゃ~$${COLOR}\t⠀╱|、\n\
 	\t\t(˚ˎ。7⠀⠀⠀$${COLOR2}~ $(1) ~$${COLOR}\n\
 	\t\t⠀|、˜\\\\\t\t$${COLOR2}~ $(2)$${COLOR}\n\
