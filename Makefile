@@ -75,14 +75,15 @@ git: fclean
 # --------------------------------------------------------------------------------- >
 # 																				TEST
 test:
-	@rm -f ./a.out
-	-@$(CC) ./test.cpp -o ./a.out
-	@if [ ! -e ./a.out ]; then\
+	@rm -f TEST/a.out
+	@clear
+	-@$(CC) TEST/*.cpp -o TEST/a.out
+	@if [ ! -e TEST/a.out ]; then\
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "The⠀Cake"), $(call pad_word, 12, "Is⠀A⠀Lie..")); \
 		exit 3; \
 	fi
 	@$(call random_cat, $(call pad_word, 12, "Making"), $(call pad_word, 14, "Science"), $(CLS), $(RESET));
-	@./a.out
+	@TEST/a.out
 
 FLAGS_TEST = -g -fPIE -I$(HEADER_FOLDER)
 
@@ -100,7 +101,7 @@ vtest:	libft
 # --------------------------------------------------------------------------------- >
 # 																				CLEAN
 clean:
-	@rm -rf cpp*/ex0*/obj ./out
+	@rm -rf cpp*/ex0*/obj TEST/a.out
 	@$(call print_cat, $(CLEAR), $(COLOR_2R_2G_5B), $(COLOR_3R_2G_0B), $(COLOR_4R_5G_0B), $(call pad_word, 10, "Objects"), $(call pad_word, 12, "Exterminated"));
 
 fclean: clean

@@ -1,19 +1,17 @@
-#ifndef CLASS_HPP
-#define CLASS_HPP
+#ifndef MYCLASS_HPP
+#define MYCLASS_HPP
 
-#include <string>
-
-class Class {
+class MyClass {
 public:
-    // Constructor
-    Class(const std::string& fName = "", const std::string& lName = "");
+	// Constructor
+	MyClass();
 
-    // Member variables
-    std::string firstName;
-    std::string lastName;
+	// Member function
+	void doSomething() const;
 
-    // Member function
-    void printName() const;
+private:
+	// Member variable
+	int myData;
 };
 
-#endif
+#endif // MYCLASS_HPP
