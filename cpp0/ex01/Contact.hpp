@@ -22,7 +22,7 @@ public:
     // Contact& operator=(const Contact& other);  // Copy assignment operator
 
     /////   PUBLIC SETTER GETTER
-    void setAttribute(int value);    // Setter
+    void setFirstName(std::string phone_number value);    // Setter
     int getAttribute() const;        // Getter
 
     // OTHER PUBLIC FUNCTIONS
