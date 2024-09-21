@@ -34,10 +34,10 @@ public:
 	std::string get_phone_number() const;
 
 	// OTHER PUBLIC FUNCTIONS
-	void printAttribute() const;
+	void printSmallDescription() const;
+	void printData() const;
 
 	/////   PUBLIC DATA
-	std::string name;
 
 };
 
