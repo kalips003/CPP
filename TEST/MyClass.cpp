@@ -7,7 +7,9 @@ MyClass::MyClass() {
 }
 
 //  VALUED CONSTRUCTOR
-MyClass::MyClass() : attribute(0), name("") {
+// MyClass::MyClass() : attribute(0), name("") {}
+MyClass::MyClass(int a) {
+    attribute = a;
 }
 
 //  DEFUALT DESTRUCTOR

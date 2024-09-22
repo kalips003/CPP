@@ -1,31 +1,27 @@
-#ifndef MYCLASS_HPP
-#define MYCLASS_HPP
+#ifndef PHONEBOOK_HPP
+#define PHONEBOOK_HPP
 
 #include <string>
 
-class MyClass {
+#include "Contact.hpp"
+
+
+class PhoneBook {
 private:
-    /////   PRIVATE DATA
-    char *contacts[8];
+	/////   PRIVATE DATA
+	Contact	repertoire[8];
 
 public:
-    /////   PUBLIC STANDARD FUNCIONS
-    MyClass();
-    MyClass(int value);
-    MyClass(const MyClass& other);
-    ~MyClass();
-    // MyClass& operator=(const MyClass& other);  // Copy assignment operator
+	/////   PUBLIC STANDARD FUNCIONS
+	PhoneBook();
+	~PhoneBook();
 
-    /////   PUBLIC SETTER GETTER
-    void setAttribute(int value);    // Setter
-    int getAttribute() const;        // Getter
+	/////   PUBLIC SETTER GETTER
+	void	pushContact(Contact contact);
+	void	addContact();
+	void	searchContact() const;
 
-    // OTHER PUBLIC FUNCTIONS
-    void printAttribute() const;
-
-    /////   PUBLIC DATA
-    std::string name;
-
+	int		how_many_contact;
 };
 
 #endif

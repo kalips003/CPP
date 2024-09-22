@@ -14,11 +14,8 @@ private:
 
 public:
 	/////   PUBLIC STANDARD FUNCIONS
-	Contact();
-	Contact(int value);
-	Contact(const Contact& other);
-	~Contact();
-	// Contact& operator=(const Contact& other);  // Copy assignment operator
+	Contact() {};
+	~Contact() {};
 
 	/////   PUBLIC SETTER
 	void set_first_name(std::string first_name);
@@ -34,7 +31,7 @@ public:
 	std::string get_phone_number() const;
 
 	// OTHER PUBLIC FUNCTIONS
-	void printSmallDescription() const;
+	void printSmallDescription(int index) const;
 	void printData() const;
 
 	/////   PUBLIC DATA

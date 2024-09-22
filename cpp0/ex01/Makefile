@@ -1,7 +1,7 @@
 NAME = phonebook
 
 CC = g++
-FLAGS = -Wextra -Wall -g -fPIE
+FLAGS = -Wextra -Wall -g -std=c++98
 # FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
 all: $(NAME)
@@ -21,21 +21,11 @@ all: $(NAME)
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 
-NAMEE = megaphone
-
-
-ARG1 = "some string in lowercase"
+ARG = 
 ARG2 = Damnit "some more text"
 
-ex01: $(NAMEE)
-	@$(call random_shmol_cat, teshting ... $@: cpp0/ex00, 'hav fun ね? ($(word 1, $^))', $(CLS), );
-	./$(word 1, $^)
-	@echo
-	./$(word 1, $^) $(ARG1)
-	@echo
-	./$(word 1, $^) $(ARG2)
-	@echo
-
+a: $(NAME)
+	./$(NAME)
 
 v: $(NAMEE)
 	@$(call random_shmol_cat, "vlgrininnng ... $(word 1, $^)!", "$(ARG2)", $(CLS), );
@@ -75,7 +65,7 @@ SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
 
 OBJ_FOLDER = obj
-HEADER = 
+# HEADER = header.h
 
 ADD_FLAGS = -std=c++98
 
@@ -83,7 +73,7 @@ ADD_FLAGS = -std=c++98
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): $(OBJ) $(HEADER)
+$(NAME): $(OBJ)
 	@clear
 	@if ! $(CC) $(FLAGS) $(OBJ) $(ADD_FLAGS) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
@@ -254,7 +244,7 @@ endef
 define random_shmol_cat
 	COLOR=$$(printf "\033[38;5;%dm" $$(shuf -i 1-255 -n 1)); \
 	COLOR2=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
-	echo "$(3)$${COLOR2}\
+	echo -e "$(3)$${COLOR2}\
 	\tにゃ~$${COLOR}\t⠀╱|、\n\
 	\t\t(˚ˎ。7⠀⠀⠀$${COLOR2}~ $(1) ~$${COLOR}\n\
 	\t\t⠀|、˜\\\\\t\t$${COLOR2}~ $(2)$${COLOR}\n\
