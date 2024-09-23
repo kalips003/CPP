@@ -15,6 +15,7 @@ private:
 public:
 	/////   PUBLIC STANDARD FUNCIONS
 	Contact() {};
+	Contact(int how_many_contact);
 	~Contact() {};
 
 	/////   PUBLIC SETTER

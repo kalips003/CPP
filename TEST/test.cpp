@@ -1,7 +1,9 @@
 #include <iostream>
 #include <stdio.h>
+#include <sstream>
 
 #include "MyClass.hpp"
+#include "_tools.hpp"
 
 /*******************************************************************************
 ******************************************************************************/
@@ -15,35 +17,13 @@
 			██╔══██║  ██╔══╝░░██╔══██║██║██╔══██╗██╔══╝░░
 			██║░░██║  ██║░░░░░██║░░██║██║██║░░██║███████╗
 			╚═╝░░╚═╝  ╚═╝░░░░░╚═╝░░╚═╝╚═╝╚═╝░░╚═╝╚══════╝
-******************************************************************************/
-# define CLEAR "\e[2J\e[H"
-# define RESET "\e[0m"
-# define BLINK "\e[5m"
-# define R_BLINK "\e[25m"
-void	ft_print_cat(int num, std::string string2, int bit)
-{
-	srand(time(NULL));
-	std::string color1 = "\e[38;5;" + std::to_string((rand() % 255 + 1)) + "m";
-	std::string color2 = "\e[38;5;" + std::to_string((rand() % 255 + 1)) + "m";
-	std::string color3 = "\e[38;5;" + std::to_string((rand() % 255 + 1)) + "m";
-	if ((bit >> 1) & 1)
-		std::cout << CLEAR;
-	std::cout << color2 << "\t\tにゃ~" << color1 << "\t⠀╱|、\n\
-	\t\t(˚ˎ。7⠀⠀⠀" << color2 << "~ " << num << " ~" + color1 + "\n\
-	\t\t⠀|、˜\\\t\t\t" + color2 + "~" + string2 + "~" + color1 + "\n\
-	\t\t⠀じしˍ)ノ\n" << std::endl;
-	if ((bit >> 0) & 1)
-	{
-		std::cout << BLINK + color3 + "\n\t\t>>>  PRISS ENTER TO CONTINUE  <<<\n" + R_BLINK;
-		std::getline(std::cin, color1);
-	}
-}
 
+template class, template argument ,  static member function??
+******************************************************************************/
 ///////////////////////////////////////////////////////////////////////////////]
 int main() {
-	ft_print_cat(0, "hello", 0b11);
-	ft_print_cat(1, "hello", 0b11);
-	ft_print_cat(2, "hello", 0b11);
+	std::string abc = ft_print_ccat(C_341, C_434, "abc?", 0, "Enter the first name abc", 0b110);
+	std::cout << "this is abc:" + abc << std::endl;
     return 0;
 }
 ///////////////////////////////////////////////////////////////////////////////]
