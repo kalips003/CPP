@@ -24,18 +24,18 @@ all: $(NAME)
 ARG = 
 ARG2 = Damnit "some more text"
 
+b: $(NAME)
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "copy tis below", $(CLS), );
+	echo "\n>\tadd\nJohn\nDoe\nJohnny\n123456789\nMy deepest secret\nJane\nSmith\nJaney\n987654321\nI love pizza\nAlice\nJohnson\nAli\n555555555\nI fear spiders\nBob\nBrown\nBobby\n444444444\nI once danced with a celebrity\nCharlie\nDavis\nChuck\n333333333\nI have a pet rock\nEve\nAdams\nEvie\n222222222\nI never learned to swim\nMallory\nClark\nMally\n111111111\nI can speak Klingon"; \
+	read -p "" key;
+	./$(NAME)
+
 a: $(NAME)
 	./$(NAME)
 
-v: $(NAMEE)
-	@$(call random_shmol_cat, "vlgrininnng ... $(word 1, $^)!", "$(ARG2)", $(CLS), );
+v: $(NAME)
+	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
 	-$(VALGRIND) ./$(word 1, $^)
-
-ULIMIT = 3000
-m2: $(NAME)
-	@$(call random_shmol_cat, "\'trying to make shit crash", "try n break it.. にゃ?", $(CLS), );
-	@(ulimit -s $(ULIMIT); ./$(word 1, $^) $(ARG))
-	ulimit -s 8192
 
 # $(1)=$(ARGS) $(2)=$(TXT_cat) $(3)=$(TXT_below) $(4)=$(VALGRIND)(timeout 15s)
 define helper_tester
@@ -61,34 +61,46 @@ endef
 # │─██████████████─██████████████─██████████████─██████──██████████─██████████████─██████████████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-SRC = $(wildcard *.cpp)
-OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
+SRC = $(wildcard src/*.cpp)
+OBJ = $(patsubst src/%.cpp, src/obj/%.o, $(SRC))
+SRC_LIB = $(wildcard lib/*.cpp)
+OBJ_LIB = $(patsubst lib/%.cpp, src/obj/%.o, $(SRC_LIB))
 
-OBJ_FOLDER = obj
-# HEADER = header.h
+INCLUDE = src lib
+ADD_FLAGS = -I$(INCLUDE)
+INC = -Isrc -Ilib
 
-ADD_FLAGS = -std=c++98
+OBJ_FOLDER = src/obj
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(OBJ_LIB) main.cpp
 	@clear
-	@if ! $(CC) $(FLAGS) $(OBJ) $(ADD_FLAGS) -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
 	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
 
-abc: fclean $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(ADD_FLAGS) -o $(NAME)
+abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
+	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
 
-obj/%.o: %.cpp
+src/obj/%.o: src/%.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi
-	@if ! $(CC) -c $(FLAGS) $< -o $@; then \
+	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
+		$(call shmol_cat_error, $(RED), $(RED_L)); \
+		exit 1; \
+	fi
+
+src/obj/%.o: lib/%.cpp
+	@if [ ! -e $(OBJ_FOLDER) ]; then\
+		mkdir -p $(OBJ_FOLDER);\
+	fi
+	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
 		$(call shmol_cat_error, $(RED), $(RED_L)); \
 		exit 1; \
 	fi
@@ -128,16 +140,20 @@ clean:
 	@rm -rf $(OBJ_FOLDER)
 	@$(call print_cat, $(CLEAR), $(COLOR_2R_2G_5B), $(COLOR_3R_2G_0B), $(COLOR_4R_5G_0B), $(call pad_word, 10, "Objects"), $(call pad_word, 12, "Exterminated"));
 
+clean_silent:
+	@clear
+	@rm -rf $(NAME)
+	@rm -rf $(OBJ_FOLDER)
+
 fclean: clean
 	@rm -rf $(NAME)
-	@make -sC lib clean_silent;
 	@$(call print_cat, $(CLEAR), $(COLOR_1R_2G_0B), $(COLOR_3R_0G_0B), $(COLOR_2R_1G_0B), $(call pad_word, 10, "All⠀clean"), $(call pad_word, 12, "Miaster"));
 
-re: fclean all bonus
+re: fclean all
 
 .PHONY: all clean fclean re bonus
 
-.SILENT: $(NAME) bonus
+.SILENT: $(NAME)
 
 # 	monitor stack activiity
 # valgrind --tool=massif --stacks=yes ./your_program

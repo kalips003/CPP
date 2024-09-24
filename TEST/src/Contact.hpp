@@ -1,7 +1,9 @@
 #ifndef CONTACT_HPP
 #define CONTACT_HPP
 
-#include <string>
+#include <iomanip>
+
+#include "_lib.hpp"
 
 class Contact {
 private:

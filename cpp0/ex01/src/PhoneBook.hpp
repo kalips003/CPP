@@ -1,10 +1,11 @@
 #ifndef PHONEBOOK_HPP
 #define PHONEBOOK_HPP
 
-#include <string>
+#include <limits>
+// use: std::numeric_limits<type>::min(); std::numeric_limits<type>::max(); std::numeric_limits<type>::epsilon();
 
+#include "_lib.hpp"
 #include "Contact.hpp"
-
 
 class PhoneBook {
 private:

@@ -2,7 +2,7 @@ NAME =
 NAME_BONUS = 
 
 CC = g++
-FLAGS = -Wextra -Wall -g -fPIE
+FLAGS = -Wextra -Wall 
 # FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
 all:
@@ -78,7 +78,7 @@ git: fclean
 test:
 	@rm -f TEST/a.out
 	@clear
-	-@$(CC) TEST/*.cpp -o TEST/a.out
+	-@$(CC) -g -std=c++98 TEST/test.cpp TEST/src/*.cpp -o TEST/a.out
 	@if [ ! -e TEST/a.out ]; then\
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "The⠀Cake"), $(call pad_word, 12, "Is⠀A⠀Lie..")); \
 		exit 3; \
@@ -89,7 +89,7 @@ test:
 FLAGS_TEST = -g -fPIE -I$(HEADER_FOLDER)
 
 test2:	libft $(OBJ) inc/$(NAME).h
-	@rm -f ./lib/a.out
+	@rm -f ./TEST/a.out
 	@$(CC) $(FLAGS_TEST) $(OBJ) ./lib/test.c lib/libft.a $(ADD_FLAGS) -o ./lib/a.out
 	@$(call random_cat, $(call pad_word, 12, "TESTING"), $(call pad_word, 14, "SCIENCE"), $(CLS), $(RESET));
 	-@$(VALGRIND) lib/a.out
