@@ -34,7 +34,7 @@ void	PhoneBook::pushContact(Contact contact) {
 ///////////////////////////////////////////////////////////////////////////////]
 void	PhoneBook::addContact() {
 	Contact new_contact;
-	try { Contact new_contact = Contact(how_many_contact);
+	try { new_contact = Contact(how_many_contact);
 	} catch (const int &exit) { return; }
 	pushContact(new_contact);
 }
@@ -45,7 +45,7 @@ void	PhoneBook::addContact() {
 void	PhoneBook::searchContact() const {
 
 	if (repertoire[0].get_first_name().empty()) {
-		std::cout << C_115 "Empty Contact List" << std::endl;
+		std::cout << C_115 "\nEmpty Contact List" << std::endl;
 		for (int i = 0; i > 8; i++)
 			std::cout << i << " ) name: " << repertoire[0].get_first_name() << std::endl;
 		ft_print_cat();
@@ -54,7 +54,7 @@ void	PhoneBook::searchContact() const {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - -]
 // Print the contact list
-	ft_print_cat3(C_123, C_021, C_551, how_many_contact, "Contact list:", 0b10);
+	ft_print_cat(C_123, C_021, C_551, how_many_contact, "Contact list:", 0b10);
 	std::cout << "\t┌─────────┬──────────┬──────────┬──────────┐" << std::endl;
 	std::cout << "\t│   Index │First Name│ Last Name│  Nickname│" << std::endl;
 	std::cout << "\t├─────────┼──────────┼──────────┼──────────┤" << std::endl;
@@ -74,8 +74,8 @@ void	PhoneBook::searchContact() const {
 	std::cout << "Enter the index of the contact to display [1-8]: ";
 	while (true && ++r < 10)
 	{
-		if (r == 5) {
-			ft_print_cat3(C_511, C_402, C_520, "..........", "Do you have some issues?", 0b11);
+		if (r == 6) {
+			ft_print_cat(C_511, C_402, C_520, "..........", "Do you have some issues?", 0b11);
 			return;
 		}
 		if (!std::getline(std::cin, input)) {
@@ -85,17 +85,17 @@ void	PhoneBook::searchContact() const {
 		std::istringstream stoi(input);
 		if (stoi >> number_index && number_index > 0 && number_index < 9)
 			break;
-		std::cout << "Invalid input! Please enter a valid integer between [1-8]: " << std::endl;
+		std::cout << "Invalid input! Please enter a valid integer between [1-8]: ";
 	}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - -]
 // the number is correct, does contact exist?
 // print details of contact, wait
 	if (repertoire[number_index - 1].get_first_name().empty() || repertoire[0].get_first_name().empty()) {
-		std::cout << C_115 "Empty Contact" << std::endl;
+		std::cout << C_115 "\nEmpty Contact" << std::endl;
 		ft_print_cat();
 	} else {
-		std::string c = ft_print_catr("Details for requested number:", "Press Enter to go back to main screen", 0b10);
+		std::string c = ft_print_cat("Details for requested number:", "Press Enter to go back to main screen", 0b10);
 		repertoire[number_index - 1].printData();
 		ft_print_cat();
 	}

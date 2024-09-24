@@ -1,11 +1,11 @@
 #include "Contact.hpp"
 
 Contact::Contact(int how_many_contact) {
-	first_name = ft_print_cat3(C_341, C_434, "first_name", how_many_contact, "Enter the first name", 0b110);
-	last_name = ft_print_cat3(C_341, C_434, "last_name", how_many_contact, "Enter the last name", 0b110);
-	nickname = ft_print_cat3(C_341, C_434, "nickname", how_many_contact, "Enter the nickname", 0b110);
-	darkest_secret = ft_print_cat3(C_341, C_434, "darkest_secret", how_many_contact, "Enter the darkest secret", 0b110);
-	phone_number = ft_print_cat3(C_341, C_434, "phone_number", how_many_contact, "Enter the phone number", 0b110);
+	first_name = ft_print_cat(C_341, C_434, "first_name", how_many_contact, "Enter the first name", 0b110);
+	last_name = ft_print_cat(C_341, C_434, "last_name", how_many_contact, "Enter the last name", 0b110);
+	nickname = ft_print_cat(C_341, C_434, "nickname", how_many_contact, "Enter the nickname", 0b110);
+	darkest_secret = ft_print_cat(C_341, C_434, "darkest_secret", how_many_contact, "Enter the darkest secret", 0b110);
+	phone_number = ft_print_cat(C_341, C_434, "phone_number", how_many_contact, "Enter the phone number", 0b110);
 	
 	if (first_name.empty() || last_name.empty() || nickname.empty() || darkest_secret.empty() || phone_number.empty()) {
 		std::cout << RED "Invalid Empty Contact!" << std::endl;

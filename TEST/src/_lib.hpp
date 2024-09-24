@@ -62,7 +62,7 @@
  * 
  * @return the 3rd color with or without RESET.*/
 template <typename T1, typename T2>
-std::string	ft_print_cat3(std::string color1, std::string color2, std::string color3, T1 a, T2 b, int bit)
+std::string	ft_print_cat(std::string color1, std::string color2, std::string color3, T1 a, T2 b, int bit)
 {
 	if (bit & 0b10)
 		std::cout << CLEAR;
@@ -102,7 +102,7 @@ std::string	ft_print_cat3(std::string color1, std::string color2, std::string co
  * 
  * @return the 3rd random color.*/
 template <typename S1, typename S2>
-std::string	ft_print_catr(S1 stringa, S2 stringb, int bit)
+std::string	ft_print_cat(S1 stringa, S2 stringb, int bit)
 {
 	srand(time(NULL));
 

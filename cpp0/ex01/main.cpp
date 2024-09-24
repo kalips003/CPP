@@ -19,13 +19,10 @@ int main(void)
 	std::string input;
 	while (!std::cin.eof())
 	{
-		ft_print_cat3(C_322, C_503, C_105, phone.how_many_contact, "The super dupperr phone!", 0b10);
+		ft_print_cat(C_322, C_503, C_105, phone.how_many_contact, "The super dupperr phone!", 0b10);
 		std::cout << "[ADD | SEARCH | EXIT]: ";
-		std::cout.flush();
-		if (!std::getline(std::cin, input)) {
-			// std::cin.clear();
-			continue;;
-		}
+		if (!std::getline(std::cin, input))
+			break;
 		if (input == "EXIT" || input == "exit")
 			break;
 		if (input == "SEARCH" || input == "search")
@@ -33,6 +30,6 @@ int main(void)
 		else if (input == "ADD" || input == "add")
 			phone.addContact();
 	}
-	ft_print_catr("Bye byee!", "I hav totally forgotten everything!!", 0b10);
+	ft_print_cat("Bye byee!", "I hav totally forgotten everything!!", 0b10);
 	return 0;
 }

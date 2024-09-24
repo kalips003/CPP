@@ -1,7 +1,7 @@
 NAME = phonebook
 
 CC = g++
-FLAGS = -Wextra -Wall -g -fPIE
+FLAGS = -Wextra -Wall -g -std=c++98
 # FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
 all: $(NAME)
@@ -21,31 +21,21 @@ all: $(NAME)
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 
-NAMEE = megaphone
-
-
-ARG1 = "some string in lowercase"
+ARG = 
 ARG2 = Damnit "some more text"
 
-ex01: $(NAMEE)
-	@$(call random_shmol_cat, teshting ... $@: cpp0/ex00, 'hav fun ね? ($(word 1, $^))', $(CLS), );
-	./$(word 1, $^)
-	@echo
-	./$(word 1, $^) $(ARG1)
-	@echo
-	./$(word 1, $^) $(ARG2)
-	@echo
+b: $(NAME)
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "copy tis below", $(CLS), );
+	echo "\n>\tadd\nJohn\nDoe\nJohnny\n123456789\nMy deepest secret\nJane\nSmith\nJaney\n987654321\nI love pizza\nAlice\nJohnson\nAli\n555555555\nI fear spiders\nBob\nBrown\nBobby\n444444444\nI once danced with a celebrity\nCharlie\nDavis\nChuck\n333333333\nI have a pet rock\nEve\nAdams\nEvie\n222222222\nI never learned to swim\nMallory\nClark\nMally\n111111111\nI can speak Klingon"; \
+	read -p "" key;
+	./$(NAME)
 
+a: $(NAME)
+	./$(NAME)
 
-v: $(NAMEE)
-	@$(call random_shmol_cat, "vlgrininnng ... $(word 1, $^)!", "$(ARG2)", $(CLS), );
+v: $(NAME)
+	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
 	-$(VALGRIND) ./$(word 1, $^)
-
-ULIMIT = 3000
-m2: $(NAME)
-	@$(call random_shmol_cat, "\'trying to make shit crash", "try n break it.. にゃ?", $(CLS), );
-	@(ulimit -s $(ULIMIT); ./$(word 1, $^) $(ARG))
-	ulimit -s 8192
 
 # $(1)=$(ARGS) $(2)=$(TXT_cat) $(3)=$(TXT_below) $(4)=$(VALGRIND)(timeout 15s)
 define helper_tester
@@ -71,34 +61,46 @@ endef
 # │─██████████████─██████████████─██████████████─██████──██████████─██████████████─██████████████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-SRC = $(wildcard *.cpp)
-OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
+SRC = $(wildcard src/*.cpp)
+OBJ = $(patsubst src/%.cpp, src/obj/%.o, $(SRC))
+SRC_LIB = $(wildcard lib/*.cpp)
+OBJ_LIB = $(patsubst lib/%.cpp, src/obj/%.o, $(SRC_LIB))
 
-OBJ_FOLDER = obj
-HEADER = 
+INCLUDE = src lib
+ADD_FLAGS = -I$(INCLUDE)
+INC = -Isrc -Ilib
 
-ADD_FLAGS = -std=c++98
+OBJ_FOLDER = src/obj
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): $(OBJ) $(HEADER)
+$(NAME): $(OBJ) $(OBJ_LIB) main.cpp
 	@clear
-	@if ! $(CC) $(FLAGS) $(OBJ) $(ADD_FLAGS) -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
 	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
 
-abc: fclean $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(ADD_FLAGS) -o $(NAME)
+abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
+	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
 
-obj/%.o: %.cpp
+src/obj/%.o: src/%.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi
-	@if ! $(CC) -c $(FLAGS) $< -o $@; then \
+	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
+		$(call shmol_cat_error, $(RED), $(RED_L)); \
+		exit 1; \
+	fi
+
+src/obj/%.o: lib/%.cpp
+	@if [ ! -e $(OBJ_FOLDER) ]; then\
+		mkdir -p $(OBJ_FOLDER);\
+	fi
+	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
 		$(call shmol_cat_error, $(RED), $(RED_L)); \
 		exit 1; \
 	fi
@@ -138,16 +140,20 @@ clean:
 	@rm -rf $(OBJ_FOLDER)
 	@$(call print_cat, $(CLEAR), $(COLOR_2R_2G_5B), $(COLOR_3R_2G_0B), $(COLOR_4R_5G_0B), $(call pad_word, 10, "Objects"), $(call pad_word, 12, "Exterminated"));
 
+clean_silent:
+	@clear
+	@rm -rf $(NAME)
+	@rm -rf $(OBJ_FOLDER)
+
 fclean: clean
 	@rm -rf $(NAME)
-	@make -sC lib clean_silent;
 	@$(call print_cat, $(CLEAR), $(COLOR_1R_2G_0B), $(COLOR_3R_0G_0B), $(COLOR_2R_1G_0B), $(call pad_word, 10, "All⠀clean"), $(call pad_word, 12, "Miaster"));
 
-re: fclean all bonus
+re: fclean all
 
 .PHONY: all clean fclean re bonus
 
-.SILENT: $(NAME) bonus
+.SILENT: $(NAME)
 
 # 	monitor stack activiity
 # valgrind --tool=massif --stacks=yes ./your_program
@@ -254,7 +260,7 @@ endef
 define random_shmol_cat
 	COLOR=$$(printf "\033[38;5;%dm" $$(shuf -i 1-255 -n 1)); \
 	COLOR2=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
-	echo "$(3)$${COLOR2}\
+	echo -e "$(3)$${COLOR2}\
 	\tにゃ~$${COLOR}\t⠀╱|、\n\
 	\t\t(˚ˎ。7⠀⠀⠀$${COLOR2}~ $(1) ~$${COLOR}\n\
 	\t\t⠀|、˜\\\\\t\t$${COLOR2}~ $(2)$${COLOR}\n\

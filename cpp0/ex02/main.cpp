@@ -6,26 +6,30 @@
 /*   By: kalipso <kalipso@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:17:39 by kalipso           #+#    #+#             */
-/*   Updated: 2024/07/24 15:19:13 by kalipso          ###   ########.fr       */
+/*   Updated: 2024/09/24 10:30:09 by kalipso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <cctype>
+#include "src/PhoneBook.hpp"
+#include "src/Contact.hpp"
 
-int main(int argc, char **argv) {
-	if (argc == 1)
-		{ std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl; }
-	else
+int main(void) 
+{
+	PhoneBook phone;
+	std::string input;
+	while (!std::cin.eof())
 	{
-		for (int i = 1; i < argc; i++) 
-		{
-			for (int j = 0; argv[i][j] != '\0'; j++)
-				{ std::cout << static_cast<char>(std::toupper(argv[i][j])); }
-			if (i < argc - 1)
-				{ std::cout << ' '; }
-		}
-		std::cout << std::endl;
+		ft_print_cat(C_322, C_503, C_105, phone.how_many_contact, "The super dupperr phone!", 0b10);
+		std::cout << "[ADD | SEARCH | EXIT]: ";
+		if (!std::getline(std::cin, input))
+			break;
+		if (input == "EXIT" || input == "exit")
+			break;
+		if (input == "SEARCH" || input == "search")
+			phone.searchContact();
+		else if (input == "ADD" || input == "add")
+			phone.addContact();
 	}
+	ft_print_cat("Bye byee!", "I hav totally forgotten everything!!", 0b10);
 	return 0;
 }
