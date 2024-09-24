@@ -1,4 +1,4 @@
-NAME = phonebook
+NAME = lost_file
 
 CC = g++
 FLAGS = -Wextra -Wall -g -std=c++98
@@ -24,14 +24,14 @@ all: $(NAME)
 ARG = 
 ARG2 = Damnit "some more text"
 
-b: $(NAME)
-	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "copy tis below", $(CLS), );
-	echo "\n>\tadd\nJohn\nDoe\nJohnny\n123456789\nMy deepest secret\nJane\nSmith\nJaney\n987654321\nI love pizza\nAlice\nJohnson\nAli\n555555555\nI fear spiders\nBob\nBrown\nBobby\n444444444\nI once danced with a celebrity\nCharlie\nDavis\nChuck\n333333333\nI have a pet rock\nEve\nAdams\nEvie\n222222222\nI never learned to swim\nMallory\nClark\nMally\n111111111\nI can speak Klingon"; \
-	read -p "" key;
-	./$(NAME)
-
 a: $(NAME)
-	./$(NAME)
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "making a diff w/ 19920104_091532.log...", $(CLS), )
+	./$(NAME) > log;
+	awk '{print $$2}' log > log_trimed;
+	awk '{print $$2}' 19920104_091532.log > log_trimed_template;
+	@if diff log_trimed log_trimed_template; then $(call shmol_cat_color, $(COLOR_5R_3G_0B), $(COLOR_1R_5G_0B), "All~", "Good !", , ); fi
+	./$(NAME) > log;
+	rm -f log log_trimed log_trimed_template;
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
@@ -76,9 +76,9 @@ OBJ_FOLDER = src/obj
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): $(OBJ) $(OBJ_LIB) main.cpp
+$(NAME): Account.cpp tests.cpp
 	@clear
-	@if ! $(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME); then \
+	@if ! $(CC) Account.cpp tests.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
