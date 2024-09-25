@@ -1,8 +1,8 @@
-NAME = zombie_call
+NAME = phonebook
 
 CC = g++
-# FLAGS = -Wextra -Wall -g -std=c++98
-FLAGS = -Wextra -Wall -Werror -std=c++98
+FLAGS = -Wextra -Wall -g -std=c++98
+# FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
 all: $(NAME)
 
@@ -24,9 +24,14 @@ all: $(NAME)
 ARG = 
 ARG2 = Damnit "some more text"
 
+b: $(NAME)
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "copy tis below", $(CLS), );
+	echo "\n>\tadd\nJohn\nDoe\nJohnny\n123456789\nMy deepest secret\nJane\nSmith\nJaney\n987654321\nI love pizza\nAlice\nJohnson\nAli\n555555555\nI fear spiders\nBob\nBrown\nBobby\n444444444\nI once danced with a celebrity\nCharlie\nDavis\nChuck\n333333333\nI have a pet rock\nEve\nAdams\nEvie\n222222222\nI never learned to swim\nMallory\nClark\nMally\n111111111\nI can speak Klingon"; \
+	read -p "" key;
+	./$(NAME)
+
 a: $(NAME)
-	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik wombies...", $(CLS), )
-	-$(VALGRIND) ./$(NAME);
+	./$(NAME)
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
@@ -71,13 +76,13 @@ OBJ_FOLDER = src/obj
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): Zombie.cpp Zombie.hpp main.cpp newZombie.cpp randomChump.cpp
+$(NAME): $(OBJ) $(OBJ_LIB) main.cpp
 	@clear
-	@if ! $(CC) Zombie.cpp main.cpp newZombie.cpp randomChump.cpp -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
-	@$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
+	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
 
 abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
 	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
@@ -115,8 +120,8 @@ src/obj/%.o: lib/%.cpp
 # ╰────────────────────────────────────────────────────────────────────────────╯
 
 # --------------------------------------------------------------------------------- >
-VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s
-# VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --trace-children=yes --track-fds=yes
+# VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --track-fds=yes
+VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --trace-children=yes --track-fds=yes $(V_FLAG)
 VALGRIND_OTHER = valgrind --vgdb=yes
 V_FLAG = --suppressions="ignore_valgrind"
 HELLGRIND = valgrind --tool=helgrind ?-g3?
@@ -195,7 +200,7 @@ pad_word = $(BLINK)$(shell printf "%$(1)s" "$(2)")$(RESET)
 # @$(call print_cat, $(CLEAR), $(body), $(eye), $(txt), $(call pad_word, 12, "The⠀Cake"), $(call pad_word, 12, "Is⠀A⠀Lie..."));
 # print_cat (resest?)(color_cat)(color_eyes)(color_text)($(padded_txt_top))($(padded_txt_bot))
 define print_cat
-    echo -e "$(1)$(2)\
+    echo "$(1)$(2)\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠒⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠇⠀⠘⡄⠀⠀⠀⠀⠀⠀⣀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀⠁⠉⠉⠉⠒⠊⠉⠀⡇⠀\n\
@@ -221,7 +226,7 @@ define random_cat
 	COLOR=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
 	COLOR2=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
 	COLOR3=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
-    echo -e "$(3)$${COLOR}\
+    echo "$(3)$${COLOR}\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠒⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠇⠀⠘⡄⠀⠀⠀⠀⠀⠀⣀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀⠁⠉⠉⠉⠒⠊⠉⠀⡇⠀\n\
@@ -243,7 +248,7 @@ endef
 # --------------------------------------------------------------------------------- >
 # @$(call shmol_cat_color, $(color_cat), $(color_txt), text1, txt2, $(CLS), $(RESET));
 define shmol_cat_color
-	echo -e "$(5)$(2)\
+	echo "$(5)$(2)\
 	\tにゃ~$(1)\t⠀╱|、\n\
 	\t\t(˚ˎ。7⠀⠀⠀$(2)~ $(3) ~$(1)\n\
 	\t\t⠀|、˜\\\\\t\t$(2)$(4)$(1)\n\

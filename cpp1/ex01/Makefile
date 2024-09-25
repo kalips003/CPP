@@ -1,4 +1,4 @@
-NAME = zombie_call
+NAME = zombie_horde
 
 CC = g++
 # FLAGS = -Wextra -Wall -g -std=c++98
@@ -71,9 +71,9 @@ OBJ_FOLDER = src/obj
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): Zombie.cpp Zombie.hpp main.cpp newZombie.cpp randomChump.cpp
+$(NAME): Zombie.cpp Zombie.hpp main.cpp zombieHorde.cpp
 	@clear
-	@if ! $(CC) Zombie.cpp main.cpp newZombie.cpp randomChump.cpp -o $(NAME); then \
+	@if ! $(CC) Zombie.cpp main.cpp zombieHorde.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi

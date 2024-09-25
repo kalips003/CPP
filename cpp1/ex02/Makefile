@@ -1,4 +1,4 @@
-NAME = zombie_call
+NAME = zombie_address
 
 CC = g++
 # FLAGS = -Wextra -Wall -g -std=c++98
@@ -26,7 +26,7 @@ ARG2 = Damnit "some more text"
 
 a: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik wombies...", $(CLS), )
-	-$(VALGRIND) ./$(NAME);
+	./$(NAME);
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
@@ -71,9 +71,9 @@ OBJ_FOLDER = src/obj
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): Zombie.cpp Zombie.hpp main.cpp newZombie.cpp randomChump.cpp
+$(NAME): main.cpp
 	@clear
-	@if ! $(CC) Zombie.cpp main.cpp newZombie.cpp randomChump.cpp -o $(NAME); then \
+	@if ! $(CC) main.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi

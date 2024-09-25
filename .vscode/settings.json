@@ -48,6 +48,26 @@
 		"iomanip": "cpp",
 		"sstream": "cpp",
 		"map": "cpp",
-		"set": "cpp"
+		"set": "cpp",
+		"charconv": "cpp",
+		"chrono": "cpp",
+		"codecvt": "cpp",
+		"condition_variable": "cpp",
+		"cstring": "cpp",
+		"list": "cpp",
+		"optional": "cpp",
+		"ratio": "cpp",
+		"format": "cpp",
+		"fstream": "cpp",
+		"future": "cpp",
+		"mutex": "cpp",
+		"semaphore": "cpp",
+		"span": "cpp",
+		"stdfloat": "cpp",
+		"stop_token": "cpp",
+		"text_encoding": "cpp",
+		"thread": "cpp",
+		"cinttypes": "cpp",
+		"variant": "cpp"
 	}
 }
