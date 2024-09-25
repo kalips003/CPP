@@ -29,16 +29,15 @@
 // std::assert
 	// #include <cctype>
 // std::isdigit(int c); std::toupper(int c)
-	#include <limits>
+	// #include <limits>
 // use: std::numeric_limits<type>::min(); std::numeric_limits<type>::max(); std::numeric_limits<type>::epsilon();
-	#include <typeinfo>
-// 	typeid(val1).name(); typeid(val) or typeid(T)> std::type_info
 
 	#include <cstdlib>
 // for rand() and srand()
 	#include <ctime> // 	for time()
 // std::time; std::clock
-	#include <cstdio>
+	#include <typeinfo>
+// 	typeid(val1).name(); typeid(val) or typeid(T)> std::type_info
 ///////////////////////////////////////////////////////////////////////////////]
 // 									MY_LIBs
 #include "_colors.h"
@@ -75,13 +74,13 @@ std::string	ft_print_cat(std::string color1, std::string color2, std::string col
 	if (bit & 0b1) {
 		std::cout << BLINK + color3 + "\n\t< enter >\n" + R_BLINK << std::endl;
 		if (!std::getline(std::cin, color3))
-			std::cin.clear(), std::cin.ignore(std::numeric_limits<std::streamsize>::max(), EOF);
+			std::cin.clear();
 	}
 
 	if (bit & 0b100) {
 		std::cout << color3 + ":" + RESET;
 		if (!std::getline(std::cin, color3))
-			std::cin.clear(), std::cin.ignore(std::numeric_limits<std::streamsize>::max(), EOF);
+			std::cin.clear();
 	}
 
 	if (bit & 0b1000)
@@ -128,7 +127,7 @@ std::string	ft_print_cat(S1 stringa, S2 stringb, int bit)
 	{
 		std::cout << BLINK + color3 + "\n\t< enter >\n" + R_BLINK;
 		if (!std::getline(std::cin, color3))
-			std::cin.clear(), std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.clear();
 	}
 	return color3;
 }
