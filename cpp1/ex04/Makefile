@@ -1,4 +1,4 @@
-NAME = human_club
+NAME = my_sed
 
 CC = g++
 # FLAGS = -Wextra -Wall -g -std=c++98
@@ -20,13 +20,20 @@ all: $(NAME)
 # │─────██████─────██████████████─██████████████─────██████─────██████████─██████──────────██████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-ARG = 
-ARG2 = Damnit "some more text"
+ARG = main.cpp
+ARG1 = std::
+ARG2 = BRAAAAaaaaiiIiiiiiinnsss....:
+ARG3 = $(ARG) $(ARG1) $(ARG2)
 
 
 a: $(NAME)
-	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "some monkeys with sticks", , );
-	-$(VALGRIND) ./$(NAME)
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", $(ARG3), , );
+	-$(VALGRIND) ./$(NAME) $(ARG3)
+	@if [ ! -e $(ARG).replace ]; then \
+		$(call print_cat, , $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 14, "NO⠀OUTPUT")); \
+		exit 1; fi
+	@cat $(ARG).replace
+	@rm -f $(ARG).replace
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );

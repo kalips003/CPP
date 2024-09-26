@@ -78,7 +78,7 @@ git: fclean
 test:
 	@rm -f TEST/a.out
 	@clear
-	-@$(CC) -g -std=c++98 TEST/test.cpp TEST/src/*.cpp -o TEST/a.out
+	-@$(CC) -g -std=c++98 TEST/test.cpp $(wildcard TEST/src/*.cpp) -o TEST/a.out
 	@if [ ! -e TEST/a.out ]; then\
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "The⠀Cake"), $(call pad_word, 12, "Is⠀A⠀Lie..")); \
 		exit 3; \

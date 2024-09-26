@@ -1,36 +1,49 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kalipso <kalipso@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/24 14:17:39 by kalipso           #+#    #+#             */
-/*   Updated: 2024/09/25 14:15:50 by kalipso          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "lib/_lib.hpp"
 
-#include "HumanA.hpp"
-#include "HumanB.hpp"
-#include "Weapon.hpp"
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <cstring>
 
-int main()
-{
-	{
-	Weapon club = Weapon("crude spiked club");
-	HumanA bob("Bob", club);
-	bob.attack();
-	club.setType("some other type of club");
-	bob.attack();
+int main(int ac, char** av) {
+
+	if (ac != 4) {
+		std::cerr << ERR3 "error args" << std::endl;
+		return 0;
 	}
-	
-	{
-	Weapon club = Weapon("crude spiked club");
-	HumanB jim("Jim");
-	jim.setWeapon(club);
-	jim.attack();
-	club.setType("some other type of club");
-	jim.attack();
+
+	std::ifstream	file(av[1]);
+	if (!file) {
+		std::cerr << "Could not open the file: " << av[1] << std::endl;
+		std::cerr << ERR7 << strerror(errno) << std::endl;
+		return 1;
 	}
-return 0;
+
+	std::ostringstream ss;
+	ss << file.rdbuf();
+	std::string content = ss.str();
+
+	std::string result = "";
+	std::string to_find(av[2]);
+	std::string to_replace_with(av[3]);
+	size_t	len_to_find = to_find.length();
+
+	size_t pos = 0;
+	while ((pos = content.find(to_find, pos)) != std::string::npos) {
+		result += content.substr(0, pos);
+		result += to_replace_with;
+		pos += len_to_find;
+		content = content.substr(pos);
+		pos = 0;
+	}
+	result += content; 
+
+	std::ofstream	outfile((std::string(av[1]) + ".replace").c_str());
+	if (!outfile) {
+		std::cerr << "Error creating the file: " << av[1] << ".replace" << std::endl;
+		std::cerr << ERR7 << strerror(errno) << std::endl;
+		return 1;
+	}
+	outfile << result;
+	return 0;
 }

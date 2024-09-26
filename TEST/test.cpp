@@ -59,16 +59,34 @@ int main(int ac, char** av) {
 		std::cerr << "Could not open the file: " << av[1] << std::endl;
 		std::cerr << ERR7 << strerror(errno) << std::endl;
 		return 1;
-	} else {
-		std::ostringstream ss;
-		ss << file.rdbuf();
-		std::string content = ss.str();
 	}
 
+	std::ostringstream ss;
+	ss << file.rdbuf();
+	std::string content = ss.str();
 
+	std::string result = "";
+	std::string to_find(av[2]);
+	std::string to_replace_with(av[3]);
+	size_t	len_to_find = to_find.length();
 
-	std::ofstream	outfile(av[1] + ".replace");
+	size_t pos = 0;
+	while ((pos = content.find(to_find, pos)) != std::string::npos) {
+		result += content.substr(0, pos);
+		result += to_replace_with;
+		pos += len_to_find;
+		content = content.substr(pos);
+		pos = 0;
+	}
+	result += content; 
 
+	std::ofstream	outfile((std::string(av[1]) + ".replace").c_str());
+	if (!outfile) {
+		std::cerr << "Error creating the file: " << av[1] << ".replace" << std::endl;
+		std::cerr << ERR7 << strerror(errno) << std::endl;
+		return 1;
+	}
+	outfile << content;
 	return 0;
 }
 ///////////////////////////////////////////////////////////////////////////////]
