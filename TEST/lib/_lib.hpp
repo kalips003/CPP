@@ -138,4 +138,9 @@ std::string	ft_print_cat(S1 stringa, S2 stringb, int bit)
  * @return the user input*/
 std::string	ft_print_cat( void );
 
+template <typename T>
+void put(T value) {
+	std::cout << value << std::endl;
+}
+
 #endif

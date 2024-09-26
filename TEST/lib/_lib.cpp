@@ -8,3 +8,4 @@ std::string	ft_print_cat()
 		std::cin.clear();
 	return string;
 }
+
