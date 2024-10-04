@@ -5,6 +5,16 @@
 FixedNum::FixedNum() : int_value(0) {
 	put("Default constructor called");
 }
+
+FixedNum::FixedNum(const int a) : int_value(a << num_fractional_bits) {
+	put("Int constructor called");
+}
+
+FixedNum::FixedNum(const float a) {
+	int_value = roundf(a * (1 << num_fractional_bits));
+	put("Float constructor called");
+}
+
 FixedNum::~FixedNum() {
 	put("Destructor called");
 }
@@ -32,3 +42,12 @@ void FixedNum::setRawBits( int const raw ) {
 	put("setRawBits member function called");
 }
 
+float FixedNum::toFloat( void ) const {
+
+	return 0.0;
+}
+
+int FixedNum::toInt( void ) const {
+
+	return int_value >> num_fractional_bits;
+}

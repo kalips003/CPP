@@ -11,7 +11,7 @@
 // #include <set>
 // #include <algorithm>
 // #include <cstdlib>
-// #include <cmath>
+#include <cmath>
 // #include <ctime>
 // #include <iomanip>
 // #include <sstream>
@@ -27,6 +27,8 @@ class FixedNum {
 public:
 /////   Orthodox Canonical Form
 	FixedNum( void );  // Default constructor
+	FixedNum( int );  // Default constructor
+	FixedNum( float );  // Default constructor
 	~FixedNum( void );  // Destructor
 	FixedNum( const FixedNum& other );  // Copy constructor
 	FixedNum& operator=( const FixedNum& other );  // Copy assignment operator
@@ -40,6 +42,8 @@ private:
 
 /////   PUBLIC DATA
 public:
+	float toFloat( void ) const;
+	int toInt( void ) const;
 	// std::string label;
 
 /////   FONCTIONS D'USAGE
