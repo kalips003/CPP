@@ -32,12 +32,12 @@ FixedNum& FixedNum::operator=(const FixedNum& other) {
 }
 
 
-
 //  SETTER & GETTER
 int FixedNum::getRawBits( void ) const {
 	put("getRawBits member function called");
 	return int_value;
 }
+
 void FixedNum::setRawBits( int const raw ) {
 	int_value  = raw;
 	put("setRawBits member function called");
@@ -54,4 +54,48 @@ int FixedNum::toInt( void ) const {
 std::ostream& operator<<(std::ostream& os, const FixedNum& n) {
 	os << n.toFloat();
 	return os;
+}
+
+//  OPERATORS
+bool operator>(const FixedNum& a, const FixedNum& b) {
+	return a.getRawBits() > b.getRawBits() ? 1 : 0;
+}
+bool operator<(const FixedNum& a, const FixedNum& b) {
+	return a.getRawBits() < b.getRawBits() ? 1 : 0;
+}
+bool operator>=(const FixedNum& a, const FixedNum& b) {
+	return a.getRawBits() >= b.getRawBits() ? 1 : 0;
+}
+bool operator<=(const FixedNum& a, const FixedNum& b) {
+	return a.getRawBits() <= b.getRawBits() ? 1 : 0;
+}
+bool operator!=(const FixedNum& a, const FixedNum& b) {
+	return a.getRawBits() != b.getRawBits() ? 1 : 0;
+}
+bool operator==(const FixedNum& a, const FixedNum& b) {
+	return a.getRawBits() == b.getRawBits() ? 1 : 0;
+}
+
+
+FixedNum operator+(const FixedNum& a, const FixedNum& b) {
+	FixedNum rtrn;
+	rtrn.setRawBits(a.getRawBits() + b.getRawBits());
+	return rtrn;
+}
+FixedNum operator-(const FixedNum& a, const FixedNum& b) {
+	FixedNum rtrn;
+	rtrn.setRawBits(a.getRawBits() - b.getRawBits());
+	return rtrn;
+}
+FixedNum operator*(const FixedNum& a, const FixedNum& b) {
+	FixedNum rtrn;
+	rtrn.setRawBits(a.getRawBits() * b.getRawBits());
+	return rtrn;
+}
+FixedNum operator/(const FixedNum& a, const FixedNum& b) {
+	if (b == 0)
+		throw std::runtime_error("Division by zero");
+	FixedNum rtrn;
+	rtrn.setRawBits(a.getRawBits() / b.getRawBits());
+	return rtrn;
 }

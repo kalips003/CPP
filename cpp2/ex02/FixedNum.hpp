@@ -21,7 +21,7 @@
 // #include "_lib.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////]
-// 									CLASS
+// 									CLASS									 //]
 ///////////////////////////////////////////////////////////////////////////////]
 class FixedNum {
 
@@ -45,13 +45,26 @@ public:
 	int toInt( void ) const;
 
 	int getRawBits( void ) const;
+	static int getRawBits2( void );
 	void setRawBits( int const raw );
+
 };
+bool operator>(const FixedNum& a, const FixedNum& b);
+bool operator<(const FixedNum& a, const FixedNum& b);
+bool operator>=(const FixedNum& a, const FixedNum& b);
+bool operator<=(const FixedNum& a, const FixedNum& b);
+bool operator!=(const FixedNum& a, const FixedNum& b);
+bool operator==(const FixedNum& a, const FixedNum& b);
+
+FixedNum operator+(const FixedNum& a, const FixedNum& b);
+FixedNum operator-(const FixedNum& a, const FixedNum& b);
+FixedNum operator*(const FixedNum& a, const FixedNum& b);
+FixedNum operator/(const FixedNum& a, const FixedNum& b);
 
 std::ostream& operator<<(std::ostream& os, const FixedNum& n);
 
 template <typename T>
-void put(T& value) {
+void put(const T& value) {
 	std::cout << value << std::endl;
 }
 
