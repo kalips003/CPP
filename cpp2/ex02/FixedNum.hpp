@@ -40,8 +40,8 @@ FixedNum();
 template <typename N>
 FixedNum( N value ) {
 	if (value > 0x7FFFFF)
-		throw std::runtime_error("Value must be less than or equal to 1000.");
-	int_value = static_cast<int>(value * (1 << num_fractional_bits));
+		throw std::runtime_error("Value too big");
+	int_value = static_cast<int>roundf(value * (1 << num_fractional_bits));
 }
 
 	FixedNum( float );  // Default constructor
