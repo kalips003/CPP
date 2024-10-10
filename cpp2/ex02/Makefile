@@ -38,7 +38,8 @@ v: $(NAME)
 define helper_tester
 	$(call random_shmol_cat, $(2), $(1), $(CLS), )
 	echo "\n\t$(3)\n"
-	read -p "" key;
+	read -p "" key;    }
+
 	$(4) ./$(word 1, $^) $(1)
 	echo "\n\t\e[5m< enter >\e[25m"; read -p "" key;
 endef
@@ -199,7 +200,7 @@ pad_word = $(BLINK)$(shell printf "%$(1)s" "$(2)")$(RESET)
 # @$(call print_cat, $(CLEAR), $(body), $(eye), $(txt), $(call pad_word, 12, "The⠀Cake"), $(call pad_word, 12, "Is⠀A⠀Lie..."));
 # print_cat (resest?)(color_cat)(color_eyes)(color_text)($(padded_txt_top))($(padded_txt_bot))
 define print_cat
-    echo "$(1)$(2)\
+    echo -e "$(1)$(2)\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠒⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠇⠀⠘⡄⠀⠀⠀⠀⠀⠀⣀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀⠁⠉⠉⠉⠒⠊⠉⠀⡇⠀\n\
@@ -225,7 +226,7 @@ define random_cat
 	COLOR=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
 	COLOR2=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
 	COLOR3=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
-    echo "$(3)$${COLOR}\
+    echo -e "$(3)$${COLOR}\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠒⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠇⠀⠘⡄⠀⠀⠀⠀⠀⠀⣀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀⠁⠉⠉⠉⠒⠊⠉⠀⡇⠀\n\
@@ -247,7 +248,7 @@ endef
 # --------------------------------------------------------------------------------- >
 # @$(call shmol_cat_color, $(color_cat), $(color_txt), text1, txt2, $(CLS), $(RESET));
 define shmol_cat_color
-	echo "$(5)$(2)\
+	echo -e "$(5)$(2)\
 	\tにゃ~$(1)\t⠀╱|、\n\
 	\t\t(˚ˎ。7⠀⠀⠀$(2)~ $(3) ~$(1)\n\
 	\t\t⠀|、˜\\\\\t\t$(2)$(4)$(1)\n\

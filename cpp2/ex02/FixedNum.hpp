@@ -20,7 +20,10 @@
 // #include <cctype>
 // #include "_lib.hpp"
 
-template FixedNum::FixedNum(float);
+template <typename T>
+void put(const T& value) {
+	std::cout << value << std::endl;
+}
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS									 //]
 ///////////////////////////////////////////////////////////////////////////////]
@@ -33,54 +36,86 @@ private:
 	static const int 	num_fractional_bits = 8;
 
 public:
-/////   Orthodox Canonical Form
 
-FixedNum();
+	FixedNum();
+	template <typename N>
+	FixedNum( N value ) {
+		if (value > 0x7FFFFF)
+			throw std::runtime_error("Value too big");
+		int_value = static_cast<int>(roundf(value * (1 << num_fractional_bits)));
+	}
+	~FixedNum( void );
+	FixedNum( const FixedNum& other );
+	FixedNum& operator=( const FixedNum& other );
 
-template <typename N>
-FixedNum( N value ) {
-	if (value > 0x7FFFFF)
-		throw std::runtime_error("Value too big");
-	int_value = static_cast<int>roundf(value * (1 << num_fractional_bits));
-}
-
-	FixedNum( float );  // Default constructor
-	~FixedNum( void );  // Destructor
-	FixedNum( const FixedNum& other );  // Copy constructor
-	FixedNum& operator=( const FixedNum& other );  // Copy assignment operator
-
-	float	toFloat( void ) const;
+////
 	int		toInt( void ) const;
+	float	toFloat( void ) const;
 
-	int 		getRawBits( void ) const;
-	void		setRawBits( int const raw );
-
-
+	int 	getRawBits( void ) const;
+	void	setRawBits( int const raw );
 };
 
+std::ostream& operator<<(std::ostream& os, const FixedNum& n);
+///////////////////////////////////////////////////////////////////////////////]
 template <typename N>
 bool operator>(const FixedNum& a, const N& b) {
 	FixedNum temp(b);
 	return a.getRawBits() > temp.getRawBits();
 }
+template <typename N>
+bool operator<(const FixedNum& a, const N& b) {
+	FixedNum temp(b);
+	return a.getRawBits() < temp.getRawBits();
+}
+template <typename N>
+bool operator>=(const FixedNum& a, const N& b) {
+	FixedNum temp(b);
+	return a.getRawBits() >= temp.getRawBits();
+}
+template <typename N>
+bool operator<=(const FixedNum& a, const N& b) {
+	FixedNum temp(b);
+	return a.getRawBits() <= temp.getRawBits();
+}
+template <typename N>
+bool operator!=(const FixedNum& a, const N& b) {
+	FixedNum temp(b);
+	return a.getRawBits() != temp.getRawBits();
+}
+template <typename N>
+bool operator==(const FixedNum& a, const N& b) {
+	FixedNum temp(b);
+	return a.getRawBits() == temp.getRawBits();
+}
 
-bool operator>(const FixedNum& a, const FixedNum& b);
-bool operator<(const FixedNum& a, const FixedNum& b);
-bool operator>=(const FixedNum& a, const FixedNum& b);
-bool operator<=(const FixedNum& a, const FixedNum& b);
-bool operator!=(const FixedNum& a, const FixedNum& b);
-bool operator==(const FixedNum& a, const FixedNum& b);
-
-FixedNum operator+(const FixedNum& a, const FixedNum& b);
-FixedNum operator-(const FixedNum& a, const FixedNum& b);
-FixedNum operator*(const FixedNum& a, const FixedNum& b);
-FixedNum operator/(const FixedNum& a, const FixedNum& b);
-
-std::ostream& operator<<(std::ostream& os, const FixedNum& n);
-
-template <typename T>
-void put(const T& value) {
-	std::cout << value << std::endl;
+///////////////////////////////////////////////////////////////////////////////]
+template <typename N>
+FixedNum operator+(const FixedNum& a, const N& b) {
+	FixedNum rtrn(b);
+	rtrn.setRawBits(a.getRawBits() + rtrn.getRawBits());
+	return rtrn;
+}
+template <typename N>
+FixedNum operator-(const FixedNum& a, const N& b) {
+	FixedNum rtrn(b);
+	rtrn.setRawBits(a.getRawBits() - rtrn.getRawBits());
+	return rtrn;
+}
+template <typename N>
+FixedNum operator*(const FixedNum& a, const N& b) {
+	FixedNum rtrn(b);
+	long temp = (a.getRawBits() * rtrn.getRawBits()) >> 8;
+	rtrn.setRawBits(static_cast<int>(temp));
+	return rtrn;
+}
+template <typename N>
+FixedNum operator/(const FixedNum& a, const N& b) {
+	FixedNum rtrn(b);
+	if (b == 0)
+		throw std::runtime_error("Division by zero");
+	rtrn.setRawBits(a.getRawBits() / rtrn.getRawBits());
+	return rtrn;
 }
 
 
