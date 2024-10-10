@@ -20,6 +20,7 @@
 // #include <cctype>
 // #include "_lib.hpp"
 
+template FixedNum::FixedNum(float);
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS									 //]
 ///////////////////////////////////////////////////////////////////////////////]
@@ -34,21 +35,35 @@ private:
 public:
 /////   Orthodox Canonical Form
 
-	FixedNum( void );  // Default constructor
-	FixedNum( int );  // Default constructor
+FixedNum();
+
+template <typename N>
+FixedNum( N value ) {
+	if (value > 0x7FFFFF)
+		throw std::runtime_error("Value must be less than or equal to 1000.");
+	int_value = static_cast<int>(value * (1 << num_fractional_bits));
+}
+
 	FixedNum( float );  // Default constructor
 	~FixedNum( void );  // Destructor
 	FixedNum( const FixedNum& other );  // Copy constructor
 	FixedNum& operator=( const FixedNum& other );  // Copy assignment operator
 
-	float toFloat( void ) const;
-	int toInt( void ) const;
+	float	toFloat( void ) const;
+	int		toInt( void ) const;
 
-	int getRawBits( void ) const;
-	static int getRawBits2( void );
-	void setRawBits( int const raw );
+	int 		getRawBits( void ) const;
+	void		setRawBits( int const raw );
+
 
 };
+
+template <typename N>
+bool operator>(const FixedNum& a, const N& b) {
+	FixedNum temp(b);
+	return a.getRawBits() > temp.getRawBits();
+}
+
 bool operator>(const FixedNum& a, const FixedNum& b);
 bool operator<(const FixedNum& a, const FixedNum& b);
 bool operator>=(const FixedNum& a, const FixedNum& b);
@@ -67,6 +82,7 @@ template <typename T>
 void put(const T& value) {
 	std::cout << value << std::endl;
 }
+
 
 
 #endif

@@ -53,6 +53,24 @@ int main(int ac, char** av) {
 	return 0;
 }
 ///////////////////////////////////////////////////////////////////////////////]
+using MyMapType = std::map<std::string, std::pair<int, std::vector<double>>>;
+MyMapType myMap;
+
+template <typename T>
+struct isInteger {
+    static const bool value = false;
+};
+
+template <>
+struct isInteger<int> {
+    static const bool value = true;
+};
+
+// int main() {
+//     std::cout << std::boolalpha;
+//     std::cout << "Is int an integer? " << isInteger<int>::value << std::endl;     // true
+//     std::cout << "Is float an integer? " << isInteger<float>::value << std::endl; // false
+// }
 
 
 /*******************************************************************************

@@ -1,15 +1,13 @@
 #include <iostream>
 #include "FixedNum.hpp"
 
-int main( void ) {
-	FixedNum a;
-	FixedNum const b( FixedNum( 5.05f ) * FixedNum( 2 ) );
-	std::cout << a << std::endl;
-	// std::cout << ++a << std::endl;
-	std::cout << a << std::endl;
-	// std::cout << a++ << std::endl;
-	std::cout << a << std::endl;
-	std::cout << b << std::endl;
-	// std::cout << FixedNum::max( a, b ) << std::endl;
-	return 0;
+int main(void) {
+    try {
+        FixedNum a(100.0f);  // Test with float
+        std::cout << a.toInt() << std::endl;
+    } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return 0;
 }

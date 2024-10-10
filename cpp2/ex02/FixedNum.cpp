@@ -5,13 +5,13 @@
 FixedNum::FixedNum() : int_value(0) {
 	put("Default constructor called");
 }
-FixedNum::FixedNum(const int a) : int_value(a << num_fractional_bits) {
-	put("Int constructor called");
-}
-FixedNum::FixedNum(const float a) {
-	int_value = roundf(a * (1 << num_fractional_bits));
-	put("Float constructor called");
-}
+// FixedNum::FixedNum(const int a) : int_value(a << num_fractional_bits) {
+// 	put("Int constructor called");
+// }
+// FixedNum::FixedNum(const float a) {
+// 	int_value = roundf(a * (1 << num_fractional_bits));
+// 	put("Float constructor called");
+// }
 
 
 FixedNum::~FixedNum() {
@@ -30,7 +30,6 @@ FixedNum& FixedNum::operator=(const FixedNum& other) {
 	}
 	return *this;
 }
-
 
 //  SETTER & GETTER
 int FixedNum::getRawBits( void ) const {
@@ -58,22 +57,22 @@ std::ostream& operator<<(std::ostream& os, const FixedNum& n) {
 
 //  OPERATORS
 bool operator>(const FixedNum& a, const FixedNum& b) {
-	return a.getRawBits() > b.getRawBits() ? 1 : 0;
+	return a.getRawBits() > b.getRawBits();
 }
 bool operator<(const FixedNum& a, const FixedNum& b) {
-	return a.getRawBits() < b.getRawBits() ? 1 : 0;
+	return a.getRawBits() < b.getRawBits();
 }
 bool operator>=(const FixedNum& a, const FixedNum& b) {
-	return a.getRawBits() >= b.getRawBits() ? 1 : 0;
+	return a.getRawBits() >= b.getRawBits();
 }
 bool operator<=(const FixedNum& a, const FixedNum& b) {
-	return a.getRawBits() <= b.getRawBits() ? 1 : 0;
+	return a.getRawBits() <= b.getRawBits();
 }
 bool operator!=(const FixedNum& a, const FixedNum& b) {
-	return a.getRawBits() != b.getRawBits() ? 1 : 0;
+	return a.getRawBits() != b.getRawBits();
 }
 bool operator==(const FixedNum& a, const FixedNum& b) {
-	return a.getRawBits() == b.getRawBits() ? 1 : 0;
+	return a.getRawBits() == b.getRawBits();
 }
 
 

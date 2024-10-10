@@ -59,6 +59,7 @@ endef
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 SRCS = main.cpp FixedNum.cpp
+HEADER = FixedNum.hpp
 SRC = $(wildcard src/*.cpp)
 OBJ = $(patsubst src/%.cpp, src/obj/%.o, $(SRC))
 SRC_LIB = $(wildcard lib/*.cpp)
@@ -74,7 +75,7 @@ OBJ_FOLDER = src/obj
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): $(SRCS)
+$(NAME): $(SRCS) $(HEADER)
 	@clear
 	@if ! $(CC) $(FLAGS) $(SRCS) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
