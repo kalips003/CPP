@@ -1,8 +1,8 @@
-NAME = someNum
+NAME = fixed2
 
 CC = g++
 # FLAGS = -Wextra -Wall -g -std=c++98
-FLAGS = -Wextra -Wall -Werror -g -std=c++98
+FLAGS = -Wextra -Wall -Werror -std=c++98
 
 all: $(NAME)
 
@@ -20,15 +20,13 @@ all: $(NAME)
 # │─────██████─────██████████████─██████████████─────██████─────██████████─██████──────────██████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-ARG =
-ARGS = DEBUG INFO WARNING ERROR UNKNOWN what_is_this_a_joke
-ARG1 = std::
-ARG2 = BRAAAAaaaaiiIiiiiiinnsss....:
-ARG3 = $(ARG) $(ARG1) $(ARG2)
-
+WARNING = DEBUG INFO WARNING ERROR DEFAULT
+S1 = apple
+S2 = MY HAND
 
 a: $(NAME)
-	-@$(VALGRIND) ./$(NAME);
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik numbers...", $(CLS), )
+	-./$(NAME)
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
@@ -38,10 +36,9 @@ v: $(NAME)
 define helper_tester
 	$(call random_shmol_cat, $(2), $(1), $(CLS), )
 	echo "\n\t$(3)\n"
-	read -p "" key;    }
-
+	read -p "" key;
 	$(4) ./$(word 1, $^) $(1)
-	echo "\n\t\e[5m< enter >\e[25m"; read -p "" key;
+	echo "\n\t\033[5m~ Press Enter to continue...\033[0m"; read -p "" key;
 endef
 
 
@@ -59,8 +56,6 @@ endef
 # │─██████████████─██████████████─██████████████─██████──██████████─██████████████─██████████████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-SRCS = main.cpp FixedNum.cpp
-HEADER = FixedNum.hpp
 SRC = $(wildcard src/*.cpp)
 OBJ = $(patsubst src/%.cpp, src/obj/%.o, $(SRC))
 SRC_LIB = $(wildcard lib/*.cpp)
@@ -70,33 +65,27 @@ INCLUDE = src lib
 ADD_FLAGS = -I$(INCLUDE)
 INC = -Isrc -Ilib
 
-OBJ_FOLDER = src/obj
+OBJ_FOLDER = obj
+SRC2 = Fixed.cpp
+HEAD2 = Fixed.hpp
+OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): $(SRCS) $(HEADER)
+$(NAME): $(OBJ2) main.cpp $(HEAD2)
 	@clear
-	@if ! $(CC) $(FLAGS) $(SRCS) -o $(NAME); then \
+	@if ! $(CC) $(OBJ2) main.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
-	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
+	@$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
 
 abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
 	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
 
-src/obj/%.o: src/%.cpp
-	@if [ ! -e $(OBJ_FOLDER) ]; then\
-		mkdir -p $(OBJ_FOLDER);\
-	fi
-	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
-		$(call shmol_cat_error, $(RED), $(RED_L)); \
-		exit 1; \
-	fi
-
-src/obj/%.o: lib/%.cpp
+obj/%.o: %.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi
@@ -121,7 +110,7 @@ src/obj/%.o: lib/%.cpp
 
 # --------------------------------------------------------------------------------- >
 VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s
-# VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --trace-children=yes --track-fds=yes $(V_FLAG)
+# VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --trace-children=yes --track-fds=yes
 VALGRIND_OTHER = valgrind --vgdb=yes
 V_FLAG = --suppressions="ignore_valgrind"
 HELLGRIND = valgrind --tool=helgrind ?-g3?

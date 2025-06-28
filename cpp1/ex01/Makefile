@@ -20,13 +20,11 @@ all: $(NAME)
 # │─────██████─────██████████████─██████████████─────██████─────██████████─██████──────────██████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-
 ARG = 
-ARG2 = Damnit "some more text"
 
 a: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik wombies...", $(CLS), )
-	-$(VALGRIND) ./$(NAME);
+	-./$(NAME);
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
@@ -65,15 +63,17 @@ INCLUDE = src lib
 ADD_FLAGS = -I$(INCLUDE)
 INC = -Isrc -Ilib
 
-OBJ_FOLDER = src/obj
+OBJ_FOLDER = obj
+SRC2 = Zombie.cpp zombieHorde.cpp
+OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): Zombie.cpp Zombie.hpp main.cpp zombieHorde.cpp
+$(NAME): $(OBJ2) Zombie.hpp main.cpp
 	@clear
-	@if ! $(CC) Zombie.cpp main.cpp zombieHorde.cpp -o $(NAME); then \
+	@if ! $(CC) $(OBJ2) main.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
@@ -82,16 +82,7 @@ $(NAME): Zombie.cpp Zombie.hpp main.cpp zombieHorde.cpp
 abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
 	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
 
-src/obj/%.o: src/%.cpp
-	@if [ ! -e $(OBJ_FOLDER) ]; then\
-		mkdir -p $(OBJ_FOLDER);\
-	fi
-	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
-		$(call shmol_cat_error, $(RED), $(RED_L)); \
-		exit 1; \
-	fi
-
-src/obj/%.o: lib/%.cpp
+obj/%.o: %.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi

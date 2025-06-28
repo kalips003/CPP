@@ -1,35 +1,32 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kalipso <kalipso@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/24 14:17:39 by kalipso           #+#    #+#             */
-/*   Updated: 2024/09/24 10:30:09 by kalipso          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "Contact.hpp"
+#include "PhoneBook.hpp"
 
-#include "src/PhoneBook.hpp"
-#include "src/Contact.hpp"
-
-int main(void) 
+int main()
 {
-	PhoneBook phone;
-	std::string input;
-	while (!std::cin.eof())
-	{
-		ft_print_cat(C_322, C_503, C_105, phone.how_many_contact, "The super dupperr phone!", 0b10);
-		std::cout << "[ADD | SEARCH | EXIT]: ";
-		if (!std::getline(std::cin, input))
-			break;
-		if (input == "EXIT" || input == "exit")
-			break;
-		if (input == "SEARCH" || input == "search")
-			phone.searchContact();
-		else if (input == "ADD" || input == "add")
-			phone.addContact();
-	}
-	ft_print_cat("Bye byee!", "I hav totally forgotten everything!!", 0b10);
-	return 0;
+    PhoneBook   myphone;
+    
+    Contact a("Mike", "Le Blanc", "Mimii", "0123456789", "Doesnt like white");
+    Contact b("Allibbabbabba", "Les 40 voleurs", "Aladin", "09 87 65 43 21", "Likes Money");
+    Contact c("Please", "add", "Me", "07 69 41 56 19", "I lied...");
+    myphone.ft_add_contact(a);
+    myphone.ft_add_contact(b);
+    myphone.ft_add_contact(c);
+
+    std::string input;
+    while (input != "EXIT" && input != "exit")
+    {
+        std::cout << C_035 << "Please enter your choice:" << RESET << std::endl;
+        std::cout << C_044 << "\tADD, SEARCH, DELETE, EXIT." << RESET << std::endl;
+        
+        if (!std::getline(std::cin, input))
+            return 0;
+        std::cout << CLEAR << std::endl;
+        if ((input == "SEARCH" || input == "search") && !myphone.ft_search_contact())
+            return 0;
+        else if ((input == "ADD" || input == "add") && !myphone.ft_add_contact())
+            return 0;
+        else if (input == "DELETE" || input == "delete")
+            myphone.ft_empty();
+    }
+    return 0;
 }

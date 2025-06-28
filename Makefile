@@ -102,12 +102,12 @@ vtest:	libft
 # --------------------------------------------------------------------------------- >
 # 																				CLEAN
 clean:
-	-@for ex in cpp*/ex0*; do make -C $$ex fclean; done
+	-@for ex in cpp*/ex0*; do make -C $$ex clean; done
 	@rm -rf TEST/a.out
 	@$(call print_cat, $(CLEAR), $(COLOR_2R_2G_5B), $(COLOR_3R_2G_0B), $(COLOR_4R_5G_0B), $(call pad_word, 10, "Objects"), $(call pad_word, 12, "Exterminated"));
 
-fclean: clean
-	@rm -rf $(NAME)
+fclean: 
+	-@for ex in cpp*/ex0*; do make -C $$ex fclean; done
 	@$(call print_cat, $(CLEAR), $(COLOR_1R_2G_0B), $(COLOR_3R_0G_0B), $(COLOR_2R_1G_0B), $(call pad_word, 10, "All⠀clean"), $(call pad_word, 12, "Miaster"));
 
 re: fclean all bonus

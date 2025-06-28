@@ -30,8 +30,11 @@ a: $(NAME)
 	awk '{print $$2}' log > log_trimed;
 	awk '{print $$2}' 19920104_091532.log > log_trimed_template;
 	@if diff log_trimed log_trimed_template; then $(call shmol_cat_color, $(COLOR_5R_3G_0B), $(COLOR_1R_5G_0B), "All~", "Good !", , ); fi
-	./$(NAME) > log;
 	rm -f log log_trimed log_trimed_template;
+
+b: $(NAME)
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "here is the log...", $(CLS), )
+	./$(NAME);
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
@@ -61,8 +64,8 @@ endef
 # │─██████████████─██████████████─██████████████─██████──██████████─██████████████─██████████████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-SRC = $(wildcard src/*.cpp)
-OBJ = $(patsubst src/%.cpp, src/obj/%.o, $(SRC))
+SRC = tests.cpp Account.cpp
+OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
 SRC_LIB = $(wildcard lib/*.cpp)
 OBJ_LIB = $(patsubst lib/%.cpp, src/obj/%.o, $(SRC_LIB))
 
@@ -70,7 +73,7 @@ INCLUDE = src lib
 ADD_FLAGS = -I$(INCLUDE)
 INC = -Isrc -Ilib
 
-OBJ_FOLDER = src/obj
+OBJ_FOLDER = obj
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
@@ -78,16 +81,16 @@ OBJ_FOLDER = src/obj
 
 $(NAME): Account.cpp tests.cpp
 	@clear
-	@if ! $(CC) Account.cpp tests.cpp -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) Account.cpp tests.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
 	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
 
-abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
-	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
+abc: clean_silent $(OBJ) $(OBJ_LIB)
+	$(CC) $(FLAGS) Account.cpp tests.cpp -o $(NAME)
 
-src/obj/%.o: src/%.cpp
+obj/%.o: %.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi
@@ -96,14 +99,14 @@ src/obj/%.o: src/%.cpp
 		exit 1; \
 	fi
 
-src/obj/%.o: lib/%.cpp
-	@if [ ! -e $(OBJ_FOLDER) ]; then\
-		mkdir -p $(OBJ_FOLDER);\
-	fi
-	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
-		$(call shmol_cat_error, $(RED), $(RED_L)); \
-		exit 1; \
-	fi
+# src/obj/%.o: lib/%.cpp
+# 	@if [ ! -e $(OBJ_FOLDER) ]; then\
+# 		mkdir -p $(OBJ_FOLDER);\
+# 	fi
+# 	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
+# 		$(call shmol_cat_error, $(RED), $(RED_L)); \
+# 		exit 1; \
+# 	fi
 
 # ╭────────────────────────────────────────────────────────────────────────────╮
 # │─██████████████─██████████████─██████████████─██████─────────██████████████─│

@@ -1,8 +1,8 @@
-NAME = someNum
+NAME = fixed1
 
 CC = g++
 # FLAGS = -Wextra -Wall -g -std=c++98
-FLAGS = -Wextra -Wall -Werror -g -std=c++98
+FLAGS = -Wextra -Wall -Werror -std=c++98
 
 all: $(NAME)
 
@@ -20,15 +20,13 @@ all: $(NAME)
 # │─────██████─────██████████████─██████████████─────██████─────██████████─██████──────────██████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-ARG =
-ARGS = DEBUG INFO WARNING ERROR UNKNOWN what_is_this_a_joke
-ARG1 = std::
-ARG2 = BRAAAAaaaaiiIiiiiiinnsss....:
-ARG3 = $(ARG) $(ARG1) $(ARG2)
-
+WARNING = DEBUG INFO WARNING ERROR DEFAULT
+S1 = apple
+S2 = MY HAND
 
 a: $(NAME)
-	-@$(VALGRIND) ./$(NAME);
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik numbers...", $(CLS), )
+	-./$(NAME)
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
@@ -40,7 +38,7 @@ define helper_tester
 	echo "\n\t$(3)\n"
 	read -p "" key;
 	$(4) ./$(word 1, $^) $(1)
-	echo "\n\t\e[5m< enter >\e[25m"; read -p "" key;
+	echo "\n\t\033[5m~ Press Enter to continue...\033[0m"; read -p "" key;
 endef
 
 
@@ -58,7 +56,6 @@ endef
 # │─██████████████─██████████████─██████████████─██████──██████████─██████████████─██████████████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-SRCS = main.cpp FixedNum.cpp
 SRC = $(wildcard src/*.cpp)
 OBJ = $(patsubst src/%.cpp, src/obj/%.o, $(SRC))
 SRC_LIB = $(wildcard lib/*.cpp)
@@ -68,33 +65,27 @@ INCLUDE = src lib
 ADD_FLAGS = -I$(INCLUDE)
 INC = -Isrc -Ilib
 
-OBJ_FOLDER = src/obj
+OBJ_FOLDER = obj
+SRC2 = Fixed.cpp
+HEAD2 = Fixed.hpp
+OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): $(SRCS)
+$(NAME): $(OBJ2) main.cpp $(HEAD2)
 	@clear
-	@if ! $(CC) $(FLAGS) $(SRCS) -o $(NAME); then \
+	@if ! $(CC) $(OBJ2) main.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
-	$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
+	@$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
 
 abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
 	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
 
-src/obj/%.o: src/%.cpp
-	@if [ ! -e $(OBJ_FOLDER) ]; then\
-		mkdir -p $(OBJ_FOLDER);\
-	fi
-	@if ! $(CC) -c $(FLAGS) $(INC) $< -o $@; then \
-		$(call shmol_cat_error, $(RED), $(RED_L)); \
-		exit 1; \
-	fi
-
-src/obj/%.o: lib/%.cpp
+obj/%.o: %.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi
@@ -119,7 +110,7 @@ src/obj/%.o: lib/%.cpp
 
 # --------------------------------------------------------------------------------- >
 VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s
-# VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --trace-children=yes --track-fds=yes $(V_FLAG)
+# VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --trace-children=yes --track-fds=yes
 VALGRIND_OTHER = valgrind --vgdb=yes
 V_FLAG = --suppressions="ignore_valgrind"
 HELLGRIND = valgrind --tool=helgrind ?-g3?
@@ -198,7 +189,7 @@ pad_word = $(BLINK)$(shell printf "%$(1)s" "$(2)")$(RESET)
 # @$(call print_cat, $(CLEAR), $(body), $(eye), $(txt), $(call pad_word, 12, "The⠀Cake"), $(call pad_word, 12, "Is⠀A⠀Lie..."));
 # print_cat (resest?)(color_cat)(color_eyes)(color_text)($(padded_txt_top))($(padded_txt_bot))
 define print_cat
-    echo "$(1)$(2)\
+    echo -e "$(1)$(2)\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠒⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠇⠀⠘⡄⠀⠀⠀⠀⠀⠀⣀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀⠁⠉⠉⠉⠒⠊⠉⠀⡇⠀\n\
@@ -224,7 +215,7 @@ define random_cat
 	COLOR=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
 	COLOR2=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
 	COLOR3=$$(printf "\033[38;5;%dm" $$(shuf -i 0-255 -n 1)); \
-    echo "$(3)$${COLOR}\
+    echo -e "$(3)$${COLOR}\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠒⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠇⠀⠘⡄⠀⠀⠀⠀⠀⠀⣀⠀⠀\n\
 	\t\t\t\t\t\t\t	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀⠁⠉⠉⠉⠒⠊⠉⠀⡇⠀\n\
@@ -246,7 +237,7 @@ endef
 # --------------------------------------------------------------------------------- >
 # @$(call shmol_cat_color, $(color_cat), $(color_txt), text1, txt2, $(CLS), $(RESET));
 define shmol_cat_color
-	echo "$(5)$(2)\
+	echo -e "$(5)$(2)\
 	\tにゃ~$(1)\t⠀╱|、\n\
 	\t\t(˚ˎ。7⠀⠀⠀$(2)~ $(3) ~$(1)\n\
 	\t\t⠀|、˜\\\\\t\t$(2)$(4)$(1)\n\

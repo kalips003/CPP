@@ -61,24 +61,24 @@ endef
 # │─██████████████─██████████████─██████████████─██████──██████████─██████████████─██████████████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-SRC = $(wildcard src/*.cpp)
-OBJ = $(patsubst src/%.cpp, src/obj/%.o, $(SRC))
+SRC = $(wildcard *.cpp)
+OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
 SRC_LIB = $(wildcard lib/*.cpp)
-OBJ_LIB = $(patsubst lib/%.cpp, src/obj/%.o, $(SRC_LIB))
+OBJ_LIB = $(patsubst lib/%.cpp, obj/%.o, $(SRC_LIB))
 
 INCLUDE = src lib
 ADD_FLAGS = -I$(INCLUDE)
 INC = -Isrc -Ilib
 
-OBJ_FOLDER = src/obj
+OBJ_FOLDER = obj
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
 # ╰──────────────────────────────────────────────────────────────────────╯
 
-$(NAME): $(OBJ) $(OBJ_LIB) main.cpp
+$(NAME): $(OBJ) $(OBJ_LIB)
 	@clear
-	@if ! $(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
@@ -87,7 +87,7 @@ $(NAME): $(OBJ) $(OBJ_LIB) main.cpp
 abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
 	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
 
-src/obj/%.o: src/%.cpp
+obj/%.o: %.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi
@@ -96,7 +96,7 @@ src/obj/%.o: src/%.cpp
 		exit 1; \
 	fi
 
-src/obj/%.o: lib/%.cpp
+obj/%.o: %.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\
 		mkdir -p $(OBJ_FOLDER);\
 	fi

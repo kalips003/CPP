@@ -1,6 +1,6 @@
 NAME = megaphone
 
-CC = g++
+CC = c++
 FLAGS = -Wextra -Wall -g -std=c++98
 # FLAGS = -Wextra -Wall -Werror -g -fPIE -I$(HEADER_FOLDER)
 
@@ -75,7 +75,7 @@ SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, obj/%.o, $(SRC))
 
 OBJ_FOLDER = obj
-HEADER = header.h
+HEADER = 
 
 ADD_FLAGS = -std=c++98
 

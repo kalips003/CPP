@@ -1,44 +1,30 @@
 #include "Harl.hpp"
 
-static const std::string	levels[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+int main(int ac, char **av) {
 
-int main(int ac, char** av) {
-
-	if (ac != 2)
-		return (std::cout << "\tWRONG NUMBER OF ARGS" << std::endl, 0);
-	
-	Harl harl;
-	std::string filter(av[1]);
-
-	int threat_level = -1;
-	for (int i = 0; i < 4; i++) {
-		if (filter == levels[i]) {
-			threat_level = i;
-			break;
-		}
+	if (ac != 2) {
+		std::cout << "harlFilter takes one complain level as argument" << std::endl;
+		return 0;
 	}
 
-	switch (threat_level) {
+	Harl harl;
+	int	 lvl = harl.whatLevel(std::string(av[1]));
 
+	if (lvl < 4)
+		std::cout << "[ " << av[1] << " ]" << std::endl << std::endl;
+	
+	switch(lvl) {
 		case 0:
-			std::cout << "\t[DEBUG]" << std::endl;
-			harl.complain("DEBUG");
-			// fall through
+			harl.complain(Harl::levels[0]);
 		case 1:
-			std::cout << "\t[INFO]" << std::endl;
-			harl.complain("INFO");
-			// fall through
+			harl.complain(Harl::levels[1]);
 		case 2:
-			std::cout << "\t[WARNING]" << std::endl;
-			harl.complain("WARNING");
-			// fall through
+			harl.complain(Harl::levels[2]);
 		case 3:
-			std::cout << "\t[ERROR]" << std::endl;
-			harl.complain("ERROR");
+			harl.complain(Harl::levels[3]);
 			break;
 		default:
-			std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
-			break;
+			harl.complain("complaining...");
 	}
 	return 0;
 }

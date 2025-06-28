@@ -1,49 +1,42 @@
-#include "lib/_lib.hpp"
-
-#include <fstream>
 #include <string>
 #include <iostream>
-#include <cstring>
+#include <fstream>
 
+#include <cerrno>    // for errno
+#include <cstring>   // for strerror
+
+// ./exe path/to/file "string 1" "string 22"
 int main(int ac, char** av) {
 
 	if (ac != 4) {
-		std::cerr << ERR3 "error args" << std::endl;
+		std::cout << "wrong nuber of args, need: FILENAME, STRING1, STRING2" << std::endl;
+		return 1;
+	}
+
+	std::string		s1 = av[2];
+	if (s1.empty()) {
+		std::cout << "Pattern to find cant be empty" << std::endl;
 		return 0;
 	}
-
+	std::string		s2 = av[3];
 	std::ifstream	file(av[1]);
 	if (!file) {
-		std::cerr << "Could not open the file: " << av[1] << std::endl;
-		std::cerr << ERR7 << strerror(errno) << std::endl;
+		std::cout << "Cant open " << av[1] << ": " << strerror(errno) << std::endl;
 		return 1;
 	}
+	std::ofstream	out(std::string(av[1]) + ".replace");
 
-	std::ostringstream ss;
-	ss << file.rdbuf();
-	std::string content = ss.str();
-
-	std::string result = "";
-	std::string to_find(av[2]);
-	std::string to_replace_with(av[3]);
-	size_t	len_to_find = to_find.length();
-
-	size_t pos = 0;
-	while ((pos = content.find(to_find, pos)) != std::string::npos) {
-		result += content.substr(0, pos);
-		result += to_replace_with;
-		pos += len_to_find;
-		content = content.substr(pos);
-		pos = 0;
+	std::string		line;
+	std::size_t		pos = 0;
+	std::size_t		s1_l = s1.length();
+	while (std::getline(file, line)) {
+		while ((pos = line.find(s1)) != std::string::npos) {
+			out << line.substr(0, pos) << s2;
+			line = line.substr(pos + s1_l);
+			pos = 0;
+		}
+		out << line << std::endl;
 	}
-	result += content; 
 
-	std::ofstream	outfile((std::string(av[1]) + ".replace").c_str());
-	if (!outfile) {
-		std::cerr << "Error creating the file: " << av[1] << ".replace" << std::endl;
-		std::cerr << ERR7 << strerror(errno) << std::endl;
-		return 1;
-	}
-	outfile << result;
 	return 0;
 }
