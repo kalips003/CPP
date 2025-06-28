@@ -73,7 +73,7 @@ OBJ_FOLDER = src/obj
 
 $(NAME): main.cpp
 	@clear
-	@if ! $(CC) main.cpp -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) main.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi

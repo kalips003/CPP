@@ -24,7 +24,8 @@ int main(int ac, char** av) {
 		std::cout << "Cant open " << av[1] << ": " << strerror(errno) << std::endl;
 		return 1;
 	}
-	std::ofstream	out(std::string(av[1]) + ".replace");
+	std::string		new_file_name = std::string(av[1]) + ".replace";
+	std::ofstream	out(new_file_name.c_str());
 
 	std::string		line;
 	std::size_t		pos = 0;

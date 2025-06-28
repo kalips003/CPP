@@ -87,7 +87,7 @@ OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
 $(NAME): $(OBJ2) main.cpp $(HEAD2)
 	@clear
-	@if ! $(CC) $(OBJ2) main.cpp -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) $(OBJ2) main.cpp -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi

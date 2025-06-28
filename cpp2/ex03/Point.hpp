@@ -16,6 +16,9 @@ public:
     Point( const Point& other );
     Point& operator=( const Point& other );
 
+	float	getX( void ) const;
+	float	getY( void ) const;
+
     const Fixed   crossProductFixed( const Point& b, const Point& p ) const;
 };
 

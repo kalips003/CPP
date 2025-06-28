@@ -1,8 +1,8 @@
 NAME = fixed3
 
 CC = g++
-# FLAGS = -Wextra -Wall -g -std=c++98
-FLAGS = -Wextra -Wall -Werror -std=c++98
+FLAGS = -g -std=c++98
+# FLAGS = -Wextra -Wall -Werror -std=c++98
 
 all: $(NAME)
 
@@ -25,7 +25,12 @@ S1 = apple
 S2 = MY HAND
 
 a: $(NAME)
-	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik numbers...", $(CLS), )
+	@$(call random_shmol_cat, "Click for points", "Backspace to delete", $(CLS), )
+	-./$(NAME)
+
+b: fclean
+	@$(call random_shmol_cat, "we have a screen yet??!", "we have a screen yet??", $(CLS), )
+	g++ $(FLAGS) main.cpp $(SFML) -o $(NAME)
 	-./$(NAME)
 
 v: $(NAME)
@@ -66,9 +71,11 @@ ADD_FLAGS = -I$(INCLUDE)
 INC = -Isrc -Ilib
 
 OBJ_FOLDER = obj
-SRC2 = Fixed.cpp
-HEAD2 = Fixed.hpp
+SRC2 = Fixed.cpp Point.cpp bsp.cpp
+HEAD2 = Fixed.hpp Point.hpp
 OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
+
+SFML = -lsfml-graphics -lsfml-window -lsfml-system
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
@@ -76,7 +83,7 @@ OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
 $(NAME): $(OBJ2) main.cpp $(HEAD2)
 	@clear
-	@if ! $(CC) $(OBJ2) main.cpp -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) $(OBJ2) main.cpp $(SFML) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi

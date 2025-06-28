@@ -69,6 +69,7 @@
 		"thread": "cpp",
 		"cinttypes": "cpp",
 		"variant": "cpp",
-		"ranges": "cpp"
+		"ranges": "cpp",
+		"minirt.h": "c"
 	}
 }
