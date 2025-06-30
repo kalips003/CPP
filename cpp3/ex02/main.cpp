@@ -1,0 +1,27 @@
+
+#include "ClapTrap.hpp"
+#include "FragTrap.hpp"
+
+///////////////////////////////////////////////////////////////////////////////]
+///////////////////////////////////////////////////////////////////////////////]
+///////////////////////////////////////////////////////////////////////////////]
+int main() {
+
+	// ClapTrap	A("Frank");
+	FragTrap	A("Mimi");
+	FragTrap	C("Lulu");
+
+	A.attack("the corrector");
+	A.takeDamage(5);
+	A.takeDamage(0);
+	A.takeDamage(25);
+	A.beRepaired(10);
+	A.beRepaired(100);
+	A.attack("you");
+
+	C = A;
+	C.beRepaired(0);
+	C.highFivesGuys();
+
+	return 0;
+}
