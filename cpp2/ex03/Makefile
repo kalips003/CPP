@@ -3,6 +3,7 @@ NAME = fixed3
 CC = g++
 # FLAGS = -g -std=c++98
 FLAGS = -Wextra -Wall -Werror -std=c++98
+# FLAGS = -Wextra -Wall -Werror -std=c++11
 
 all: $(NAME)
 
@@ -26,7 +27,9 @@ S2 = MY HAND
 
 a: $(NAME)
 	@$(call random_shmol_cat, "Click for points", "Backspace to delete", $(CLS), )
-	-./$(NAME)
+	-LD_LIBRARY_PATH=./SFML/lib ./$(NAME)
+# -./$(NAME)
+
 
 b: fclean
 	@$(call random_shmol_cat, "we have a screen yet??!", "we have a screen yet??", $(CLS), )
@@ -76,6 +79,7 @@ HEAD2 = Fixed.hpp Point.hpp
 OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
 SFML = -lsfml-graphics -lsfml-window -lsfml-system
+SFML2 = -I./SFML/include -L./SFML/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
@@ -83,7 +87,7 @@ SFML = -lsfml-graphics -lsfml-window -lsfml-system
 
 $(NAME): $(OBJ2) main.cpp $(HEAD2)
 	@clear
-	@if ! $(CC) $(FLAGS) $(OBJ2) main.cpp $(SFML) -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) $(OBJ2) main.cpp $(SFML2) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi

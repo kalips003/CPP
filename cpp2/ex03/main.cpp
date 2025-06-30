@@ -3,7 +3,10 @@
 #include "Point.hpp"
 #include "Fixed.hpp"
 
+// #include "./SFML/include/Graphics.hpp"
+// #include "./SFML/include/SFML/Graphics.hpp"
 #include <SFML/Graphics.hpp>
+
 #include <sstream>
 #include <iomanip>
 #include <math.h>
@@ -74,21 +77,21 @@ void	draw_background(sf::RenderWindow& win) {
 	sf::Font font;
 	if (font.loadFromFile("ARIAL.TTF")) {
 		sf::Text txt_o("0", font, 14);
-		txt_o.setFillColor(sf::Color::White);
+		txt_o.setColor(sf::Color::White);
 		txt_o.setPosition(win.getSize().x / 2 + 5, win.getSize().y / 2 + 5);
 		win.draw(txt_o);
 
 		std::ostringstream oss;
 		oss << std::fixed << std::setprecision(2) << FOV;
 		sf::Text txt_maxx(oss.str(), font, 14);
-		txt_maxx.setFillColor(sf::Color::White);
+		txt_maxx.setColor(sf::Color::White);
 		txt_maxx.setPosition(win.getSize().x - 40, win.getSize().y / 2 + 5);
 		win.draw(txt_maxx);
 
 		oss.str("");
 		oss << std::fixed << std::setprecision(2) <<  SZ_PX_Y * PX;
 		sf::Text txt_maxy(oss.str(), font, 14);
-		txt_maxy.setFillColor(sf::Color::White);
+		txt_maxy.setColor(sf::Color::White);
 		txt_maxy.setPosition(win.getSize().x / 2 - 30, 5);
 		win.draw(txt_maxy);
 	}
@@ -168,13 +171,14 @@ void	handle_event(sf::RenderWindow& win, t_data& data) {
 		else if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Escape)  // Exit on Esc
 				win.close();
-			if (event.key.code == sf::Keyboard::BackSpace)  // Clear all points
+			if (event.key.code == sf::Keyboard::BackSpace) { // Clear all points
 				delete data.A;
 				delete data.B;
 				delete data.C;
 				delete data.P;
 				data.A = data.B = data.C = data.P = NULL;
 				data.how_many_points = 0;
+			}
 		}
 		else if (event.type == sf::Event::MouseButtonPressed) {
 			if (event.mouseButton.button == sf::Mouse::Left) {  // Add new triangle point
