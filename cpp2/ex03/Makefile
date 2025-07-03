@@ -21,13 +21,9 @@ all: $(NAME)
 # │─────██████─────██████████████─██████████████─────██████─────██████████─██████──────────██████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-WARNING = DEBUG INFO WARNING ERROR DEFAULT
-S1 = apple
-S2 = MY HAND
-
 a: $(NAME)
 	@$(call random_shmol_cat, "Click for points", "Backspace to delete", $(CLS), )
-	-LD_LIBRARY_PATH=./SFML/lib ./$(NAME)
+	-./$(NAME)
 # -./$(NAME)
 
 
@@ -78,8 +74,11 @@ SRC2 = Fixed.cpp Point.cpp bsp.cpp
 HEAD2 = Fixed.hpp Point.hpp
 OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
+LIBDIR   := $(CURDIR)/lib
+LDFLAGS += -Wl,-rpath,'$$ORIGIN/lib' -L$(LIBDIR)
+
 SFML = -lsfml-graphics -lsfml-window -lsfml-system
-SFML2 = -I./SFML/include -L./SFML/lib -lsfml-graphics -lsfml-window -lsfml-system
+QQQB = -I./include -L./lib -Wl,-rpath,'$$ORIGIN/lib'
 
 # ╭──────────────────────────────────────────────────────────────────────╮
 # │                  	 	       PROJECT                   	         │
@@ -87,14 +86,14 @@ SFML2 = -I./SFML/include -L./SFML/lib -lsfml-graphics -lsfml-window -lsfml-syste
 
 $(NAME): $(OBJ2) main.cpp $(HEAD2)
 	@clear
-	@if ! $(CC) $(FLAGS) $(OBJ2) main.cpp $(SFML2) -o $(NAME); then \
+	@if ! $(CC) $(FLAGS) $(OBJ2) main.cpp $(QQQB) $(SFML) -o $(NAME); then \
 		$(call print_cat, "", $(RED), $(GOLD), $(RED_L), $(call pad_word, 10, "ERROR"), $(call pad_word, 12, "COMPILING..")); \
 		exit 1; \
 	fi
 	@$(call print_cat, $(CLEAR), $(GOLD), $(GREEN1), $(GREEN1), $(call pad_word, 10, $(NAME)), $(call pad_word, 12, "Compiled~"));
 
-abc: clean_silent $(OBJ) $(OBJ_LIB) main.cpp
-	$(CC) $(FLAGS) main.cpp $(OBJ) $(OBJ_LIB) $(INC) -o $(NAME)
+abc: clean_silent $(OBJ2) main.cpp $(HEAD2)
+	$(CC) $(FLAGS) $(OBJ2) main.cpp $(QQQB) $(SFML) -o $(NAME)
 
 obj/%.o: %.cpp
 	@if [ ! -e $(OBJ_FOLDER) ]; then\

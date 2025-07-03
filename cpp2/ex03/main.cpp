@@ -77,21 +77,21 @@ void	draw_background(sf::RenderWindow& win) {
 	sf::Font font;
 	if (font.loadFromFile("ARIAL.TTF")) {
 		sf::Text txt_o("0", font, 14);
-		txt_o.setColor(sf::Color::White);
+		txt_o.setFillColor(sf::Color::White);
 		txt_o.setPosition(win.getSize().x / 2 + 5, win.getSize().y / 2 + 5);
 		win.draw(txt_o);
 
 		std::ostringstream oss;
 		oss << std::fixed << std::setprecision(2) << FOV;
 		sf::Text txt_maxx(oss.str(), font, 14);
-		txt_maxx.setColor(sf::Color::White);
+		txt_maxx.setFillColor(sf::Color::White);
 		txt_maxx.setPosition(win.getSize().x - 40, win.getSize().y / 2 + 5);
 		win.draw(txt_maxx);
 
 		oss.str("");
 		oss << std::fixed << std::setprecision(2) <<  SZ_PX_Y * PX;
 		sf::Text txt_maxy(oss.str(), font, 14);
-		txt_maxy.setColor(sf::Color::White);
+		txt_maxy.setFillColor(sf::Color::White);
 		txt_maxy.setPosition(win.getSize().x / 2 - 30, 5);
 		win.draw(txt_maxy);
 	}
