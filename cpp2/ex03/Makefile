@@ -75,7 +75,8 @@ HEAD2 = Fixed.hpp Point.hpp
 OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
 LIBDIR   := $(CURDIR)/lib
-LDFLAGS += -Wl,-rpath,'$$ORIGIN/lib' -L$(LIBDIR)
+INC_DIR  := $(CURDIR)/include
+LDFLAGS += -Wl,-rpath,'$$ORIGIN/lib' -L$(LIBDIR) -I$(INC_DIR)
 
 SFML = -lsfml-graphics -lsfml-window -lsfml-system
 QQQB = -I./include -L./lib -Wl,-rpath,'$$ORIGIN/lib'
