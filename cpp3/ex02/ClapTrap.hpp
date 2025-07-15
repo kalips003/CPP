@@ -9,7 +9,7 @@
 class ClapTrap {
 
 private:
-	const std::string name;
+	std::string name;
 	int			hp;
 	int			energy;
 	int			attack_dmg;
@@ -21,10 +21,11 @@ public:
 	ClapTrap& operator=( const ClapTrap& other );
 
 	virtual void attack( const std::string& target );
+	virtual void attack2( const std::string& target, const std::string color );
 	void takeDamage( unsigned int amount );
 	void beRepaired( unsigned int amount );
 
-	void printHp( void );
+	void printHp( bool name );
 	void setStats(int hp, int energy, int attk);
 };
 

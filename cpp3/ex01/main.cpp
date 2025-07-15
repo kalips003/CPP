@@ -13,13 +13,25 @@ int main() {
 	ClapTrap	A("Frank");
 	ScavTrap	B("Mimi");
 
+	std::cout << std::endl;
 	A.attack("the corrector");
+	B.attack("the corrector");
+	
+	std::cout << std::endl;
 	A.takeDamage(5);
-	A.takeDamage(0);
-	A.takeDamage(25);
-	A.beRepaired(1);
-	B.beRepaired(1);
-	B.attack("you");
+	B.takeDamage(5);
+	std::cout << std::endl;
+	A.beRepaired(15);
+	B.beRepaired(15);
+	A.beRepaired(0);
+	B.beRepaired(0);
+	std::cout << std::endl;
+	B.guardGate();
+
+	ScavTrap	C("default");
+	C = B;
+	C.attack("the corrector");
+	std::cout << std::endl;
 
 	return 0;
 }

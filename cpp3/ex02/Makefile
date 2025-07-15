@@ -62,8 +62,8 @@ ADD_FLAGS = -I$(INCLUDE)
 INC = -Isrc -Ilib
 
 OBJ_FOLDER = obj
-SRC2 = ClapTrap.cpp FragTrap.cpp
-HEAD2 = ClapTrap.hpp FragTrap.hpp
+SRC2 = ClapTrap.cpp FragTrap.cpp ScavTrap.cpp
+HEAD2 = ClapTrap.hpp FragTrap.hpp ScavTrap.hpp
 OBJ2 = $(patsubst %.cpp, obj/%.o, $(SRC2))
 
 SFML = -lsfml-graphics -lsfml-window -lsfml-system

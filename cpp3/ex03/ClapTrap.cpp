@@ -1,21 +1,27 @@
 #include "ClapTrap.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////]
+ClapTrap::ClapTrap( void )
+: name("default"), hp(100), energy(50), attack_dmg(20) {
+    std::cout << C_041 << "Default ClapTrap constructor called" << RESET;
+	std::cout << std::endl;
+}
 ClapTrap::ClapTrap( const std::string& name )
 : name(name), hp(100), energy(50), attack_dmg(20) {
-    std::cout << C_041 << "Default constructor called for: " << RESET << name << " ";
-	this->printHp();
+    std::cout << C_041 << "ClapTrap constructor called for: " << RESET << name << " ";
+	this->printHp(false);
 	std::cout << std::endl;
 }
 ClapTrap::~ClapTrap( void ) {
-    std::cout << C_401 << "Destructor called" << RESET << std::endl;
+    std::cout << C_401 << "ClapTrap Destructor called for " << name << RESET << std::endl;
 }
 ClapTrap::ClapTrap( const ClapTrap& other )
 : name(other.name), hp(other.hp), energy(other.energy), attack_dmg(other.attack_dmg) {
-    std::cout << C_042 << "Copy constructor called" << RESET << std::endl;
+    std::cout << C_041 << "ClapTrap Copy constructor called for " << name << RESET << std::endl;
 }
 ClapTrap& ClapTrap::operator=( const ClapTrap& other ) {
-    std::cout << C_141 << "Copy assignment operator called" << RESET << std::endl;
+    std::cout << C_041 << "ClapTrap Copy assignment operator called for " << name << RESET << std::endl;
+	name = other.name;
 	hp = other.hp;
 	energy = other.energy;
 	attack_dmg = other.attack_dmg;
@@ -24,51 +30,56 @@ ClapTrap& ClapTrap::operator=( const ClapTrap& other ) {
 
 ///////////////////////////////////////////////////////////////////////////////]
 void ClapTrap::attack( const std::string& target ) {
+
+	attack2(target, "\e[38;5;220mClapTrap ");
+}
+
+void ClapTrap::attack2( const std::string& target, const std::string color) {
 	if (!hp || !energy) {
-		this->printHp();
-		std::cout << C_400 << name << " can't attack..." << RESET << std::endl;
+		this->printHp(true);
+		std::cout << C_400 << "can't attack..." << RESET << std::endl;
 		return;
 	}
 	energy--;
-	this->printHp();
-	std::cout << C_152 << "ClapTrap " << name << " attacks " << target << 
+	this->printHp(true);
+	std::cout << color << "attacks " << target << 
 	", causing " << attack_dmg << " points of damage!" << RESET << std::endl;
 }
 
 void ClapTrap::takeDamage( unsigned int amount ) {
 	hp -= amount;
 	hp = hp < 0 ? 0 : hp;
-	this->printHp();
+	this->printHp(true);
 	if (!amount) {
-		std::cout << C_040 << "ClapTrap " << name << " takes no damages!" << RESET << std::endl;
+		std::cout << C_400 << "takes no damages!" << RESET << std::endl;
 		return;
 	}
-	std::cout << C_512 << "ClapTrap " << name << " takes " << amount << 
+	std::cout << C_512 << "takes " << amount << 
 	" points of damage!" << RESET << std::endl;
 	// std::cout << "remaining: " << hp << RESET << std::endl;
 }
 
 void ClapTrap::beRepaired( unsigned int amount ) {
 	if (!amount) {
-		this->printHp();
-		std::cout << C_400 << "ClapTrap " << name << " can't heal!" << RESET << std::endl;
+		this->printHp(true);
+		std::cout << C_400 << "can't heal!" << RESET << std::endl;
 		return;
 	}
 	if (!hp || !energy) {
-		this->printHp();
-		std::cout << C_400 << name << " is out of energy!" << RESET << std::endl;
+		this->printHp(true);
+		std::cout << C_400 << "is out of energy!" << RESET << std::endl;
 		return;
 	}
 	hp += amount;
 	energy--;
-	this->printHp();
-	std::cout << C_152 << "ClapTrap " << name << " repairs itself for " << amount << 
-	" hp! " << std::endl;
-	// std::cout << "remaining: " << hp << RESET << std::endl;
+	this->printHp(true);
+	std::cout << C_152 << "repairs itself for " << amount << " hp! " << RESET << std::endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////]
-void	ClapTrap::printHp( void ) {
+void	ClapTrap::printHp( bool name ) {
+	if (name)
+		std::cout << this->name << " ";
 	std::cout << "( " << C_151 << hp << RESET << " / " << C_015 << energy << RESET << " ) ";
 }
 
@@ -76,4 +87,12 @@ void	ClapTrap::setStats(int hp, int energy, int attk) {
 	this->hp = hp;
 	this->energy = energy;
 	this->attack_dmg = attk;
+}
+
+void	ClapTrap::setName( const std::string& name ) {
+	this->name = name;
+}
+
+std::string &ClapTrap::getName( void ) {
+	return name;
 }

@@ -15,7 +15,6 @@ public:
 
 	void attack( const std::string& target );
 
-
 };
 
 #endif
