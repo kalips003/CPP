@@ -45,7 +45,6 @@ std::ostream & operator<<( std::ostream& out, const Bureaucrat& jeff) {
 }
 ///////////////////////////////////////////////////////////////////////////////]
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
-	// return "Grade too High";
 	return "\e[38;5;118mGrade too High\e[0m";
 }
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
