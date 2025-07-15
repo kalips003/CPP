@@ -1,30 +1,34 @@
-#include "src/AMateria.hpp"
-#include "src/ICharacter.hpp"
-#include "src/Character.hpp"
-#include "src/Cure.hpp"
-#include "src/Ice.hpp"
-#include "src/IMateriaSource.hpp"
-#include "src/MateriaSource.hpp"
+#include "src/Bureaucrat.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 int main()
 {
-	IMateriaSource* src = new MateriaSource();
-	src->learnMateria(new Ice());
-	src->learnMateria(new Cure());
-	ICharacter* me = new Character("me");
-	AMateria* tmp;
-	tmp = src->createMateria("ice");
-	me->equip(tmp);
-	tmp = src->createMateria("cure");
-	me->equip(tmp);
-	ICharacter* bob = new Character("bob");
-	me->use(0, *bob);
-	me->use(1, *bob);
-	delete bob;
-	delete me;
-	delete src;
+	try {
+		Bureaucrat a("leon", 1500);
+	} catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+	Bureaucrat b("Corrector", 100);
+	Bureaucrat c("BIBI", 150);
+
+	try {
+		c.decrementGrade();
+	} catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << b;
+
+	for (int i = 0; i < 155; i++) {
+		std::cout << c;
+		try {
+			c.incrementGrade();
+		} catch (std::exception & e) {
+			std::cout << e.what() << std::endl;
+			break ;
+		}
+	}
 	return 0;
 }
