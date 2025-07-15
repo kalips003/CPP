@@ -3,7 +3,6 @@
 ///////////////////////////////////////////////////////////////////////////////]
 ScavTrap::ScavTrap( void ) {
 	ClapTrap::setStats(100, 50, 20);
-	ClapTrap::setName("default");
     std::cout << C_043 << "Default ScavTrap constructor called" << RESET << std::endl;
 }
 ScavTrap::ScavTrap( const std::string& name )

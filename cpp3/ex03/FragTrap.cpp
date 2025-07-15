@@ -3,7 +3,6 @@
 ///////////////////////////////////////////////////////////////////////////////]
 FragTrap::FragTrap( void ) {
 	ClapTrap::setStats(100, 100, 30);
-	ClapTrap::setName("default");
     std::cout << C_151 << "Default FragTrap constructor called" << RESET << std::endl;
 }
 FragTrap::FragTrap( const std::string& name )
