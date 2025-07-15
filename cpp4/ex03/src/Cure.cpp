@@ -1,16 +1,21 @@
-#include "Default.hpp"
+#include "Cure.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
-Default::Default() {}
-Default::Default(const Default &other) { (void)other; }
-Default& Default::operator=(const Default& other) {
+Cure::Cure() : AMateria("cure") {}
+Cure::Cure(const Cure &other) : AMateria(other) {}
+Cure& Cure::operator=(const Cure& other) {
 	if (this != &other)
 		(void)other;
 	return *this;
 }
-Default::~Default() {}
+Cure::~Cure() {}
 ///////////////////////////////////////////////////////////////////////////////]
-void Default::setAttribute(int value) { (void)value; }
-int Default::getAttribute() const {	return 0; }
+AMateria*	Cure::clone() const {
+	return new Cure(*this);
+}
+
+void		Cure::use(ICharacter& target) {
+	std::cout << C_251 << "* heals " << RESET << target.getName() << C_251 << "’s wounds *" << std::endl;
+}

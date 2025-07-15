@@ -1,5 +1,5 @@
-#ifndef DEFAULT_HPP
-#define DEFAULT_HPP
+#ifndef IMATERIASOURCE_HPP
+#define IMATERIASOURCE_HPP
 
 ///////////////////////////////////////////////////////////////////////////////]
 // 									LIBs
@@ -20,27 +20,16 @@
 // #include <cctype>
 #include "../_colors.h"
 
+#include "AMateria.hpp"
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS
 ///////////////////////////////////////////////////////////////////////////////]
-class Default {
-
-private:
-
-protected:
+class IMateriaSource {
 
 public:
-
-/////   CANONICAL
-	Default();
-	Default(const Default &other);
-	Default& operator=(const Default& other);
-	~Default();
-
-/////   SETTER GETTER
-	void setAttribute(int value);
-	int getAttribute() const;
-
+	virtual ~IMateriaSource() {}
+	virtual void learnMateria(AMateria*) = 0;
+	virtual AMateria* createMateria(std::string const & type) = 0;
 };
 
 #endif

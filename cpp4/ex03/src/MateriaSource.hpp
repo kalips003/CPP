@@ -1,5 +1,5 @@
-#ifndef DEFAULT_HPP
-#define DEFAULT_HPP
+#ifndef MATERIASOURCE_HPP
+#define MATERIASOURCE_HPP
 
 ///////////////////////////////////////////////////////////////////////////////]
 // 									LIBs
@@ -20,28 +20,30 @@
 // #include <cctype>
 #include "../_colors.h"
 
+#include "AMateria.hpp"
+#include "IMateriaSource.hpp"
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS
+#define MEMORY_LIMIT 4
 ///////////////////////////////////////////////////////////////////////////////]
-class Default {
+class MateriaSource : public IMateriaSource {
 
 private:
-
+	AMateria	*memory[MEMORY_LIMIT];
 protected:
 
 public:
 
 /////   CANONICAL
-	Default();
-	Default(const Default &other);
-	Default& operator=(const Default& other);
-	~Default();
+	MateriaSource();
+	MateriaSource(const MateriaSource &other);
+	MateriaSource& operator=(const MateriaSource& other);
+	~MateriaSource();
 
-/////   SETTER GETTER
-	void setAttribute(int value);
-	int getAttribute() const;
+/////
+	void learnMateria(AMateria*);
+	AMateria* createMateria(std::string const & type);
 
 };
 
 #endif
-

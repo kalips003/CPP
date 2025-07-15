@@ -1,5 +1,5 @@
-#ifndef DEFAULT_HPP
-#define DEFAULT_HPP
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
 
 ///////////////////////////////////////////////////////////////////////////////]
 // 									LIBs
@@ -20,26 +20,33 @@
 // #include <cctype>
 #include "../_colors.h"
 
+#include "AMateria.hpp"
+#include "ICharacter.hpp"
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS
+#define INVENTORY_LIMIT 4
 ///////////////////////////////////////////////////////////////////////////////]
-class Default {
+class Character : public ICharacter {
 
 private:
-
+	std::string name;
+	AMateria	*inventory[INVENTORY_LIMIT];
 protected:
 
 public:
 
 /////   CANONICAL
-	Default();
-	Default(const Default &other);
-	Default& operator=(const Default& other);
-	~Default();
+	Character(std::string const & name);
+	Character(const Character &other);
+	Character& operator=(const Character& other);
+	~Character();
 
 /////   SETTER GETTER
-	void setAttribute(int value);
-	int getAttribute() const;
+	std::string const & getName() const;
+/////
+	void equip(AMateria* m);
+	void unequip(int idx);
+	void use(int idx, ICharacter& target);
 
 };
 

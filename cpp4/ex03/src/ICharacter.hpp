@@ -1,5 +1,5 @@
-#ifndef DEFAULT_HPP
-#define DEFAULT_HPP
+#ifndef ICHARACTER_HPP
+#define ICHARACTER_HPP
 
 ///////////////////////////////////////////////////////////////////////////////]
 // 									LIBs
@@ -20,27 +20,18 @@
 // #include <cctype>
 #include "../_colors.h"
 
+class AMateria;
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS
 ///////////////////////////////////////////////////////////////////////////////]
-class Default {
-
-private:
-
-protected:
+class ICharacter {
 
 public:
-
-/////   CANONICAL
-	Default();
-	Default(const Default &other);
-	Default& operator=(const Default& other);
-	~Default();
-
-/////   SETTER GETTER
-	void setAttribute(int value);
-	int getAttribute() const;
-
+	virtual ~ICharacter() {}
+	virtual std::string const & getName() const = 0;
+	virtual void equip(AMateria* m) = 0;
+	virtual void unequip(int idx) = 0;
+	virtual void use(int idx, ICharacter& target) = 0;
 };
 
 #endif

@@ -1,16 +1,21 @@
-#include "Default.hpp"
+#include "Ice.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
-Default::Default() {}
-Default::Default(const Default &other) { (void)other; }
-Default& Default::operator=(const Default& other) {
+Ice::Ice() : AMateria("ice") {}
+Ice::Ice(const Ice &other) : AMateria(other) {}
+Ice& Ice::operator=(const Ice& other) {
 	if (this != &other)
 		(void)other;
 	return *this;
 }
-Default::~Default() {}
+Ice::~Ice() {}
 ///////////////////////////////////////////////////////////////////////////////]
-void Default::setAttribute(int value) { (void)value; }
-int Default::getAttribute() const {	return 0; }
+AMateria*	Ice::clone() const {
+	return new Ice(*this);
+}
+
+void		Ice::use(ICharacter& target) {
+	std::cout << C_045 << "* shoots an ice bolt at " << RESET << target.getName() << C_045 << " *" << std::endl;
+}

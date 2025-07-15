@@ -1,10 +1,10 @@
-#ifndef DEFAULT_HPP
-#define DEFAULT_HPP
+#ifndef AMATERIA_HPP
+#define AMATERIA_HPP
 
 ///////////////////////////////////////////////////////////////////////////////]
 // 									LIBs
-#include <iostream>
 #include <string>
+#include <iostream>
 // std::string
 // #include <vector>
 // #include <map>
@@ -20,26 +20,25 @@
 // #include <cctype>
 #include "../_colors.h"
 
+#include "ICharacter.hpp"
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS
 ///////////////////////////////////////////////////////////////////////////////]
-class Default {
-
+class AMateria {
 private:
 
 protected:
+	const std::string	type;
 
 public:
-
-/////   CANONICAL
-	Default();
-	Default(const Default &other);
-	Default& operator=(const Default& other);
-	~Default();
-
-/////   SETTER GETTER
-	void setAttribute(int value);
-	int getAttribute() const;
+	AMateria(std::string const & type);
+	AMateria(const AMateria &other);
+	AMateria& operator=(const AMateria& other);
+	virtual ~AMateria();
+	
+	std::string const & getType() const; //Returns the materia type
+	virtual AMateria* clone() const = 0;
+	virtual void use(ICharacter& target);
 
 };
 

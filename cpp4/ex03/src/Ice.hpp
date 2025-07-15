@@ -1,5 +1,5 @@
-#ifndef DEFAULT_HPP
-#define DEFAULT_HPP
+#ifndef ICE_HPP
+#define ICE_HPP
 
 ///////////////////////////////////////////////////////////////////////////////]
 // 									LIBs
@@ -20,10 +20,13 @@
 // #include <cctype>
 #include "../_colors.h"
 
+#include "ICharacter.hpp"
+#include "AMateria.hpp"
+
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS
 ///////////////////////////////////////////////////////////////////////////////]
-class Default {
+class Ice : public AMateria {
 
 private:
 
@@ -32,14 +35,14 @@ protected:
 public:
 
 /////   CANONICAL
-	Default();
-	Default(const Default &other);
-	Default& operator=(const Default& other);
-	~Default();
+	Ice();
+	Ice(const Ice &other);
+	Ice& operator=(const Ice& other);
+	~Ice();
 
-/////   SETTER GETTER
-	void setAttribute(int value);
-	int getAttribute() const;
+/////
+	AMateria*	clone() const;
+	void		use(ICharacter& target);
 
 };
 
