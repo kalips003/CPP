@@ -1,4 +1,4 @@
-NAME = interface
+NAME = bureaucrat1
 
 all: $(NAME)
 
@@ -17,7 +17,7 @@ all: $(NAME)
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 a: $(NAME)
-	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Cat friends!... go kil the dogs!", $(CLS), )
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "me no like administrative!", $(CLS), )
 	-./$(NAME)
 
 v: $(NAME)
@@ -36,7 +36,7 @@ endef
 
 # CREATE THE CLASS
 TEMPLATE_PATH = "../../TEST/_template"
-NEW_CLASS = AMateria Ice Cure ICharacter Character IMateriaSource MateriaSource
+NEW_CLASS = Bureaucrat Form
 
 new: 
 	@$(call random_shmol_cat, "Classes created for: ~", "$(NEW_CLASS)", $(CLS), );
