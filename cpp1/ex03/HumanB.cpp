@@ -7,8 +7,8 @@ HumanB::HumanB( const std::string& name)
 HumanB::~HumanB( void ) {}
 
 void    HumanB::attack( void ) { 
-    std::cout << name << " attacks with their " 
-        << (weapon ? weapon->getType() : "bare hands") << "." << std::endl;
+    std::cout << name << " attacks with their: " 
+        << (weapon ? weapon->getType() : C_211 "bare hands!" RESET) << std::endl;
 }
 
 void    HumanB::setWeapon( Weapon& new_weapon ) {

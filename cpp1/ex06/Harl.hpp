@@ -9,6 +9,7 @@ class Harl {
 
 private:
     static void (Harl::*const ft_lvl[4])();
+    
     void    debug( void );
     void    info( void );
     void    warning( void );
@@ -16,10 +17,12 @@ private:
 
 public:
     static const std::string levels[4];
-    void    complain( std::string level );
-    int     whatLevel( std::string level );
+
     Harl( void );
     ~Harl( void );
+    
+    void    complain( std::string level );
+    int     whatLevel( std::string level );
 };
 
 #endif

@@ -3,6 +3,8 @@
 
 #include "Weapon.hpp"
 
+#include "_colors.h"
+
 class HumanA {
 
 private:
@@ -15,13 +17,5 @@ public:
 
     void    attack( void );
 };
-
-
-
-
-
-
-
-
 
 #endif

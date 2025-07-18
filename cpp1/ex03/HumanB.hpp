@@ -3,6 +3,8 @@
 
 #include "Weapon.hpp"
 
+#include "_colors.h"
+
 class HumanB {
 
 private:
@@ -16,20 +18,5 @@ public:
     void    attack( void );
     void    setWeapon( Weapon& new_weapon );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif

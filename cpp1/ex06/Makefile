@@ -20,7 +20,7 @@ all: $(NAME)
 # │─────██████─────██████████████─██████████████─────██████─────██████████─██████──────────██████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-WARNING = DEBUG INFO WARNING ERROR DEFAULT
+WARNING = DEBUG INFO WARNING ERROR DEFAULT ''
 S1 = apple
 S2 = MY HAND
 
@@ -28,17 +28,21 @@ a: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik Harl...", $(CLS), )
 	-./$(NAME) $(word 3, $(WARNING))
 
+b: $(NAME)
+	-for lvl in $(WARNING); do \
+		$(call helper_tester, $$lvl, "teshting: ", "Press Enter to continue", ) \
+	done
+
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );
 	-$(VALGRIND) ./$(word 1, $^)
 
 # $(1)=$(ARGS) $(2)=$(TXT_cat) $(3)=$(TXT_below) $(4)=$(VALGRIND)(timeout 15s)
 define helper_tester
-	$(call random_shmol_cat, $(2), $(1), $(CLS), )
-	echo "\n\t$(3)\n"
-	read -p "" key;
-	$(4) ./$(word 1, $^) $(1)
-	echo "\n\t\033[5m~ Press Enter to continue...\033[0m"; read -p "" key;
+	$(call random_shmol_cat, $(2), $(1), $(CLS), ); \
+	echo "\n\t$(3)\n"; \
+	$(4) ./$(word 1, $^) $(1); \
+	echo "\n\t$(COLOR_4R_2G_1B)~ Press Enter to continue...$(RESET)"; read -p "" key;
 endef
 
 

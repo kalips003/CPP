@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 
+#include "_colors.h"
+
 class Weapon {
 
 private:

@@ -1,19 +1,18 @@
 #include "Zombie.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////]
-
 Zombie::Zombie( std::string name )
 : name(name) {
 }
 Zombie::~Zombie( void ) {
-    std::cout << name << ": Deeaaad..." << std::endl;
+    std::cout << name << ":" << C_312 " Deeaaad..." RESET << std::endl;
 }
 Zombie::Zombie( void ) 
 : name("empty") {   
 }
 ///////////////////////////////////////////////////////////////////////////////]
 void   Zombie::announce( void ) {
-    std::cout << name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+    std::cout << name << RESET ":" << C_414 " BraiiiiiiinnnzzzZ..." RESET << std::endl;
 }
 
 Zombie  *newZombie(std::string name) {

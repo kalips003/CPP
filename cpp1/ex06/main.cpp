@@ -3,7 +3,7 @@
 int main(int ac, char **av) {
 
 	if (ac != 2) {
-		std::cout << "harlFilter takes one complain level as argument" << std::endl;
+		std::cout << ERR1 "harlFilter takes one complain level as argument" RESET << std::endl;
 		return 0;
 	}
 

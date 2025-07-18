@@ -27,16 +27,16 @@ S2 = MY HAND
 a: $(NAME)
 	@rm -f $(INFILE).replace
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik sed...", $(CLS), )
-	@echo -e "$(COLOR_4R_1G_0B)" 
+	@echo "$(COLOR_4R_1G_0B)" 
 	@cat $(INFILE)
-	@echo -e "$(COLOR_1R_0G_4B)" 
+	@echo "$(COLOR_2R_1G_4B)" 
 	-./$(NAME) $(INFILE) $(S1) '$(S2)'
-	@echo -e "$(COLOR_1R_4G_0B)" 
+	@echo "$(COLOR_0R_1G_2B)" 
 	@cat $(INFILE).replace
 
 b: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "Me no lik sed...", $(CLS), )
-	@echo -e "$(COLOR_4R_1G_0B)" 
+	@echo "$(COLOR_4R_1G_0B)" 
 	-./$(NAME) $(INFILE) '' '$(S2)'
 
 v: $(NAME)
@@ -138,6 +138,7 @@ git: fclean
 # 																				CLEAN
 clean:
 	@rm -rf $(OBJ_FOLDER)
+	@rm -f *.replace
 	@$(call print_cat, $(CLEAR), $(COLOR_2R_2G_5B), $(COLOR_3R_2G_0B), $(COLOR_4R_5G_0B), $(call pad_word, 10, "Objects"), $(call pad_word, 12, "Exterminated"));
 
 clean_silent:
