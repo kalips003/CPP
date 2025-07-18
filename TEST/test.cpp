@@ -43,31 +43,55 @@
 template class, template argument ,  static member function??
 ******************************************************************************/
 ///////////////////////////////////////////////////////////////////////////////]
-#include <fstream>
-#include <cstring>
+#include <sstream>
+#include <iomanip>
+#define COLOR(fg, bg) "\033[38;5;" << fg << ";48;5;" << bg << "m"
+void	printMemory(void *start, int size, bool hexa) {
+	if (!start || size < 0)
+		return;
 
-void ft_rev_int_tab(int *tab, int size) {
-	int i;
-	int temp;
+	char *str = (char *)start;
 
-	i = -1;
-	while (++i < size / 2) {
-		temp = tab[i];
-		tab[i] = tab[size - 1 - i];
-		tab[size - 1 - i] = temp;
+if (!hexa) {
+	for (int i = 0; i < size; i++) {
+		int c = static_cast<unsigned char>(str[i]);
+
+
+		if (std::isprint(str[i]))
+			std::cout << COLOR(0, c) << str[i] << RESET << std::flush;
+		else
+			std::cout << COLOR(15, c) << "." << RESET << std::flush;
+		
+		// std::cout << "\033[38;5;0;48;5;" << c << "m" << str[i] << RESET;
 	}
+} else {
+	for (int i = 0; i < size; i++) {
+		int c = static_cast<unsigned char>(str[i]);
+		std::stringstream ss;
+		// if (!c)
+		// 	ss << "\033[38;5;0;48;5;100m";
+		// ss << std::hex << c;
+		ss << std::uppercase << std::hex << c; // "FF"
+		std::cout << COLOR(0, c) << ss.str() << RESET << std::flush;
+		// std::cout << "\033[38;5;0;48;5;" << c << "m" << std::setw(2) << std::setfill('0') << ss.str() << RESET;
+	}
+}
+	std::cout << std::endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////]
 int main(int ac, char** av) {
 
-	put("helllooooooo");
+	std::string a = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	// printMemory(&a, 1000, false);
+	// char *a = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	printMemory(&a, 11000, true);
+	// printMemory((void*)a.c_str(), 5000, false);
+	// std::cout << "sound" << std::endl;
+	// std::cout << '\a';
 	return 0;
 }
 ///////////////////////////////////////////////////////////////////////////////]
-using MyMapType = std::map<std::string, std::pair<int, std::vector<double>>>;
-MyMapType myMap;
-
 template <typename T>
 struct isInteger {
     static const bool value = false;
@@ -148,26 +172,6 @@ public:
     Box(T v) : value(v) {}
 };
 
-
-
-
-
-
-// User-Defined Types
-
-struct Point {
-    int x;
-    int y;
-};
-
-class Circle {
-private:
-    double radius;
-
-public:
-    Circle(double r) : radius(r) {}
-};
-
 enum Color {
     RED,
     GREEN,
@@ -180,26 +184,7 @@ union Data {
     char charValue;
 };
 
-// Standard Library Types
-
-#include <vector>
-std::vector<int> numbers;  // Dynamic array
-
-#include <list>
-std::list<int> myList;     // Doubly linked list
-
-#include <map>
-std::map<std::string, int> ages;  // Key-value pairs
-
-#include <utility>
-std::pair<int, std::string> person;  // Pair of two types
-
-#include <string>
-std::string name;  // String type
-
 ******************************************************************************/
-
-
 /*******************************************************************************
 struct Base {};
 struct Derived : Base {};  // public inheritance
@@ -224,30 +209,6 @@ truct Point {
     ~Point() {}
 };
 
-Member Functions:
-
-cpp
-
-struct Point {
-    int x, y;
-    
-    void print() const {
-        std::cout << "Point(" << x << ", " << y << ")" << std::endl;
-    }
-};
-
-Operator Overloading:
-
-cpp
-
-struct Point {
-    int x, y;
-    
-    Point operator+(const Point& other) {
-        return Point(x + other.x, y + other.y);
-    }
-};
-
 Inheritance and Polymorphism:
 
 cpp
@@ -260,15 +221,4 @@ cpp
         void speak() override { std::cout << "Derived speaking" << std::endl; }
     };
 
-5. Use Cases for struct:
-
-    Data Storage: structs are useful when you need to represent simple, passive data structures like coordinates, RGB values, or database records.
-
-    Example:
-
-    cpp
-
-struct RGB {
-    int red, green, blue;
-};
 ******************************************************************************/

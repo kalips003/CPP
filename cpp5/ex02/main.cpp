@@ -33,5 +33,8 @@ int main() {
 		std::cout << "Exception caught: " << e.what() << std::endl;
 	}
 
+	RRF lobo("your mom");
+	lobo.doExecution();
+
 	return 0;
 }

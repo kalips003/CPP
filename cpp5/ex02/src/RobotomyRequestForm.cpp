@@ -28,7 +28,7 @@ void	RobotomyRequestForm::doExecution() const {
 	
 	std::string noise = "Brr";
 	for (int i = 1; i < 7; i++) {
-		std::cout << "\e[38;5;" << (i+63) << "m" << noise << std::string(i, ' ') << std::flush;
+		std::cout << "\e[38;5;" << (i+63) << "m" << noise << '\a' << std::string(i, ' ') << std::flush;
 		noise += 'r';
 		usleep(150000*i);  // 0.1 * i sec
 	}
