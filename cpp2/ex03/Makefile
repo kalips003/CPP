@@ -1,9 +1,9 @@
 NAME = fixed3
 
 CC = g++
-# FLAGS = -g -std=c++98
-FLAGS = -Wextra -Wall -Werror -std=c++98
-# FLAGS = -Wextra -Wall -Werror -std=c++11
+
+FLAGS = -Wextra -Wall -Werror -g -std=c++98
+
 
 all: $(NAME)
 
@@ -24,8 +24,6 @@ all: $(NAME)
 a: $(NAME)
 	@$(call random_shmol_cat, "Click for points", "Backspace to delete", $(CLS), )
 	-./$(NAME)
-# -./$(NAME)
-
 
 b: fclean
 	@$(call random_shmol_cat, "we have a screen yet??!", "we have a screen yet??", $(CLS), )
