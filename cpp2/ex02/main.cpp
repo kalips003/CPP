@@ -2,36 +2,36 @@
 #include "Fixed.hpp"
 
 int main( void ) {
-Fixed a;
-Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
-std::cout << a << std::endl;
-std::cout << ++a << std::endl;
-std::cout << a << std::endl;
-std::cout << a++ << std::endl;
-std::cout << a << std::endl;
-std::cout << b << std::endl;
-std::cout << Fixed::max( a, b ) << std::endl;
-return 0;   
-}
+    Fixed a;
+    Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
 
-// > ./a.out
-// Default constructor called
-// Int constructor called
-// Float constructor called
-// Copy constructor called
-// Copy assignment operator called
-// Float constructor called
-// Copy assignment operator called
-// Destructor called
-// a is 1234.43
-// b is 10
-// c is 42.4219
-// d is 10
-// a is 1234 as integer
-// b is 10 as integer
-// c is 42 as integer
-// d is 10 as integer
-// Destructor called
-// Destructor called
-// Destructor called
-// Destructor called
+    std::cout << C_414 "A: \t" RESET << a << std::endl;
+    std::cout << C_414 "++A: \t" RESET << ++a << std::endl;
+    std::cout << C_414 "A: \t" RESET << a << std::endl;
+    std::cout << C_414 "A++: \t" RESET << a++ << std::endl;
+    std::cout << C_414 "A: \t" RESET << a << std::endl;
+    std::cout << C_414 "--A: \t" RESET << --a << std::endl;
+    std::cout << std::endl;
+
+    std::cout << C_414 "B: \t" RESET << b << std::endl;
+    std::cout << C_414 "Max(a,b): " RESET << Fixed::max( a, b ) << std::endl;
+    std::cout << C_414 "Min(a,b): " RESET << Fixed::min( a, b ) << std::endl;
+    std::cout << std::endl;
+
+    std::cout << C_414 "a = 15.2f + 0.8f: " RESET << (a = 15.2f + 0.8f) << std::endl;
+    std::cout << C_414 "a - 0.5f: \t" RESET << a - 0.5f << std::endl;
+    std::cout << C_414 "a * 2: \t\t" RESET << a * 2 << std::endl;
+    std::cout << C_414 "a / 0: \t\t" RESET << a / 0 << std::endl;
+    std::cout << C_414 "a * 12.2f: \t" RESET << a * 12.2f << std::endl;
+    std::cout << std::endl;
+
+    Fixed c(3.9f);
+    Fixed d(4);
+
+    std::cout << C_323 "c = 3.9f\t d = 4" RESET << std::endl;
+    std::cout << C_414 "c > d?: \t" RESET << (c > d ? "true" : "false") << std::endl;
+    std::cout << C_414 "c <= d?: \t" RESET << (c <= d ? "true" : "false") << std::endl;
+    std::cout << C_414 "c == c?: \t" RESET << (c == c ? "true" : "false") << std::endl;
+
+    return 0;   
+}

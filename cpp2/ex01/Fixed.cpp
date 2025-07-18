@@ -10,10 +10,6 @@ Fixed::Fixed( void )
 Fixed::~Fixed( void ) {
     std::cout << C_401 << "Destructor called" << RESET << std::endl;
 }
-// Fixed::Fixed( const Fixed& other ) {
-//     this->num = other.getRawBits();
-//     std::cout << C_042 << "Copy constructor called" << std::endl;
-// }
 Fixed::Fixed( const Fixed& other ) 
 : num(other.num) {
     std::cout << C_042 << "Copy constructor called" << RESET << std::endl;
@@ -49,6 +45,7 @@ Fixed::Fixed( const float& f ) {
     num = static_cast<int>(f  * 256);
 }
 
+///////////////////////////////////////////////////////////////////////////////]
 float   Fixed::toFloat( void ) const {
     return static_cast<float>(num) / 256;
 }

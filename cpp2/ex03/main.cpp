@@ -3,8 +3,6 @@
 #include "Point.hpp"
 #include "Fixed.hpp"
 
-// #include "./SFML/include/Graphics.hpp"
-// #include "./SFML/include/SFML/Graphics.hpp"
 #include <SFML/Graphics.hpp>
 
 #include <sstream>

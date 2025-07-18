@@ -7,9 +7,24 @@ int main( void ) {
 	Fixed b( a );
 	Fixed c;
 	c = b;
-	std::cout << a.getRawBits() << std::endl;
-	std::cout << b.getRawBits() << std::endl;
-	std::cout << c.getRawBits() << std::endl;
+
+	std::cout << std::endl;
+
+	int bit;
+	bit = a.getRawBits();
+	std::cout << C_423 "Raw bits A: \t" RESET << bit << std::endl;
+	a.setRawBits(6546);
+	bit = a.getRawBits();
+	std::cout << C_423 "Raw bits A: \t" RESET << bit << std::endl;
+
+	bit = b.getRawBits();
+	std::cout << C_423 "Raw bits B: \t" RESET << bit << std::endl;
+
+	bit = c.getRawBits();
+	std::cout << C_423 "Raw bits C: \t" RESET << bit << std::endl;
+	
+	std::cout << std::endl;
+
 	return 0;
 }
 

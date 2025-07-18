@@ -16,18 +16,18 @@ Fixed::~Fixed( void ) {
 // }
 Fixed::Fixed( const Fixed& other ) 
 : num(other.num) {
-    std::cout << C_042 << "Copy constructor called" << std::endl;
+    std::cout << C_032 << "Copy constructor called" << std::endl;
 }
 Fixed& Fixed::operator=( const Fixed& other ) {
     if (this != &other)
         this->num = other.num;
-    std::cout << C_141 << "Copy assignment operator called" << std::endl;
+    std::cout << C_252 << "Copy assignment operator called" << std::endl;
     return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////]
 int     Fixed::getRawBits( void ) const {
-    std::cout << C_241 << "getRawBits member function called" << std::endl;
+    std::cout << C_124 << "getRawBits member function called" << std::endl;
     return this->num;
 }
 void    Fixed::setRawBits( int const raw ) {
