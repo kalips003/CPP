@@ -25,7 +25,8 @@ int main() {
 	Dog *dog_b = dynamic_cast<Dog*>(ar[2]);
 	dog_a->hasAnIdea(0, "i like cheese");
 	*dog_b = *dog_a;
-	std::cout << C_413 << "dog 2 ideas are: " << RESET << dog_b->TellsIdea(0) << std::endl;
+	std::cout << C_413 << "dog A ideas are: " << RESET << dog_b->TellsIdea(0) << std::endl;
+	std::cout << C_413 << "dog B ideas are: " << RESET << dog_b->TellsIdea(0) << std::endl;
 	std::cout << C_012 << "------------" << RESET << std::endl;
 
 	for (int i = 0; i < SPA; i++)

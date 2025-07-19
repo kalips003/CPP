@@ -14,9 +14,18 @@ int main()
 
 	std::cout << j->getType() << " " << std::endl;
 	std::cout << i->getType() << " " << std::endl;
-	i->makeSound(); //will output the cat sound!
+	i->makeSound();
 	j->makeSound();
 	
+
+	std::cout << std::endl;
+	std::cout << C_145 "Type of dog?: " RESET << j->getType() << " " << std::endl;
+	std::cout << C_145 "Type of cat?: " RESET << i->getType() << " " << std::endl;
+	std::cout << std::endl;
+	i->makeSound();
+	j->makeSound();
+	
+	std::cout << std::endl;
 	delete j;
 	delete i;
 	return 0;

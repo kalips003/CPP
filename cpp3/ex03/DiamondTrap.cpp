@@ -28,7 +28,7 @@ DiamondTrap& DiamondTrap::operator=( const DiamondTrap& other ) {
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 void	DiamondTrap::whoAmI( void ) {
-	std::cout << "Who am I?! im " << C_521 << name << RESET << " the " << C_521 << getName() << RESET << "!" << std::endl;
+	std::cout << "Who am I?! I AM " << C_521 << name << RESET << " the " << C_521 << getName() << RESET << "!" << std::endl;
 }
 
 void DiamondTrap::attack( const std::string& target ) {
