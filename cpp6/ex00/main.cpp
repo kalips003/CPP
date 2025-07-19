@@ -6,6 +6,11 @@
 #include <iomanip>
 ///////////////////////////////////////////////////////////////////////////////]
 enum LiteralType { TYPE_CHAR, TYPE_INT, TYPE_FLOAT, TYPE_DOUBLE, TYPE_INVALID };
+// ptr function { TYPE_CHAR, TYPE_INT, TYPE_FLOAT, TYPE_DOUBLE, TYPE_INVALID };
+// std::stringstream	f_char() {}
+// std::stringstream	f_int() {}
+// std::stringstream	f_float() {}
+// std::stringstream	f_double() {}
 ///////////////////////////////////////////////////////////////////////////////]
 int	whatIsIt(const char* arg) {
 
@@ -75,6 +80,20 @@ void	rtrnInt(char *arg) {
 	std::cout << std::endl;
 }
 
+template <typename T>
+void	convertion(T num) {
+	char c = static_cast<char>(num);
+	int i = static_cast<int>(num);
+	float f = static_cast<float>(num);
+	double d = static_cast<double>(num);
+
+	std::cout << C_454 "char: \t" RESET << c << std::endl;
+	std::cout << C_512 "int: \t" RESET << i << std::endl;
+	std::cout << C_153 "float: \t" RESET << f << "f" << std::endl;
+	std::cout << C_401 "double: " RESET << d << std::endl;
+	std::cout << C_454 "char again int?: \t" RESET << static_cast<int>(c) << std::endl;
+
+}
 
 void	doThePrinting(char *arg) {
 	std::cout << std::endl;
@@ -98,6 +117,9 @@ int main(int ac, char** av) {
 	std::cout << C_232 "The arg is of type: " RESET << typeName(whatIsIt(av[1])) << std::endl << std::endl;
 
 	doThePrinting(av[1]);
+
+	std::cout << std::endl;
+	convertion(552.0f);
 
 	return 0;
 }

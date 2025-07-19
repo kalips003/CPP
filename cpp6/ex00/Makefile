@@ -17,7 +17,7 @@ all: $(NAME)
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 ARGS2 = 0 1 12 a g \' 9
-ARGS = 0 a -a 42 9876543210 2.0 2.0f 2.33 -inf ++inf nan inff
+ARGS = 2e3 0 a -a 42 9876543210 2.0 2.0f 2.33 -inf ++inf nan inff
 ARG = 2.0ff
 
 a: $(NAME)
@@ -45,7 +45,7 @@ endef
 
 # CREATE THE CLASS
 TEMPLATE_PATH = "../../TEST/_template"
-NEW_CLASS = ScalarConverter
+NEW_CLASS = ScalarConverter chat chien joseph
 
 new: 
 	@$(call random_shmol_cat, "Classes created for: ~", "$(NEW_CLASS)", $(CLS), );
