@@ -32,6 +32,7 @@ int main() {
 	B.guardGate();
 	D.highFivesGuys();
 
+	std::cout << std::endl;
 	FragTrap	C("default");
 	C = D;
 	C.attack("YOU again!");

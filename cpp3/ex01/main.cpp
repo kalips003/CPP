@@ -15,7 +15,7 @@ int main() {
 
 	std::cout << std::endl;
 	A.attack("the corrector");
-	B.attack("the corrector");
+	B.attack("the corrector again");
 	
 	std::cout << std::endl;
 	A.takeDamage(5);
@@ -28,6 +28,7 @@ int main() {
 	std::cout << std::endl;
 	B.guardGate();
 
+	std::cout << std::endl;
 	ScavTrap	C("default");
 	C = B;
 	C.attack("the corrector");

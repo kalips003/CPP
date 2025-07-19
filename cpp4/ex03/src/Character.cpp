@@ -41,6 +41,10 @@ std::string const & Character::getName() const {
 }
 ///////////////////////////////////////////////////////////////////////////////]
 void Character::equip(AMateria* m) {
+	if (!m) {
+		std::cout << RED "How do you expect me to equip NOTHING?!?" RESET << std::endl;
+		return;
+	}
 	for (int i = 0; i < INVENTORY_LIMIT; i++) {
 		if (inventory[i] == m) {
 			std::cout << C_215 << "Already equiped" << RESET << std::endl;
@@ -61,7 +65,10 @@ void Character::unequip(int idx) {
 	inventory[idx] = NULL;
 }
 void Character::use(int idx, ICharacter& target) {
-	if (idx >= INVENTORY_LIMIT || idx < 0 || !inventory[idx])
+	if (idx >= INVENTORY_LIMIT || idx < 0 || !inventory[idx]) {
+		std::cout << RED "im sorry i cant do that" RESET << std::endl;
 		return;
+	}
+	std::cout << name << ": ";
 	inventory[idx]->use(target);
 }

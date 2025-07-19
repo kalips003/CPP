@@ -33,6 +33,10 @@ MateriaSource::~MateriaSource() {
 }
 ///////////////////////////////////////////////////////////////////////////////]
 void MateriaSource::learnMateria(AMateria* ptr) {
+	if (!ptr) {
+		std::cout << RED "Can't learn *nothing*" RESET << std::endl;
+		return;
+	}
 	for (int i = 0; i < MEMORY_LIMIT; i++) {
 		if (!memory[i]) {
 			memory[i] = ptr->clone();
