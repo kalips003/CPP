@@ -29,6 +29,7 @@ Base *generate( void ) {
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////]
 void	identify(Base* p) {
 
 	std::cout << C_414 "Is of type: " RESET;
@@ -42,6 +43,31 @@ void	identify(Base* p) {
 	else
 		std::cout << RED "Unknown" RESET << std::endl;
 }
-void	identify(Base& p) {
 
+///////////////////////////////////////////////////////////////////////////////]
+void	identify(Base& p) {
+	try {
+		dynamic_cast<A&>(p);
+		std::cout << C_343 "is of type " RESET "A" << std::endl;
+		return ;
+
+	} catch (std::exception & e) {
+		// std::cout << e.what() << std::endl;
+	}
+	try {
+		dynamic_cast<B&>(p);
+		std::cout << C_343 "is of type " RESET "B" << std::endl;
+		return ;
+	
+	} catch (std::exception & e) {
+		// std::cout << e.what() << std::endl;
+	}
+	try {
+		dynamic_cast<C&>(p);
+		std::cout << C_343 "is of type " RESET "C" << std::endl;
+		return ;
+
+	} catch (std::exception & e) {
+		// std::cout << e.what() << std::endl;
+	}
 }

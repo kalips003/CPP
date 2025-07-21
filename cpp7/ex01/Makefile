@@ -1,4 +1,4 @@
-NAME = whatisit
+NAME = iter
 
 all: $(NAME)
 

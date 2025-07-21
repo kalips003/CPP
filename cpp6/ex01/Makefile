@@ -18,7 +18,7 @@ all: $(NAME)
 
 ARGS2 = 0 1 12 a g \' 9
 ARGS = 2e3 2a 0 a -a 42 9876543210 2.0 2.0f 2.33 -inf ++inf nan inff
-ARG = 2.0ff
+ARG = 
 
 a: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "templates? temples to contemplate?", $(CLS), )

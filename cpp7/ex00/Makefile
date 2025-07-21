@@ -1,4 +1,4 @@
-NAME = whatisit
+NAME = template1
 
 all: $(NAME)
 

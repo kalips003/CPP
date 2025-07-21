@@ -5,14 +5,35 @@
 
 #include <iostream>
 
+void	identify(Base* p);
+void	identify(Base& p);
+
+///////////////////////////////////////////////////////////////////////////////]
 int main() {
 
     Base *ptr = generate();
     A *a = new A;
-    A *b = new B;
-    A *c = new C;
+    B *b = new B;
+    C *c = new C;
 
-    identify()
+    std::cout << C_333 "A* is: " RESET; identify(a);
+    std::cout << C_333 "B* is: " RESET; identify(b);
+    std::cout << C_333 "C* is: " RESET; identify(c);
+    std::cout << std::endl << C_430 "Random ptr is: " RESET; identify(ptr);
+
+    delete a;
+    delete b;
+    delete c;
+    delete ptr;
+
+    A aa;
+    B bb;
+    C cc;
+
+    std::cout << std::endl;
+    identify(aa);
+    identify(bb);
+    identify(cc);
 
 	return 0;
 }
