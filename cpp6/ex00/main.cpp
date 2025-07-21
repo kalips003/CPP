@@ -35,6 +35,7 @@ int	whatIsIt(const char* arg) {
 		return TYPE_INVALID;
 }
 
+///////////////////////////////////////////////////////////////////////////////]
 const char* typeName(int type) {
 	switch (type) {
 		case TYPE_CHAR: return "TYPE_CHAR";
@@ -46,6 +47,8 @@ const char* typeName(int type) {
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////]
+// 
 void	rtrnChar(char *arg) {
 	std::cout << C_124 "char: \t" RESET;
 
@@ -63,23 +66,13 @@ void	rtrnChar(char *arg) {
 void	rtrnInt(char *arg) {
 	std::cout << C_135 "int: " RESET;
 
-	long l = strtol(arg, NULL, 10);
+	long long l = strtol(arg, NULL, 10);
 	if (l > INT_MAX || l < INT_MIN)
 		std::cout << C_400 "Too big" RESET;
-
-
-
-
-	char c(arg[0]);
-	if (arg[1])
-		std::cout << RED "Impossible" RESET;
-	else if (std::isprint(c) && !std::isdigit(c))
-		std::cout << "'" << c << "'";
-	else
-		std::cout << RED "Non displayable" RESET;
 	std::cout << std::endl;
 }
 
+///////////////////////////////////////////////////////////////////////////////]
 template <typename T>
 void	convertion(T num) {
 	char c = static_cast<char>(num);
@@ -95,6 +88,7 @@ void	convertion(T num) {
 
 }
 
+///////////////////////////////////////////////////////////////////////////////]
 void	doThePrinting(char *arg) {
 	std::cout << std::endl;
 	rtrnChar(arg);
@@ -116,10 +110,15 @@ int main(int ac, char** av) {
 
 	std::cout << C_232 "The arg is of type: " RESET << typeName(whatIsIt(av[1])) << std::endl << std::endl;
 
+	std::cout << C_430 "\e[4m" "\tDo the printing:" RESET;
 	doThePrinting(av[1]);
 
+
+
 	std::cout << std::endl;
-	convertion(552.0f);
+	std::cout << C_430 "\e[4m" "\tConversion:" RESET;
+	std::cout << std::endl;
+	convertion(std::strtod(av[1], NULL));
 
 	return 0;
 }

@@ -1,4 +1,4 @@
-NAME = convert
+NAME = whatisit
 
 all: $(NAME)
 
@@ -45,7 +45,7 @@ endef
 
 # CREATE THE CLASS
 TEMPLATE_PATH = "../../TEST/_template"
-NEW_CLASS = ScalarConverter chat chien joseph
+NEW_CLASS = Base A B C
 
 new: 
 	@$(call random_shmol_cat, "Classes created for: ~", "$(NEW_CLASS)", $(CLS), );
