@@ -1,5 +1,7 @@
 #include "src/Span.hpp"
 
+#include <climits>
+
 ///////////////////////////////////////////////////////////////////////////////]
 int main() {
 	
@@ -13,7 +15,10 @@ int main() {
 	numbers[0] += 10;
 	numbers[4] += 10;
 
-
+	a.randomSpan(INT_MIN, INT_MAX, 1000);
+	a.printSpan(a.begin(), a.end());
+	a.shortestSpan();
+	a.longestSpan();
 
 	return 0;
 }

@@ -10,7 +10,7 @@ Cat::Cat( void ) {
 }
 Cat::Cat( const Cat& other ) : Animal(other) {
 	std::cout << C_420 << "Cat Copy-constructor" << std::endl;
-	*brain = *other.brain;
+	brain = new Brain(*other.brain);
 }
 Cat::~Cat( void ) {
 	std::cout << C_420 << "Cat destructor" << std::endl;
@@ -19,7 +19,7 @@ Cat::~Cat( void ) {
 Cat& Cat::operator=( const Cat& other ) {
 	if (this != &other) {
 		Animal::operator=(other);
-		*brain = *other.brain;
+		brain = new Brain(*other.brain);
 	}
 	return *this;
 }

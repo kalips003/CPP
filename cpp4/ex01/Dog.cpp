@@ -9,6 +9,7 @@ Dog::Dog( void ) {
 	brain = new Brain();
 }
 Dog::Dog( const Dog& other ) : Animal(other) {
+	brain = new Brain();
 	std::cout << C_015 << "Dog Copy-constructor" << std::endl;
 	*brain = *other.brain;
 }
