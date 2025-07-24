@@ -1,4 +1,4 @@
-NAME = array
+NAME = span
 
 all: $(NAME)
 
@@ -41,11 +41,9 @@ define helper_tester
 	echo "\n\t$(C_421)~ Press Enter to continue...$(RESET)"; read -p "" key;
 endef
 
-# echo "\n\t\033[5m~ Press Enter to continue...\033[0m"; read -p "" key;
-
 # CREATE THE CLASS
 TEMPLATE_PATH = "../../TEST/_template"
-NEW_CLASS = Array
+NEW_CLASS = Span
 
 new: 
 	@$(call random_shmol_cat, "Classes created for: ~", "$(NEW_CLASS)", $(CLS), );
