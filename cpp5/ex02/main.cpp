@@ -16,25 +16,33 @@ int main() {
 		Bureaucrat jeff("Jeff", 50);
 		Bureaucrat intern(RED"Intern", 150);
   
+		std::cout << jeff << boss << intern << std::endl;
+
 		SCF tree("you");
 		RRF lobo("you");
 		PPF pardon("you");
 
-		std::cout << jeff << boss << intern << std::endl;
+		std::cout << tree << lobo << pardon << std::endl;
 
 		jeff.signForm(pardon);
 		boss.executeForm(pardon);
 		jeff.executeForm(pardon);
 		boss.signForm(pardon);
 		jeff.executeForm(pardon);
+		std::cout << std::endl;
 		boss.executeForm(pardon);
 
 	} catch (std::exception &e) {
 		std::cout << "Exception caught: " << e.what() << std::endl;
 	}
 
+	std::cout << std::endl;
 	RRF lobo("your mom");
 	lobo.doExecution();
+
+	std::cout << std::endl;
+	SCF tree("home");
+	tree.doExecution();
 
 	return 0;
 }

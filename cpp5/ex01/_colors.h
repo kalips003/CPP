@@ -32,6 +32,7 @@
 # define CLS "\e[2J\e[H"
 # define REVERSE "\e[7m"
 # define BLINK "\e[5m"
+# define UNDER "\e[4m"
 # define R_BLINK "\e[25m"
 
 # define RESET "\e[0m"

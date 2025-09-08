@@ -19,6 +19,7 @@ all: $(NAME)
 a: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "me no like administrative!", $(CLS), )
 	-./$(NAME)
+	cat ./*_shrubbery
 
 v: $(NAME)
 	@$(call random_shmol_cat, "vlgrininnng ... $(NAME)!", "$(ARG2)", $(CLS), );

@@ -33,6 +33,7 @@
 # define REVERSE "\e[7m"
 # define BLINK "\e[5m"
 # define R_BLINK "\e[25m"
+# define UNDER "\e[4m"
 
 # define RESET "\e[0m"
 # define END "\e[0m\n"
