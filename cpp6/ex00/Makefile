@@ -20,11 +20,11 @@ ARGS2 = 0 1 12 a g \' 9
 ARGS = 2e3 2a 0 a -a 42 9876543210 2.0 2.0f 2.33 -inf ++inf nan inff
 ARG = 2.0ff
 
-a: $(NAME)
+b: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "templates? temples to contemplate?", $(CLS), )
 	-./$(NAME) $(ARG)
 
-b: $(NAME)
+a: $(NAME)
 	-for num in $(ARGS); do \
 		$(call helper_tester, $$num, "testing aaall the numbers: $$num", "press enter to go next", ,) \
 	done
