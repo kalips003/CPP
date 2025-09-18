@@ -15,6 +15,12 @@ static var_box fillChar(const char* arg);
 static var_box fillInt(const char * arg);
 static var_box fillFloat(const char* arg);
 static var_box fillDouble(const char* arg);
+static std::string toLower(std::string s) {
+    for (std::size_t i = 0; i < s.size(); ++i) {
+        s[i] = static_cast<char>(std::tolower(static_cast<unsigned char>(s[i])));
+    }
+    return s;
+}
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 ScalarConverter::ScalarConverter() {}
@@ -51,9 +57,15 @@ void ScalarConverter::convert(const std::string& literal) {
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 static int	whatIsIt(const char* arg) {
-
-	if (std::string(arg).length() == 1 && !std::isdigit(arg[0]))
+	std::string str = toLower(std::string(arg));
+	
+	if (str.length() == 1 && !std::isdigit(arg[0]))
 		return TYPE_CHAR;
+
+	if (str == "inf" || str == "-inf" || str == "nan")
+		return TYPE_DOUBLE;
+	if (str == "inff" || str == "-inff")
+		return TYPE_FLOAT;
 
 	std::strtod(arg, NULL);
 	if (errno == ERANGE)
@@ -64,8 +76,8 @@ static int	whatIsIt(const char* arg) {
 	if (!*end)
 		return TYPE_INT;
 
-	if (std::string(arg).find('.') == std::string::npos &&
-		std::string(arg).find('e') == std::string::npos)
+	if (str.find('.') == std::string::npos &&
+		str.find('e') == std::string::npos)
 		return TYPE_INVALID;
 
 	std::strtod(arg, &end);
