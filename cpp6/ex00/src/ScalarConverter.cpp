@@ -42,7 +42,7 @@ void ScalarConverter::convert(const std::string& literal) {
 		case TYPE_FLOAT: box = fillFloat(str); break;
 		case TYPE_DOUBLE: box = fillDouble(str); break;
 		case TYPE_TOOBIG:
-			std::cout << ERR4 "Your input is too big" RESET << std::endl;
+			std::cout << ERR4 "Your input is too big to have any meaningfull sense (> e+19)" RESET << std::endl;
 			return ;
 		case TYPE_INVALID:
 			std::cout << ERR4 "Invalid input" RESET << std::endl;
@@ -66,6 +66,13 @@ static int	whatIsIt(const char* arg) {
 		return TYPE_DOUBLE;
 	if (str == "inff" || str == "-inff")
 		return TYPE_FLOAT;
+
+	int start = (str[0] == '-' || str[0] == '+') ? 1 : 0;
+	std::size_t dot = str.find('.');
+	if (dot == std::string::npos)
+		dot = str.size();
+	if (dot - start > 19)
+		return TYPE_TOOBIG;
 
 	std::strtod(arg, NULL);
 	if (errno == ERANGE)
@@ -91,30 +98,28 @@ static int	whatIsIt(const char* arg) {
 
 static void printBox(var_box& box) {
 
-	std::cout << C_512 "char: \t" RESET;
+	std::cout << "\n" << C_451 "char: \t" RESET;
 	if (box.control_c)
 		std::cout << errors[box.control_c] << std::endl;
 	else
-		std::cout << box.c << std::endl;
+		std::cout << "'" << box.c << "'" << std::endl;
 
-	std::cout << C_153 "int: \t" RESET;
+	std::cout << C_512 "int: \t" RESET;
 	if (box.control_i)
 		std::cout << errors[box.control_i] << std::endl;
 	else
 		std::cout << box.i << std::endl;
 
-	std::cout << C_401 "float: " RESET;
+	std::cout << C_151 "float: \t" RESET;
 	if (box.control_f)
 		std::cout << errors[box.control_f] << std::endl;
 	else
-		std::cout << box.f << std::endl;
-	
-	// std::cout << C_124 "double: " RESET;
-	// if (box.control_d)
-	// 	std::cout << errors[box.control_d] << std::endl;
-	// else
-	// 	std::cout << box.d << std::endl;
-	std::cout << C_124 "double: " RESET << box.d << std::endl;
+		std::cout << std::fixed << std::setprecision(1) << box.f << "f" << std::endl;
+
+	if (box.d < 1e10)
+		std::cout << C_401 "double: " RESET << std::fixed << std::setprecision(1) << box.d << std::endl << std::endl;
+	else
+		std::cout << C_401 "double: " RESET << box.d << std::endl << std::endl;
 }
 ///////////////////////////////////////////////////////////////////////////////]
 static var_box	fillChar(const char* arg) {
@@ -141,11 +146,11 @@ static var_box fillInt(const char * arg) {
 	
 	if (value > INT_MAX || value < INT_MIN)
 		box.control_i = 2;// display Overflow int
-	if (value > 127 || value < 0)
+	if (value > 255 || value < 0)
 		box.control_c = 2;// display Overflow char
-	if (!box.control_c && !std::isprint(box.c))
+	if (!box.control_c && !std::isprint(static_cast<unsigned char>(box.c)))
 		box.control_c = 1;//display: Non Displayable char
-	
+
 	if (errno == ERANGE) {
 		double security = std::strtod(arg, NULL);
 		if (security > FLT_MAX || security < -FLT_MAX)
@@ -169,6 +174,7 @@ static var_box fillFloat(const char* arg) {
 	box.i = static_cast<int>(value);
 	box.c = static_cast<char>(value);
 
+	// if (value != )
 	if (value > FLT_MAX || value < -FLT_MAX)
 		box.control_f = 2;// display Overflow float
 	if ((value > 0 && value < FLT_MIN) || (value < 0 && value > -FLT_MIN))

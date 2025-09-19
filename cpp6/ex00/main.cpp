@@ -13,4 +13,3 @@ int main(int ac, char** av) {
 	ScalarConverter::convert(str);
 	return 0;
 }
-

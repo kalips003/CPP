@@ -27,11 +27,12 @@ struct var_box {
 
 };
 
-const std::string errors[4] = {
+const std::string errors[5] = {
 	"You should never see this.",
 	"Non Displayable",
 	"Overflow",
 	"Small Overflow",
+	"Impossible"
 };
 ///////////////////////////////////////////////////////////////////////////////]
 // 									CLASS
