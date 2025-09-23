@@ -70,4 +70,5 @@ void	identify(Base& p) {
 	} catch (std::exception & e) {
 		// std::cout << e.what() << std::endl;
 	}
+	std::cout << RED "Unknown" RESET << std::endl;
 }

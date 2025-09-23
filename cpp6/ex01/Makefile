@@ -21,7 +21,7 @@ ARGS = 2e3 2a 0 a -a 42 9876543210 2.0 2.0f 2.33 -inf ++inf nan inff
 ARG = 
 
 a: $(NAME)
-	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "templates? temples to contemplate?", $(CLS), )
+	@$(call random_shmol_cat, "TESHTING: ... reinterpret_cast?", "this exo is underwhelming....", $(CLS), )
 	-./$(NAME) $(ARG)
 
 b: $(NAME)

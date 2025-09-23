@@ -24,7 +24,6 @@ int main() {
     delete a;
     delete b;
     delete c;
-    delete ptr;
 
     A aa;
     B bb;
@@ -34,6 +33,11 @@ int main() {
     identify(aa);
     identify(bb);
     identify(cc);
+    std::cout << std::endl << C_430 "Random ptr is: " RESET; identify(*ptr);
+
+    std::cout << std::endl << C_430 "Random ptr is: " RESET; identify(*ptr);
+
+    delete ptr;
 
 	return 0;
 }

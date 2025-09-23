@@ -16,17 +16,28 @@ all: $(NAME)
 # │─────██████─────██████████████─██████████████─────██████─────██████████─██████──────────██████─██████████████─│
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-ARGS2 = 0 1 12 a g \' 9
-ARGS = 2e3 2a 0 a -a 42 9876543210 2.0 2.0f 2.33 -inf ++inf nan inff
+# LONG_MAX = 9223372036854775807L
+# LONG_MIN = (-9223372036854775807L -1L)
+# DOUBLE_MAX = 1.79769e+308
+# DOUBLE_MIN = 2.22507e-308
+
+ARG = 2.22507e-310
+
+ARGS = -1 1 000 234 2e3 2.0f 2.3e5f 3f 2.3333333 
+ARGS0 = -000 0.0 0..0 +0 +2
+ARGS1 = 2147483648
+ARGS2 = 2.0ff 0..03 2ee3
+ARGS3 = 2a a -a 42 9876543210
+ARGS2 = a g \' 9 "" ' '
+ARGS9 = inf -inf +inf nan nanf inff -inff +inff
 ARGS_BAD = 2.0ff
-ARG = NAN
 
 a: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "everyone liks numbers no?", $(CLS), )
-	-./$(NAME) $(ARG)
+	-./$(NAME) $(ARGS1)
 
 b: $(NAME)
-	-@for num in $(ARGS); do \
+	-@for num in $(ARGS) $(ARGS0) $(ARGS1) $(ARGS2) $(ARGS3); do \
 		$(call helper_tester, $$num, "testing aaall the numbers: $$num", "press enter to go next", ,) \
 	done
 

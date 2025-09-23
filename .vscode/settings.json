@@ -70,6 +70,9 @@
 		"cinttypes": "cpp",
 		"variant": "cpp",
 		"ranges": "cpp",
-		"minirt.h": "c"
+		"minirt.h": "c",
+		"any": "cpp",
+		"unordered_set": "cpp",
+		"bitset": "cpp"
 	}
 }

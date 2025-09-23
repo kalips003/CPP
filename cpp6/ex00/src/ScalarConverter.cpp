@@ -7,20 +7,7 @@
 #include <cfloat>
 #include <cmath>
 #include <cerrno>
-
-///////////////////////////////////////////////////////////////////////////////]
-static int	whatIsIt(const char* arg);
-static void printBox(var_box& box);
-static var_box fillChar(const char* arg);
-static var_box fillInt(const char * arg);
-static var_box fillFloat(const char* arg);
-static var_box fillDouble(const char* arg);
-static std::string toLower(std::string s) {
-    for (std::size_t i = 0; i < s.size(); ++i) {
-        s[i] = static_cast<char>(std::tolower(static_cast<unsigned char>(s[i])));
-    }
-    return s;
-}
+#include <bitset>
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 ScalarConverter::ScalarConverter() {}
@@ -32,17 +19,30 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other) {
 }			
 ScalarConverter::~ScalarConverter() {}
 ///////////////////////////////////////////////////////////////////////////////]
-void ScalarConverter::convert(const std::string& literal) {
-	const char *str = literal.c_str();
 
+///////////////////////////////////////////////////////////////////////////////]
+static int	whatIsIt(data& data);
+static void printBox(var_box& box);
+static void	fillChar(data& data, var_box& box);
+static void fillInt(data& data, var_box& box);
+static void fillHexa(data& data, var_box& box);
+static void fillFloat(data& data, var_box& box);
+static void fillDouble(data& data, var_box& box);
+///////////////////////////////////////////////////////////////////////////////]
+
+///////////////////////////////////////////////////////////////////////////////]
+void ScalarConverter::convert(const std::string& literal) {
+	data	data(literal);
 	var_box	box;
-	switch (whatIsIt(str)) {
-		case TYPE_CHAR: box = fillChar(str); break;
-		case TYPE_INT: box = fillInt(str); break;
-		case TYPE_FLOAT: box = fillFloat(str); break;
-		case TYPE_DOUBLE: box = fillDouble(str); break;
+
+	switch (whatIsIt(data)) {
+		case TYPE_CHAR: fillChar(data, box); break;
+		case TYPE_INT: fillInt(data, box); break;
+		case TYPE_HEXA: fillHexa(data, box); break;
+		case TYPE_FLOAT: fillFloat(data, box); break;
+		case TYPE_DOUBLE: fillDouble(data, box); break;
 		case TYPE_TOOBIG:
-			std::cout << ERR4 "Your input is too big to have any meaningfull sense (> e+19)" RESET << std::endl;
+			std::cout << ERR4 "Your input is too long" RESET << std::endl;
 			return ;
 		case TYPE_INVALID:
 			std::cout << ERR4 "Invalid input" RESET << std::endl;
@@ -55,162 +55,165 @@ void ScalarConverter::convert(const std::string& literal) {
 	printBox(box);
 }
 ///////////////////////////////////////////////////////////////////////////////]
-///////////////////////////////////////////////////////////////////////////////]
-static int	whatIsIt(const char* arg) {
-	std::string str = toLower(std::string(arg));
+static int	whatIsIt(data& data) {
 	
-	if (str.length() == 1 && !std::isdigit(arg[0]))
+	if (data._string.length() == 1 && !std::isdigit(data._string[0]))
 		return TYPE_CHAR;
-
-	if (str == "inf" || str == "-inf" || str == "nan")
-		return TYPE_DOUBLE;
-	if (str == "inff" || str == "-inff")
-		return TYPE_FLOAT;
-
-	int start = (str[0] == '-' || str[0] == '+') ? 1 : 0;
-	std::size_t dot = str.find('.');
-	if (dot == std::string::npos)
-		dot = str.size();
-	if (dot - start > 19)
-		return TYPE_TOOBIG;
-
-	std::strtod(arg, NULL);
-	if (errno == ERANGE)
-		return TYPE_TOOBIG;
-
-	char *end;
-	std::strtol(arg, &end, 10);
-	if (!*end)
+	if (!*data._endl)
 		return TYPE_INT;
-
-	if (str.find('.') == std::string::npos &&
-		str.find('e') == std::string::npos)
-		return TYPE_INVALID;
-
-	std::strtod(arg, &end);
-	if (*end == 'f' && !*(end+1))
+	if (*data._endd == 'f' && !*(data._endd+1))
 		return TYPE_FLOAT;
-	else if (!*end)
+	if (!*data._endd)
 		return TYPE_DOUBLE;
-	else
-		return TYPE_INVALID;
-}
+	if (!*data._endx)
+		return TYPE_HEXA;
 
+	return TYPE_INVALID;
+}
+///////////////////////////////////////////////////////////////////////////////]
 static void printBox(var_box& box) {
 
+	std::cout << std::endl << C_305 "binary: 0b" RESET << std::bitset<8>(box.i) << std::endl;
+// 
 	std::cout << "\n" << C_451 "char: \t" RESET;
 	if (box.control_c)
 		std::cout << errors[box.control_c] << std::endl;
 	else
-		std::cout << "'" << box.c << "'" << std::endl;
-
+		std::cout << C_451 "'" RESET << box.c << C_451 "'" RESET << std::endl;
+// 
 	std::cout << C_512 "int: \t" RESET;
 	if (box.control_i)
 		std::cout << errors[box.control_i] << std::endl;
 	else
 		std::cout << box.i << std::endl;
-
+// 
 	std::cout << C_151 "float: \t" RESET;
 	if (box.control_f)
 		std::cout << errors[box.control_f] << std::endl;
 	else
 		std::cout << std::fixed << std::setprecision(1) << box.f << "f" << std::endl;
-
-	if (box.d < 1e10)
-		std::cout << C_401 "double: " RESET << std::fixed << std::setprecision(1) << box.d << std::endl << std::endl;
+// 
+	std::cout << C_401 "double: " RESET;
+	if (box.control_f)
+		std::cout << errors[box.control_d] << std::endl;
+	else if (box.d < 1e10)
+		std::cout << std::fixed << std::setprecision(1) << box.d << std::endl;
 	else
-		std::cout << C_401 "double: " RESET << box.d << std::endl << std::endl;
+		std::cout << box.d << std::endl;
+// 
+	std::cout << std::endl << C_043 "hexa: \t0x" RESET << std::hex << box.i << std::endl << std::endl;
 }
 ///////////////////////////////////////////////////////////////////////////////]
-static var_box	fillChar(const char* arg) {
-	var_box	box;
 
-	box.c = *arg;
-	box.d = static_cast<double>(box.c);
-	box.f = static_cast<float>(box.c);
+///////////////////////////////////////////////////////////////////////////////]
+static void	fillChar(data& data, var_box& box) {
+std::cout << C_550 "\t[ CHAR ]" RESET << std::endl;
+
+	box.c = data._string[0];
 	box.i = static_cast<int>(box.c);
+	box.f = static_cast<float>(box.c);
+	box.d = static_cast<double>(box.c);
 
-	return box;
 }
 
-static var_box fillInt(const char * arg) {
-	var_box box;
+static void fillInt(data& data, var_box& box) {
+std::cout << C_550 "\t[ INT ]" RESET << std::endl;
 
-	// errno = 0;
-	long value = std::strtol(arg, NULL, 10);
+	box.c = static_cast<char>(data._lng);
+	box.i = static_cast<int>(data._lng);
+	box.f = static_cast<float>(data._lng);
+	box.d = static_cast<double>(data._lng);
 
-	box.d = static_cast<double>(value);
-	box.f = static_cast<float>(value);
-	box.i = static_cast<int>(value);
-	box.c = static_cast<char>(value);
-	
-	if (value > INT_MAX || value < INT_MIN)
-		box.control_i = 2;// display Overflow int
-	if (value > 255 || value < 0)
+	if (data._lng > 255 || data._lng < 0)
 		box.control_c = 2;// display Overflow char
 	if (!box.control_c && !std::isprint(static_cast<unsigned char>(box.c)))
 		box.control_c = 1;//display: Non Displayable char
+	
+	if (data._lng > INT_MAX || data._lng < INT_MIN)
+		box.control_i = 2;// display Overflow int
 
-	if (errno == ERANGE) {
-		double security = std::strtod(arg, NULL);
-		if (security > FLT_MAX || security < -FLT_MAX)
-			box.control_f = 2;// display Overflow float
-		else if ((security > 0 && security < FLT_MIN) || (security < 0 && security > -FLT_MIN))
-			box.control_f = 3;// display Min Overflow float
-		else
-			box.f = static_cast<float>(security);
+	if (errno == ERANGE)
+		fillDouble(data, box);
+
+}
+
+static void fillHexa(data& data, var_box& box) {
+std::cout << C_550 "\t[ HEXA ]" RESET << std::endl;
+
+	unsigned int num = static_cast<unsigned int>(data._hex);
+	box.c = static_cast<char>(num);
+	box.i = static_cast<int>(num);
+	box.f = static_cast<float>(num);
+	box.d = static_cast<double>(num);
+
+	if (data._lng > 255 || data._lng < 0)
+		box.control_c = 2;// display Overflow char
+	if (!box.control_c && !std::isprint(static_cast<unsigned char>(box.c)))
+		box.control_c = 1;//display: Non Displayable char
+	
+	if (data._lng > INT_MAX || data._lng < INT_MIN)
+		box.control_i = 2;// display Overflow int
+
+}
+
+static void fillFloat(data& data, var_box& box) {
+std::cout << C_550 "\t[ FLOAT ]" RESET << std::endl;
+
+	box.d = static_cast<double>(data._dbl);
+	box.f = static_cast<float>(data._dbl);
+	box.i = static_cast<int>(data._dbl);
+	box.c = static_cast<char>(data._dbl);
+
+	if (data._dbl > 127 || data._dbl < 0)
+		box.control_c = 2;// display Overflow char
+	if (!box.control_c && !std::isprint(box.c))
+		box.control_c = 1;//display: Non Displayable char
+
+	if (data._dbl > INT_MAX || data._dbl < INT_MIN)
+		box.control_i = 2;// display Overflow int
+	if (std::isnan(data._dbl) || std::isinf(data._dbl)) {
+		box.control_c = 4;// display Impossible char
+		box.control_i = 4;// display Impossible int
+		return ;
 	}
 
-	return box;
+	if (data._dbl > FLT_MAX || data._dbl < -FLT_MAX)
+		box.control_f = 2;// display Overflow float
+	if ((data._dbl > 0 && data._dbl < FLT_MIN) || (data._dbl < 0 && data._dbl > -FLT_MIN))
+		box.control_f = 3;// display Min Overflow float
+
 }
 
-static var_box fillFloat(const char* arg) {
-	var_box box;
+static void fillDouble(data& data, var_box& box) {
+std::cout << C_550 "\t[ DOUBLE ]" RESET << std::endl;
 
-	double value = strtod(arg, NULL);
+	box.c = static_cast<char>(data._dbl);
+	box.i = static_cast<int>(data._dbl);
+	box.f = static_cast<float>(data._dbl);
+	box.d = data._dbl;
 
-	box.d = static_cast<double>(value);
-	box.f = static_cast<float>(value);
-	box.i = static_cast<int>(value);
-	box.c = static_cast<char>(value);
-
-	// if (value != )
-	if (value > FLT_MAX || value < -FLT_MAX)
-		box.control_f = 2;// display Overflow float
-	if ((value > 0 && value < FLT_MIN) || (value < 0 && value > -FLT_MIN))
-		box.control_f = 3;// display Min Overflow float
-	if (value > INT_MAX || value < INT_MIN)
-		box.control_i = 2;// display Overflow int
-	if (value > 127 || value < 0)
+	if (data._dbl > 127 || data._dbl < 0)
 		box.control_c = 2;// display Overflow char
 	if (!box.control_c && !std::isprint(box.c))
 		box.control_c = 1;//display: Non Displayable char
 
-	return box;
-}
-
-
-static var_box fillDouble(const char* arg) {
-	var_box box;
-
-	double value = strtod(arg, NULL);
-	// value = NaN; -HUGE_VAL;
-
-	box.d = value;
-	box.f = static_cast<float>(value);
-	box.i = static_cast<int>(value);
-	box.c = static_cast<char>(value);
-
-	if (value > FLT_MAX || value < -FLT_MAX)
-		box.control_f = 2;// display Overflow float
-	if ((value > 0 && value < FLT_MIN) || (value < 0 && value > -FLT_MIN))
-		box.control_f = 3;// display Min Overflow float
-	if (value > INT_MAX || value < INT_MIN)
+	if (data._dbl > INT_MAX || data._dbl < INT_MIN)
 		box.control_i = 2;// display Overflow int
-	if (value > 127 || value < 0)
-		box.control_c = 2;// display Overflow char
-	if (!box.control_c && !std::isprint(box.c))
-		box.control_c = 1;//display: Non Displayable char
+	if (std::isnan(data._dbl) || std::isinf(data._dbl)) {
+		box.control_c = 4;// display Impossible char
+		box.control_i = 4;// display Impossible int
+		return ;
+	}
 
-	return box;
+	if (data._dbl > FLT_MAX || data._dbl < -FLT_MAX)
+		box.control_f = 2;// display Overflow float
+	if ((data._dbl > 0 && data._dbl < FLT_MIN) || (data._dbl < 0 && data._dbl > -FLT_MIN))
+		box.control_f = 3;// display Min Overflow float
+
+	if (errno == ERANGE) {
+		box.control_c = 3 + (box.d == 0.0);// display (Small) Overflow char
+		box.control_i = box.control_c;
+		box.control_f = box.control_c;
+		box.control_d = box.control_c;
+	}
 }
