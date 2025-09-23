@@ -132,8 +132,10 @@ std::cout << C_550 "\t[ INT ]" RESET << std::endl;
 	if (data._lng > INT_MAX || data._lng < INT_MIN)
 		box.control_i = 2;// display Overflow int
 
-	if (errno == ERANGE)
+	if (errno == ERANGE) {
+		errno = 0;
 		fillDouble(data, box);
+	}
 
 }
 

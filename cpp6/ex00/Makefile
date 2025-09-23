@@ -21,7 +21,7 @@ all: $(NAME)
 # DOUBLE_MAX = 1.79769e+308
 # DOUBLE_MIN = 2.22507e-308
 
-ARG = 2.22507e-310
+ARG = 9327593275032750275027
 
 ARGS = -1 1 000 234 2e3 2.0f 2.3e5f 3f 2.3333333 
 ARGS0 = -000 0.0 0..0 +0 +2
@@ -34,7 +34,7 @@ ARGS_BAD = 2.0ff
 
 a: $(NAME)
 	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "everyone liks numbers no?", $(CLS), )
-	-./$(NAME) $(ARGS1)
+	-./$(NAME) $(ARG)
 
 b: $(NAME)
 	-@for num in $(ARGS) $(ARGS0) $(ARGS1) $(ARGS2) $(ARGS3); do \
