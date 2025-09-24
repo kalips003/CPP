@@ -41,6 +41,23 @@ public:
 
 };
 
+template <typename T>
+std::ostream& operator<<(std::ostream& s, const Array<T>& a) {
+	if (a.size() == 0) {
+		s << C_410 "\t[ " RESET "EMPTY" C_410 " ]" RESET << std::endl;
+		return s;
+	}
+
+	size_t	j = a.size() - 1;
+	size_t i = -1;
+	s << C_410 "[ " RESET << j << C_410 " ]" RESET ": ";
+	while (++i < j)
+		s << C_410 << a[i] << RESET ", ";
+	s << C_410 << a[i] << RESET "." << std::endl;
+
+	return s;
+}
+
 #include "Array.tpp"
 
 #endif

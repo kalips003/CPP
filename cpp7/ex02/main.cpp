@@ -6,37 +6,39 @@
 ///////////////////////////////////////////////////////////////////////////////]
 int main() {
 	try {
-		std::cout << "Creating empty array of int...\n";
+		std::cout << C_410 REVERSE "Creating empty array of int...\n" RESET;
 		Array<int> emptyArray;
-		std::cout << "Size: " << emptyArray.size() << "\n";
+		std::cout << emptyArray;
 
 		std::cout << "\nCreating array of 5 ints...\n";
-		Array<int> arr(5);
-		for (size_t i = 0; i < arr.size(); ++i)
-			arr[i] = static_cast<int>(i * 10);
+		Array<int> default_arr(5);
+		std::cout << default_arr;
 
+		std::cout << "\nFilling it...\n";
+		for (size_t i = 0; i < default_arr.size(); ++i)
+			default_arr[i] = static_cast<int>(i * 10);
 		std::cout << "Elements in arr:\n";
-		for (size_t i = 0; i < arr.size(); ++i)
-			std::cout << arr[i] << " ";
-		std::cout << "\n";
+		std::cout << default_arr;
 
-		std::cout << "\nTesting copy constructor...\n";
-		Array<int> copyArr(arr);
+		std::cout << C_410 REVERSE "\nTesting copy constructor...:" RESET;
+		Array<int> copyArr(default_arr);
 		copyArr[0] = 999;  // change to check independence
+		std::cout << "\ncopy with first num changed...\n";
+		std::cout << copyArr;
+		std::cout << "original:\n";
+		std::cout << default_arr;
 
-		std::cout << "Original arr[0]: " << arr[0] << "\n";
-		std::cout << "Copy copyArr[0]: " << copyArr[0] << "\n";
-
-		std::cout << "\nTesting assignment operator...\n";
+		std::cout << C_410 REVERSE "\nTesting assignment operator..." RESET;
 		Array<int> assignArr;
-		assignArr = arr;
+		assignArr = copyArr;
 		assignArr[1] = 888;  // change to check independence
+		std::cout << "\ncopy with second num changed...\n";
+		std::cout << assignArr;
+		std::cout << "original:\n";
+		std::cout << copyArr;
 
-		std::cout << "Original arr[1]: " << arr[1] << "\n";
-		std::cout << "Assigned assignArr[1]: " << assignArr[1] << "\n";
-
-		std::cout << "\nTesting out-of-bounds access (should throw)...\n";
-		std::cout << arr[10] << "\n";  // out of range, should throw
+		std::cout << C_410 REVERSE "\nTesting out-of-bounds access (should throw)...\n" RESET;
+		std::cout << default_arr[10] << "\n";  // out of range, should throw
 
 	} catch (const std::exception& e) {
 		std::cerr << "Caught exception: " << e.what() << "\n";
