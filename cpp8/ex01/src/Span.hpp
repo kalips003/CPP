@@ -17,67 +17,59 @@
 ///////////////////////////////////////////////////////////////////////////////]
 class Span {
 
+/////////////////	DATA
 private:
 	std::vector<int>	_array;
 	unsigned int		_max;
+
 protected:
 
 public:
 
-/////   CANONICAL
+/////////////////	CANONICAL
 	Span(unsigned int max);
 	Span(const Span &other);
 	Span& operator=(const Span& other);
 	~Span();
 
-/////   SETTER GETTER
+/////////////////	SETTER GETTER
 	void	addNumber( int to_add );
-/////
+
+	template <typename ITE>
+	void	addLotsOfNumbers(ITE a, ITE b) {
+
+		unsigned long distAB = static_cast<unsigned long>(std::distance(a, b));
+		unsigned long distArray = static_cast<unsigned long>(_array.size());
+		unsigned long distMin = distArray + distAB;
+		if (distMin > _max) {
+			std::cout << C_513 "Not enough space, copy reduced to fit" << std::endl;
+			b -= distMin - _max;
+		}
+		_array.insert(_array.end(), a, b);	
+		if (_array.size() > _max)
+			std::cout << ERR "you should never see this" << std::endl;
+	}
+
+/////////////////	FUNCTIONS
 	long	shortestSpan( void );
 	long	longestSpan( void );
 
+	void	randomSpan(int min, int max, size_t size);
+
+/////////////////	TOOLS
 	template <typename Iterator>
-	void	addNumber(Iterator start, Iterator end) {
-		if (_array.size() + std::distance(start, end) > _max)
-			throw std::runtime_error(ERR8 "Not enough space" RESET);
-		_array.insert(_array.end(), start, end);
+	static void	printSpan(Iterator start, Iterator end) {
+
+		for (; start != end-1; start++)
+			std::cout << C_512 << *start << RESET ", ";
+		std::cout << C_512 << *(end-1) << RESET << std::endl;
 	}
 
-	void	randomSpan(int min, int max, size_t size) {
-		static bool seeded = false;
-		if (!seeded) {
-			srand(std::time(NULL));
-			seeded = true;
-		}
-
-		if (_array.size() + size > _max)
-			size = _max - _array.size();
-			// throw std::runtime_error(ERR8 "Not enough space" RESET);
-		if (min > max)
-			throw std::runtime_error(ERR0 "Fix your input!" RESET);
-		for (size_t i = 0; i < size; i++) {
-			int randomN = std::rand() % (static_cast<long>(max) - min + 1) + min;
-			_array.push_back(randomN);
-		
-		}
-	}
-
-	// std::vector<int>::const_iterator begin() const;
 	std::vector<int>::const_iterator begin() const {
 		return _array.begin();
 	}
-	// std::vector<int>::const_iterator end() const;
 	std::vector<int>::const_iterator end() const {
 		return _array.end();
-	}
-
-	template <typename Iterator>
-	void	printSpan(Iterator start, Iterator end) {
-
-		for (; start != end; start++)
-			std::cout << C_512 << *start << " ";
-		std::cout << *end << RESET << std::endl;
-
 	}
 };
 

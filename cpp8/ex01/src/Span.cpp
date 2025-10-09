@@ -29,6 +29,7 @@ void	Span::addNumber( int to_add ) {
 	_array.push_back(to_add);
 }
 
+///////////////////////////////////////////////////////////////////////////////]
 long	Span::shortestSpan( void ) {
 	if (_array.size() <= 1)
 		throw std::runtime_error(ERR3 "No span can be found" RESET);
@@ -53,14 +54,36 @@ long	Span::shortestSpan( void ) {
 	return span;
 }
 
+///////////////////////////////////////////////////////////////////////////////]
 long	Span::longestSpan( void ) {
 	if (_array.size() <= 1)
 		throw std::runtime_error(ERR3 "No span can be found" RESET);
 
 	int min = *std::min_element(_array.begin(), _array.end());
 	int max = *std::max_element(_array.begin(), _array.end());
+
 	std::cout << C_425 "Longest Span: [" RESET << min << C_425 ", " RESET
 	<< max << C_425 "] (" C_113 << max - min << C_425 ")" RESET << std::endl;
+
 	return max - min;
 
+}
+
+///////////////////////////////////////////////////////////////////////////////]
+void	Span::randomSpan(int min, int max, size_t size) {
+	static bool seeded = false;
+	if (!seeded) {
+		srand(std::time(NULL));
+		seeded = true;
+	}
+
+	if (_array.size() + size > _max)
+		size = _max - _array.size();
+	if (min > max)
+		throw std::runtime_error(ERR0 "Fix your input!" RESET);
+
+	for (size_t i = 0; i < size; i++) {
+		int randomN = std::rand() % (static_cast<long>(max) - min + 1) + min;
+		_array.push_back(randomN);
+	}
 }

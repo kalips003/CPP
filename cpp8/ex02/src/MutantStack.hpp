@@ -19,33 +19,26 @@ class MutantStack : public std::stack<T> {
 public:
 	typedef typename std::stack<T>::container_type::iterator iterator;
 
+/////////////////	DATA		
 private:
 
 protected:
 
 public:
 
-/////   CANONICAL
-	MutantStack() {};
-	MutantStack(const MutantStack &other) : std::stack<T>(other) {};
-	MutantStack& operator=(const MutantStack& other) {
-		if (this != &other)
-			std::stack<T>::operator=(other);
-		return *this;
-	}
-	~MutantStack() {}
+/////////////////	CANONICAL
+	MutantStack();
+	MutantStack(const MutantStack &other);
+	MutantStack& operator=(const MutantStack& other);
+	~MutantStack();
 
-/////   SETTER GETTER
-	T&	operator[](size_t index) {
-		return this->c[index];
-	}
-	iterator	begin() {
-		return this->c.begin();
-	}
-	iterator	end() {
-		return this->c.end();
-	}
+/////////////////	OPERATORS
+	T&			operator[](size_t index);
+	iterator	begin();
+	iterator	end();
 
 };
+
+#include "MutantStack.tpp"
 
 #endif

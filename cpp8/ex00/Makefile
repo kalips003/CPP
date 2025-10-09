@@ -85,7 +85,7 @@ new:
 # ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 CC = g++
-FLAGS = -Wextra -Wall -Werror -g -std=c++98
+FLAGS = -Wextra -Wall -Werror -g -std=c++98 -O2
 
 SRC = $(wildcard src/*.cpp)
 OBJ = $(patsubst src/%.cpp, obj/%.o, $(SRC))
