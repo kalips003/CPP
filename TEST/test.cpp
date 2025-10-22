@@ -90,6 +90,19 @@ int main(int ac, char** av) {
 	// std::cout << "sound" << std::endl;
 	// std::cout << '\a';
 	return 0;
+
+	while (1) {
+		char* input = gnl(0);
+		struct data = parsing?(input);
+	
+	}
+
+
+
+
+
+
+
 }
 ///////////////////////////////////////////////////////////////////////////////]
 template <typename T>
