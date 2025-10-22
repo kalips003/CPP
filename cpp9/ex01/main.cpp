@@ -5,14 +5,13 @@
 #include <fstream>
 #include <sstream>
 #include <stack>
-#include <vector>
 #include <algorithm>
 
 //  "8 9 * 9 - 9 - 9 - 4 - 1 +"
 struct t_stack {
 	std::stack<int> _stack;
 
-///////////////////////////////////]
+	///////////////////////////////////]
 	void	addline(const char *input) {
 
 		std::stringstream ss(input);
@@ -24,7 +23,7 @@ struct t_stack {
 		printStack();
 	}
 
-///////////////////////////////////]
+	///////////////////////////////////]
 	void	handleOneSymbol(std::string& symbol) {
 
 		std::string operators = "+-*/";
@@ -52,7 +51,7 @@ struct t_stack {
 
 	}
 
-///////////////////////////////////]
+	///////////////////////////////////]
 	void	doTheMath(size_t pos, std::string& symbol) {
 		if (_stack.size() < 2) {
 			std::cout << C_520 "stack too small for operation (ignored)" RESET << std::endl;
@@ -78,7 +77,8 @@ struct t_stack {
 		}
 		std::cout << ">   " C_520 << b << RESET " " << symbol << " " C_250 << a << RESET " = " << _stack.top() << std::endl;
 	}
-///////////////////////////////////]
+
+	///////////////////////////////////]
 	void	printStack() {
 		std::stack<int> temp(_stack);
 		bool 	first(true);
@@ -93,6 +93,7 @@ struct t_stack {
 		std::cout << "]" << std::endl;
 	}
 };
+
 ///////////////////////////////////////////////////////////////////////////////]
 ///////////////////////////////////////////////////////////////////////////////]
 //  "8 9 * 9 - 9 - 9 - 4 - 1 +"
@@ -110,11 +111,6 @@ int main(int ac, char** av)
 		return 0;
 	}
 
-	// std::cout << C_253 "input: " RESET << ac << std::endl;
-	// for (int i = 1; i < ac; i++)
-	// 	std::cout << C_253 << av[i] << ", " RESET;
-
-		// stack.addline(av[i]);
 	while (*(++av))
 		stack.addline(*av);
 

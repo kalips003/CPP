@@ -20,8 +20,9 @@ all: $(NAME)
 ARGS2 = "8 9 * 9 - 9 - 9 - 4 - 1 +"
 ARGS = 2e3 2a 0 a -a 42 9876543210 2.0 2.0f 2.33 -inf ++inf nan inff
 ARG = 4 3 2 1 5 6 7
+
 a: $(NAME)
-	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "templates? temples to contemplate?", $(CLS), )
+	@$(call random_shmol_cat, "TESHTING: ... $(NAME)!", "A worse pushswap?", $(CLS), )
 	-./$(NAME) $(ARG)
 
 

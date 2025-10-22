@@ -31,8 +31,6 @@ template <typename Container>
 bool	ini(int ac, char** av, Container& stacks) {
 	if (ac < 2)
 		return false; // need at least one number
-	
-	// instanciate time?
 
 	for (int i = 1; i < ac; i++) {
 		int result = readNumber(av[i]);
@@ -74,7 +72,6 @@ void ft_merge(Container& left, Container& right) {
 	for (size_t j = 1, k = 1; j < left.size(); j++) {
 		if (j == Jacobsthal[k] && k++)
 			continue;
-		// std::cout << RED "num: " RESET << left[j] << std::endl;
 		insertNum(right, left[j]);
 	}
 }
@@ -89,8 +86,6 @@ Container	ft_algo(Container& c) {
 	for (size_t i = 0; i + 1 < c.size(); i += 2) {
 		if (i + 1 < c.size() && c[i] > c[i+1])//
 			std::swap(c[i], c[i+1]);
-		// std::cout << C_441 "[" RESET << c[i] << ", " << c[i+1] << "] " RESET;
-		
 		left.push_back(c[i]);
 		right.push_back(c[i+1]);
 	}
