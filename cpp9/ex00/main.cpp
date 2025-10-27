@@ -78,12 +78,12 @@ bool	isDateValid(std::string& date) {
 		return p(7), false; //day month integrity
 
 	int	t[] = {2,4,6,9,11}; // months with less 31 days
-	std::vector<int> trentaUno(t, t + sizeof(t)/sizeof(int));
+	// std::vector<int> trentaUno(t, t + sizeof(t)/sizeof(int));
 
-	if (day > 30 && std::find(trentaUno.begin(), trentaUno.end(), month) != trentaUno.end())
-		return p(8), false;
-	// if (day > 30 && std::find(t, t + sizeof(t) / sizeof(int), month) != t + sizeof(t) / sizeof(int))
+	// if (day > 30 && std::find(trentaUno.begin(), trentaUno.end(), month) != trentaUno.end())
 	// 	return p(8), false;
+	if (day > 30 && std::find(t, t + sizeof(t) / sizeof(int), month) != t + sizeof(t) / sizeof(int))
+		return p(8), false;
 	
 	if (month == 2) { // feburary
 		if (day > 29)

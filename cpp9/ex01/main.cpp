@@ -73,7 +73,7 @@ struct t_stack {
 			case 3:// '/' 
 				if (b != 0) {_stack.top() = b / a;} break;
 			default:// bad input
-				std::cout << ERR3 "// bad input ignored: (" << symbol << ")" << std::endl; return;
+				std::cout << ERR3 "// bad input ignored: (" << symbol << ")" << std::endl; _stack.push(a) ; return;
 		}
 		std::cout << ">   " C_520 << b << RESET " " << symbol << " " C_250 << a << RESET " = " << _stack.top() << std::endl;
 	}
